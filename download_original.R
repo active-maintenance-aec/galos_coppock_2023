@@ -7,10 +7,10 @@
 #
 #   The manifest carries two checksums per file. md5_served is the MD5 of the bytes Dataverse
 #   returns for `?format=original`, which is what this code was written against. md5_published
-#   is the checksum Dataverse displays. Here all 19 agree, but they do not always: another
-#   deposit in this program carries three published checksums that verify neither the original
-#   nor the derived tabular file, so verification runs against md5_served and any disagreement
-#   is reported rather than allowed to fail the check for the wrong reason.
+#   is the checksum Dataverse displays. Here all 19 agree, but they do not always: a published
+#   checksum can verify neither the deposited bytes nor the tabular file Dataverse derives from
+#   them. Verification therefore runs against md5_served, and any disagreement with the
+#   published value is reported rather than allowed to fail the check for the wrong reason.
 #
 #   None of the 19 files was ingested into a tabular representation, so served_as repeats the
 #   deposited file name in every row. The deposit is organised into folders, which Dataverse

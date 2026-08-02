@@ -790,6 +790,19 @@ gt <- gt |>
          value_rewrite, match_rewrite, defect_locus, notes) |>
   arrange(factor(table_figure, levels = unique(table_figure)))
 
+# Gates ----
+# A published value with no rewrite counterpart is a join that silently found nothing, which
+# would otherwise be indistinguishable from a quantity the pipeline does not produce.
+orphans <- gt |> filter(!is.na(value_paper), is.na(value_rewrite))
+
+if (nrow(orphans) > 0) {
+  print(orphans |> select(table_figure, claim), n = 50)
+  stop(str_glue("{nrow(orphans)} published values have no rewrite counterpart. ",
+                "Either a label failed to join or an output is missing."))
+}
+
+stopifnot(all(!is.na(gt$defect_locus[!is.na(gt$match_rewrite) & gt$match_rewrite == 0])))
+
 write_csv(gt, here::here("ground_truth", str_glue("{paper_id}_ground_truth.csv")))
 
 print(str_glue(

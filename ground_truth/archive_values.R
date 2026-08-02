@@ -15,6 +15,11 @@
 #   run in a copy under tempdir() and never in original/, which must keep the deposited bytes
 #   exactly. They also print ggplot objects at the top level, which opens a graphics device, so
 #   the device is sent to a null target for the duration.
+#
+#   One caveat travels with these values. The deposit is nothing but derived .rds files, one of
+#   which, gender_gradients_df.rds, is the output of the script that fails. appendix_gender_
+#   gradient.R therefore passes here by reading a deposited intermediate its own archive cannot
+#   regenerate, and its harvested values are a reading of that file rather than of a run.
 
 library(here)
 library(tidyverse)
