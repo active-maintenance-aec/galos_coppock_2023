@@ -1,0 +1,42 @@
+# galos_coppock_2023/run_all.R
+# Runs the whole reproduction in order: fetch and verify the deposited archive, re-derive the
+# study-level gender gradients, then every published table and figure, then the in-text numbers.
+# Every script is self-contained apart from the two that read gender_gradients.csv.
+
+library(here)
+here::i_am("run_all.R")
+
+# Deposited archive ----
+# Downloads from Dataverse on a fresh clone; verifies checksums either way.
+source(here::here("download_original.R"))
+
+# Cleaning ----
+# Re-derives what the archive ships as data/gender_gradients_df.rds. figure_s5 and
+# text_summary_stats.R both read it, so it runs first.
+source(here::here("maintained", "clean_gender_gradients.R"))
+
+# Tables ----
+source(here::here("maintained", "table_1_meta_regression.R"))
+source(here::here("maintained", "table_2_ethnicity_meta_regression.R"))
+source(here::here("maintained", "table_s2_1_study_manifest.R"))
+
+# Figures ----
+source(here::here("maintained", "figure_4_cates_gender_gradient.R"))
+source(here::here("maintained", "figure_5_cates_ethnicity.R"))
+source(here::here("maintained", "figure_s1_1_field_ates_forest.R"))
+source(here::here("maintained", "figure_s2_2_evidence_map.R"))
+source(here::here("maintained", "figure_s3_3_survey_field_comparison.R"))
+source(here::here("maintained", "figure_s3_4_survey_ates_forest.R"))
+source(here::here("maintained", "figure_s4_study_panels.R"))
+source(here::here("maintained", "figure_s5_62_gender_gradient_forest.R"))
+
+# In-text quantities ----
+# text_difference_in_magnitude.R bootstraps the meta-regression 500 times and takes about
+# two minutes; it is the slow step.
+source(here::here("maintained", "text_summary_stats.R"))
+source(here::here("maintained", "text_difference_in_magnitude.R"))
+
+# Ground truth ----
+# Joins the published values to what the scripts above wrote, so the comparison table is
+# generated rather than transcribed. It has to run last.
+source(here::here("ground_truth", "build_ground_truth.R"))

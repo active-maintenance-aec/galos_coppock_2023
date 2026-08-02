@@ -1,0 +1,58 @@
+study_id,study_name_citation,n_subjects_from_df,n_occupations,included_majority_minority
+neumark_1,Neumark et al. (9): United States,65,1,No
+petit_1,Petit (97): France,157,1,No
+rivera_1,"Rivera and Tilcsik (101): United States, field experiment",159,1,No
+baert_3,Baert et al. (72): Belgium,288,1,No
+hipp_1,Hipp (90): Germany,410,1,No
+birkelund_6,Birkelund et al. (76): United States,502,6,No
+birkelund_3,Birkelund et al. (76): Norway,547,6,No
+baert_2,Baert et al. (71): Belgium,576,1,No
+birkelund_1,Birkelund et al. (76): Germany,717,6,No
+birkelund_5,Birkelund et al. (76): United Kingdom,786,6,No
+capeau_1,Capéau et al. (82): Belgium,854,1,No
+riach_2,Riach and Rich (100): England,873,4,No
+birkelund_4,Birkelund et al. (76): Spain,959,6,No
+birkelund_2,Birkelund et al. (76): the Netherlands,982,6,No
+rooth_1,Rooth (102): Sweden,985,7,No
+riach_1,Riach and Rich (8): Australia,991,7,No
+pedulla_2,"Pedulla (96): United States, field experiment",1210,4,No
+saeed_1,Saeed et al. (104): Pakistan,1216,1,No
+berson_1,Berson (75): France,1250,1,No
+correll_1,"Correll et al. (83): United States, field experiment",1276,1,No
+gonzalez_1,Gonzalez et al. (89): Spain,1341,17,No
+wu_1,Wu (106): China,1344,1,No
+carlsson_1,Carlsson (13): Sweden,1614,13,No
+erlandsson_1,Erlandsson (86): Sweden,1643,3,No
+thomas_1,"Thomas (4): United States, field experiment",2096,4,No
+quadlin_1,"Quadlin (98): United States, field experiment",2106,1,No
+bygren_1,Bygren et al. (78): Sweden,2144,13,No
+patacchini_1,Patacchini et al. (95): Italy,2320,7,No
+ruffle_1,Ruffle and Shtudiner (103): Israel,2656,10,No
+albert_1,Albert et al. (67): Spain,2760,3,No
+ahmed_1,Ahmed at al. (14): Sweden,3254,15,No
+booth_1,Booth and Leigh (15): Australia,3365,4,No
+bursell_1,Bursell (77): Sweden,3636,1,No
+ahmed_2,Ahmed at al. (66): Sweden,3990,10,No
+jackson_1,Jackson (91): United Kingdom,5120,1,No
+carlssonr_1,Carlsson et al. (81): Sweden,5662,3,No
+carlsson_2,Carlsson and Eriksson (80): Sweden,6066,7,No
+yavorsky_1,Yavorsky (107): United States,6302,1,No
+horvath_1,Horváth (16): China,6404,2,No
+becker_1,"Becker et al. (74): Austria, Germany, Switzerland",6690,2,No
+asanov_1,Mavlikeeva and Asanov (11): Russia,8328,6,No
+zhou_1,Zhou et al. (108): China,9565,4,No
+maurer_1,Maurer-Fazio and Lei (92): China,24192,4,No
+dahl_1,Dahl and Krog (84): Denmark,394,21,Yes
+edo_1,Edo et al. (85): France,504,3,Yes
+asali_1,Asali et al. (70): Georgia,550,9,Yes
+arai_1,Arai et al. (69): Sweden (equivalent CVs),566,5,Yes
+arai_2,Arai et al. (69): Sweden (enhanced CVs),584,5,Yes
+alden_1,Alden et al. (68): Sweden,854,2,Yes
+banerjee_1,Banerjee et al. (73): India,1324,2,Yes
+nunley_1,Nunley et al. (93): United States,2365,6,Yes
+oreopolus_1,Oreopoulos (94): Canada,3348,21,Yes
+galarza_2,Galarza and Yamada (88): Peru,3828,3,Yes
+galarza_1,Galarza and Yamada (87): Peru,4820,3,Yes
+ramos_1,Ramos et al. (99): Spain and the Netherlands,9231,7,Yes
+stasio_1,"Di Stasio and Larsen (105): United Kingdom, Germany and Norway",9425,10,Yes
+busetta_1,Busetta et al. (79): Italy,21998,1,Yes

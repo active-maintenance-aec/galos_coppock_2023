@@ -1,0 +1,320 @@
+table_figure,claim,value_script
+text,Field studies collected,57
+text,Field studies with a positive ATE,37
+text,Occupation CATEs meta-analysed,298
+text,Mean occupations per study,5.228070175438597
+text,Median occupations per study,4
+text,Predicted CATE at 0 percent women (pp),-3.0238450714504808
+text,Predicted CATE at 100 percent women (pp),5.129314992673274
+text,"Difference in magnitude, 100 vs 0 percent women (pp)",2.1054699212227934
+text,Bootstrapped SE of the difference in magnitude,0.5391649395743355
+text_S3,Survey experiments collected,12
+text_S3,Survey occupation CATEs,31
+text_S5,Study-level gender gradients estimated,37
+text_S5,Gender gradients significant at p <= 0.05,7
+fig_S3.3,Field experimental gradient,8.153160064123755
+fig_S3.3,Field experimental intercept,-3.0238450714504808
+fig_S3.3,Survey experimental gradient,9.57854229210751
+fig_S3.3,Survey experimental intercept,-1.6543531584308664
+table_1_model1,Intercept,-3.02
+table_1_model1,Intercept SE,0.81
+table_1_model1,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3
+table_1_model1,Gender gradient,8.15
+table_1_model1,Gender gradient SE,1.5
+table_1_model1,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3
+table_1_model1,Tau squared,12.57
+table_1_model1,Nobs,298
+table_1_model2,Intercept,-2.48
+table_1_model2,Intercept SE,1.58
+table_1_model2,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",0
+table_1_model2,Gender gradient,8.33
+table_1_model2,Gender gradient SE,1.58
+table_1_model2,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3
+table_1_model2,Tau squared,11.71
+table_1_model2,Nobs,298
+table_1_model3,Intercept,-5.43
+table_1_model3,Intercept SE,1.91
+table_1_model3,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",2
+table_1_model3,Gender gradient,8.69
+table_1_model3,Gender gradient SE,1.56
+table_1_model3,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3
+table_1_model3,Tau squared,12.56
+table_1_model3,Nobs,298
+table_1_model4,Intercept,-5.2
+table_1_model4,Intercept SE,1.82
+table_1_model4,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",2
+table_1_model4,Gender gradient,7.97
+table_1_model4,Gender gradient SE,1.57
+table_1_model4,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3
+table_1_model4,Tau squared,10.22
+table_1_model4,Nobs,298
+table_1_model5,Intercept,1.05
+table_1_model5,Intercept SE,1.96
+table_1_model5,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",0
+table_1_model5,Gender gradient,7.51
+table_1_model5,Gender gradient SE,1.54
+table_1_model5,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3
+table_1_model5,Tau squared,8.89
+table_1_model5,Nobs,298
+table_2_model1,Intercept,-1.55
+table_2_model1,Intercept SE,1.31
+table_2_model1,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",0
+table_2_model1,Gender gradient,5.7
+table_2_model1,Gender gradient SE,2.5
+table_2_model1,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",1
+table_2_model1,Majority status,NA
+table_2_model1,Majority status SE,NA
+table_2_model1,"Majority status significance stars (0 = none, 1 = one, 2 = two, 3 = three)",NA
+table_2_model1,Majority x gradient,NA
+table_2_model1,Majority x gradient SE,NA
+table_2_model1,"Majority x gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",NA
+table_2_model1,Tau squared,6.6
+table_2_model1,Nobs,91
+table_2_model2,Intercept,-3.72
+table_2_model2,Intercept SE,1.13
+table_2_model2,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",2
+table_2_model2,Gender gradient,9.08
+table_2_model2,Gender gradient SE,2.26
+table_2_model2,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3
+table_2_model2,Majority status,NA
+table_2_model2,Majority status SE,NA
+table_2_model2,"Majority status significance stars (0 = none, 1 = one, 2 = two, 3 = three)",NA
+table_2_model2,Majority x gradient,NA
+table_2_model2,Majority x gradient SE,NA
+table_2_model2,"Majority x gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",NA
+table_2_model2,Tau squared,6.28
+table_2_model2,Nobs,96
+table_2_model3,Intercept,-3.73
+table_2_model3,Intercept SE,1.14
+table_2_model3,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",2
+table_2_model3,Gender gradient,9.11
+table_2_model3,Gender gradient SE,2.28
+table_2_model3,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3
+table_2_model3,Majority status,2.19
+table_2_model3,Majority status SE,1.74
+table_2_model3,"Majority status significance stars (0 = none, 1 = one, 2 = two, 3 = three)",0
+table_2_model3,Majority x gradient,-3.42
+table_2_model3,Majority x gradient SE,3.37
+table_2_model3,"Majority x gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",0
+table_2_model3,Tau squared,6.44
+table_2_model3,Nobs,187
+fig_S1.1,ATE: Ahmed at al. (14): Sweden,4.735654523691575
+fig_S1.1,ATE SE: Ahmed at al. (14): Sweden,1.6214789061756718
+fig_S1.1,ATE: Ahmed at al. (66): Sweden,1.0828909759084875
+fig_S1.1,ATE SE: Ahmed at al. (66): Sweden,1.4293923188541044
+fig_S1.1,ATE: Albert et al. (67): Spain,9.927536231884108
+fig_S1.1,ATE SE: Albert et al. (67): Spain,1.7906004720355049
+fig_S1.1,ATE: Alden et al. (68): Sweden,4.793637734814241
+fig_S1.1,ATE SE: Alden et al. (68): Sweden,2.1988498127820884
+fig_S1.1,ATE: Arai et al. (69): Sweden (equivalent CVs),-6.3112745098039404
+fig_S1.1,ATE SE: Arai et al. (69): Sweden (equivalent CVs),3.992416006944822
+fig_S1.1,ATE: Arai et al. (69): Sweden (enhanced CVs),2.9867046533713406
+fig_S1.1,ATE SE: Arai et al. (69): Sweden (enhanced CVs),3.85468358397225
+fig_S1.1,ATE: Asali et al. (70): Georgia,-1.6363636363636382
+fig_S1.1,ATE SE: Asali et al. (70): Georgia,1.2591706754870082
+fig_S1.1,ATE: Mavlikeeva and Asanov (11): Russia,2.7003820315965354
+fig_S1.1,ATE SE: Mavlikeeva and Asanov (11): Russia,0.9745648869773433
+fig_S1.1,ATE: Baert et al. (71): Belgium,-1.0416666666666756
+fig_S1.1,ATE SE: Baert et al. (71): Belgium,1.3001549204461211
+fig_S1.1,ATE: Baert et al. (72): Belgium,-2.546296296296417
+fig_S1.1,ATE SE: Baert et al. (72): Belgium,3.0772886501745957
+fig_S1.1,ATE: Banerjee et al. (73): India,0.4094290802937244
+fig_S1.1,ATE SE: Banerjee et al. (73): India,1.5840142193780322
+fig_S1.1,"ATE: Becker et al. (74): Austria, Germany, Switzerland",8.089343652221682
+fig_S1.1,"ATE SE: Becker et al. (74): Austria, Germany, Switzerland",0.8883180149185802
+fig_S1.1,ATE: Berson (75): France,2.000000000000091
+fig_S1.1,ATE SE: Berson (75): France,0.625132581009476
+fig_S1.1,ATE: Birkelund et al. (76): Germany,7.451350045962384
+fig_S1.1,ATE SE: Birkelund et al. (76): Germany,3.724832255566862
+fig_S1.1,ATE: Birkelund et al. (76): the Netherlands,8.26942231075691
+fig_S1.1,ATE SE: Birkelund et al. (76): the Netherlands,3.1790963251005047
+fig_S1.1,ATE: Birkelund et al. (76): Norway,2.4065458045884514
+fig_S1.1,ATE SE: Birkelund et al. (76): Norway,3.9834296135203293
+fig_S1.1,ATE: Birkelund et al. (76): Spain,6.163003663003723
+fig_S1.1,ATE SE: Birkelund et al. (76): Spain,2.660575453770793
+fig_S1.1,ATE: Birkelund et al. (76): United Kingdom,4.764807740948099
+fig_S1.1,ATE SE: Birkelund et al. (76): United Kingdom,3.0587650702107445
+fig_S1.1,ATE: Birkelund et al. (76): United States,1.8954787909575561
+fig_S1.1,ATE SE: Birkelund et al. (76): United States,4.070514895121482
+fig_S1.1,ATE: Booth and Leigh (15): Australia,7.209614704842575
+fig_S1.1,ATE SE: Booth and Leigh (15): Australia,1.5553338282635971
+fig_S1.1,ATE: Bursell (77): Sweden,-0.07239597255658879
+fig_S1.1,ATE SE: Bursell (77): Sweden,1.5137272425336705
+fig_S1.1,ATE: Busetta et al. (79): Italy,-3.456106068871697
+fig_S1.1,ATE SE: Busetta et al. (79): Italy,0.3399679284201418
+fig_S1.1,ATE: Bygren et al. (78): Sweden,-2.5009485816527883
+fig_S1.1,ATE SE: Bygren et al. (78): Sweden,2.107748700586604
+fig_S1.1,ATE: Carlsson (13): Sweden,2.8500619578689914
+fig_S1.1,ATE SE: Carlsson (13): Sweden,0.997847983260217
+fig_S1.1,ATE: Carlsson and Eriksson (80): Sweden,1.8048198138621605
+fig_S1.1,ATE SE: Carlsson and Eriksson (80): Sweden,0.7203671064721264
+fig_S1.1,ATE: Carlsson et al. (81): Sweden,2.527824359665234
+fig_S1.1,ATE SE: Carlsson et al. (81): Sweden,1.5339339257680713
+fig_S1.1,"ATE: Correll et al. (83): United States, field experiment",0.9129323899371479
+fig_S1.1,"ATE SE: Correll et al. (83): United States, field experiment",1.1471695312230459
+fig_S1.1,ATE: Dahl and Krog (84): Denmark,-0.05757052389177396
+fig_S1.1,ATE SE: Dahl and Krog (84): Denmark,3.783888065520845
+fig_S1.1,ATE: Edo et al. (85): France,4.761904761904864
+fig_S1.1,ATE SE: Edo et al. (85): France,1.0993123019516071
+fig_S1.1,ATE: Erlandsson (86): Sweden,-3.6716002822599783
+fig_S1.1,ATE SE: Erlandsson (86): Sweden,2.4670439091056444
+fig_S1.1,ATE: Galarza and Yamada (87): Peru,-2.1161825726141092
+fig_S1.1,ATE SE: Galarza and Yamada (87): Peru,0.9473197893474563
+fig_S1.1,ATE: Galarza and Yamada (88): Peru,0.3134796238244737
+fig_S1.1,ATE SE: Galarza and Yamada (88): Peru,0.997753169054199
+fig_S1.1,ATE: Gonzalez et al. (89): Spain,-3.2608012871171197
+fig_S1.1,ATE SE: Gonzalez et al. (89): Spain,0.6737779214529236
+fig_S1.1,ATE: Hipp (90): Germany,5.1994098610318
+fig_S1.1,ATE SE: Hipp (90): Germany,3.2491555090263886
+fig_S1.1,ATE: Horváth (16): China,-1.6792481041525742
+fig_S1.1,ATE SE: Horváth (16): China,0.7978633804260828
+fig_S1.1,ATE: Jackson (91): United Kingdom,0.039062499999992104
+fig_S1.1,ATE SE: Jackson (91): United Kingdom,0.2551212938289447
+fig_S1.1,ATE: Maurer-Fazio and Lei (92): China,1.0912698412699062
+fig_S1.1,ATE SE: Maurer-Fazio and Lei (92): China,0.4123414262006168
+fig_S1.1,ATE: Neumark et al. (9): United States,-12.307692307692344
+fig_S1.1,ATE SE: Neumark et al. (9): United States,8.384117784722884
+fig_S1.1,ATE: Nunley et al. (93): United States,0.8796370446605494
+fig_S1.1,ATE SE: Nunley et al. (93): United States,0.6600808096963703
+fig_S1.1,ATE: Oreopoulos (94): Canada,1.1518712716646036
+fig_S1.1,ATE SE: Oreopoulos (94): Canada,0.31930285594513347
+fig_S1.1,ATE: Patacchini et al. (95): Italy,0.40190518515654555
+fig_S1.1,ATE SE: Patacchini et al. (95): Italy,1.301579084733513
+fig_S1.1,"ATE: Pedulla (96): United States, field experiment",1.999786878840603
+fig_S1.1,"ATE SE: Pedulla (96): United States, field experiment",1.337563913970477
+fig_S1.1,ATE: Petit (97): France,-1.6985138004245341
+fig_S1.1,ATE SE: Petit (97): France,2.1479690646568494
+fig_S1.1,"ATE: Quadlin (98): United States, field experiment",-2.089268755935493
+fig_S1.1,"ATE SE: Quadlin (98): United States, field experiment",1.4615783205361124
+fig_S1.1,ATE: Ramos et al. (99): Spain and the Netherlands,1.9257788710984904
+fig_S1.1,ATE SE: Ramos et al. (99): Spain and the Netherlands,0.9173223525543166
+fig_S1.1,ATE: Riach and Rich (8): Australia,-2.4217961654893596
+fig_S1.1,ATE SE: Riach and Rich (8): Australia,1.2093672767956203
+fig_S1.1,ATE: Riach and Rich (100): England,4.123711340206194
+fig_S1.1,ATE SE: Riach and Rich (100): England,1.2375162071239914
+fig_S1.1,"ATE: Rivera and Tilcsik (101): United States, field experiment",-3.797468354430362
+fig_S1.1,"ATE SE: Rivera and Tilcsik (101): United States, field experiment",3.285514319458328
+fig_S1.1,ATE: Rooth (102): Sweden,3.4406254402028464
+fig_S1.1,ATE SE: Rooth (102): Sweden,2.7138567738255746
+fig_S1.1,ATE: Ruffle and Shtudiner (103): Israel,0.8283132530121133
+fig_S1.1,ATE SE: Ruffle and Shtudiner (103): Israel,1.150109927168199
+fig_S1.1,ATE: Saeed et al. (104): Pakistan,1.8092105263157143
+fig_S1.1,ATE SE: Saeed et al. (104): Pakistan,1.8705414214787082
+fig_S1.1,"ATE: Di Stasio and Larsen (105): United Kingdom, Germany and Norway",3.5938656613410167
+fig_S1.1,"ATE SE: Di Stasio and Larsen (105): United Kingdom, Germany and Norway",0.9470328613045512
+fig_S1.1,"ATE: Thomas (4): United States, field experiment",-0.2025537805788827
+fig_S1.1,"ATE SE: Thomas (4): United States, field experiment",1.392080315321958
+fig_S1.1,ATE: Wu (106): China,-3.571428571428431
+fig_S1.1,ATE SE: Wu (106): China,2.687010142088893
+fig_S1.1,ATE: Yavorsky (107): United States,0.2856236115521971
+fig_S1.1,ATE SE: Yavorsky (107): United States,0.7751513709649017
+fig_S1.1,ATE: Zhou et al. (108): China,1.8504966021948879
+fig_S1.1,ATE SE: Zhou et al. (108): China,0.27657483305262864
+fig_S1.1,ATE: Capéau et al. (82): Belgium,-2.734834494742352
+fig_S1.1,ATE SE: Capéau et al. (82): Belgium,2.6492254763442116
+fig_S1.1,ATE: Meta-analysis,1.1901505479625971
+fig_S1.1,ATE SE: Meta-analysis,0.4233089145760646
+fig_S3.4,ATE: Bell and Klein (122): United States,11.907810499359824
+fig_S3.4,ATE SE: Bell and Klein (122): United States,8.560232460063235
+fig_S3.4,ATE: Bertogg et al. (125): Bulgaria,2.3705853349371453
+fig_S3.4,ATE SE: Bertogg et al. (125): Bulgaria,0.9515452097184752
+fig_S3.4,ATE: Bertogg et al. (125): Greece,1.7011103680662147
+fig_S3.4,ATE SE: Bertogg et al. (125): Greece,0.7009648885165377
+fig_S3.4,ATE: Bertogg et al. (125): Norway,2.583438722371988
+fig_S3.4,ATE SE: Bertogg et al. (125): Norway,1.109011594116912
+fig_S3.4,ATE: Bertogg et al. (125): Switzerland,2.2342446736396444
+fig_S3.4,ATE SE: Bertogg et al. (125): Switzerland,0.7220696291175842
+fig_S3.4,ATE: Blommaert et al. (123): the Netherlands,0.7123161764708911
+fig_S3.4,ATE SE: Blommaert et al. (123): the Netherlands,0.9087422459533587
+fig_S3.4,"ATE: Carlsson et al. (124): Iceland, Norway, Sweden",8.046241157427726
+fig_S3.4,"ATE SE: Carlsson et al. (124): Iceland, Norway, Sweden",3.1312989771182465
+fig_S3.4,ATE: Mari and Luijkx (126): the Netherlands,5.194603009859847
+fig_S3.4,ATE SE: Mari and Luijkx (126): the Netherlands,3.127440896105781
+fig_S3.4,"ATE: Pedulla (96): United States, survey experiment",5.490404579998666
+fig_S3.4,"ATE SE: Pedulla (96): United States, survey experiment",2.4220207785749612
+fig_S3.4,ATE: Di Stasio (127): Italy,0.397996537926722
+fig_S3.4,ATE SE: Di Stasio (127): Italy,2.4853066074796417
+fig_S3.4,ATE: Di Stasio and Werfhorst (128): England and the Netherlands,-0.06431572829231272
+fig_S3.4,ATE SE: Di Stasio and Werfhorst (128): England and the Netherlands,3.0225289063834615
+fig_S3.4,"ATE: Thomas (4): United States, survey experiment",4.3285953915423345
+fig_S3.4,"ATE SE: Thomas (4): United States, survey experiment",2.166281047816863
+fig_S3.4,ATE: Meta-analysis,2.106822513018533
+fig_S3.4,ATE SE: Meta-analysis,0.35456533041974053
+fig_S5.62,Gender gradient: Ahmed at al. (14): Sweden,28.96428516746053
+fig_S5.62,Gender gradient SE: Ahmed at al. (14): Sweden,7.571673316638934
+fig_S5.62,Gender gradient: Ahmed at al. (66): Sweden,1.0458587543514448
+fig_S5.62,Gender gradient SE: Ahmed at al. (66): Sweden,6.690671152086121
+fig_S5.62,Gender gradient: Albert et al. (67): Spain,139.8165053342534
+fig_S5.62,Gender gradient SE: Albert et al. (67): Spain,43.881660037050395
+fig_S5.62,Gender gradient: Arai et al. (69): Sweden (equivalent CVs),8.121372867348486
+fig_S5.62,Gender gradient SE: Arai et al. (69): Sweden (equivalent CVs),16.988246145653076
+fig_S5.62,Gender gradient: Arai et al. (69): Sweden (enhanced CVs),7.160212979834855
+fig_S5.62,Gender gradient SE: Arai et al. (69): Sweden (enhanced CVs),22.274304436447558
+fig_S5.62,Gender gradient: Asali et al. (70): Georgia,6.971238706214396
+fig_S5.62,Gender gradient SE: Asali et al. (70): Georgia,4.916866121483327
+fig_S5.62,Gender gradient: Mavlikeeva and Asanov (11): Russia,32.8528947195993
+fig_S5.62,Gender gradient SE: Mavlikeeva and Asanov (11): Russia,4.899129636531107
+fig_S5.62,Gender gradient: Birkelund et al. (76): Germany,-0.46771572999304833
+fig_S5.62,Gender gradient SE: Birkelund et al. (76): Germany,27.752327570834137
+fig_S5.62,Gender gradient: Birkelund et al. (76): the Netherlands,26.967204497725497
+fig_S5.62,Gender gradient SE: Birkelund et al. (76): the Netherlands,19.810504879067622
+fig_S5.62,Gender gradient: Birkelund et al. (76): Norway,-11.500194056532937
+fig_S5.62,Gender gradient SE: Birkelund et al. (76): Norway,18.831646022701886
+fig_S5.62,Gender gradient: Birkelund et al. (76): Spain,49.913046583951136
+fig_S5.62,Gender gradient SE: Birkelund et al. (76): Spain,23.741815476385703
+fig_S5.62,Gender gradient: Birkelund et al. (76): United Kingdom,-7.521008419743763
+fig_S5.62,Gender gradient SE: Birkelund et al. (76): United Kingdom,35.09118562008963
+fig_S5.62,Gender gradient: Birkelund et al. (76): United States,6.829763459623778
+fig_S5.62,Gender gradient SE: Birkelund et al. (76): United States,19.235855429821367
+fig_S5.62,Gender gradient: Booth and Leigh (15): Australia,-26.40755655625277
+fig_S5.62,Gender gradient SE: Booth and Leigh (15): Australia,61.082594164946244
+fig_S5.62,Gender gradient: Bygren et al. (78): Sweden,3.7730981972099564
+fig_S5.62,Gender gradient SE: Bygren et al. (78): Sweden,16.241567645422705
+fig_S5.62,Gender gradient: Carlsson (13): Sweden,4.061344535422362
+fig_S5.62,Gender gradient SE: Carlsson (13): Sweden,8.5777161234400765
+fig_S5.62,Gender gradient: Carlsson and Eriksson (80): Sweden,13.079671668605984
+fig_S5.62,Gender gradient SE: Carlsson and Eriksson (80): Sweden,8.594357335657447
+fig_S5.62,Gender gradient: Carlsson et al. (81): Sweden,-3.530473707463769
+fig_S5.62,Gender gradient SE: Carlsson et al. (81): Sweden,10.549517423872738
+fig_S5.62,Gender gradient: Dahl and Krog (84): Denmark,-6.050146933542991
+fig_S5.62,Gender gradient SE: Dahl and Krog (84): Denmark,20.86704578400379
+fig_S5.62,Gender gradient: Edo et al. (85): France,7.36287477691454
+fig_S5.62,Gender gradient SE: Edo et al. (85): France,5.904420724167175
+fig_S5.62,Gender gradient: Erlandsson (86): Sweden,12.202157541223414
+fig_S5.62,Gender gradient SE: Erlandsson (86): Sweden,31.209220858494596
+fig_S5.62,Gender gradient: Galarza and Yamada (87): Peru,9.760891497669498
+fig_S5.62,Gender gradient SE: Galarza and Yamada (87): Peru,11.530164056481494
+fig_S5.62,Gender gradient: Galarza and Yamada (88): Peru,12.156049682980466
+fig_S5.62,Gender gradient SE: Galarza and Yamada (88): Peru,28.736319889538063
+fig_S5.62,Gender gradient: Gonzalez et al. (89): Spain,7.315072303607376
+fig_S5.62,Gender gradient SE: Gonzalez et al. (89): Spain,3.3054183276580194
+fig_S5.62,Gender gradient: Maurer-Fazio and Lei (92): China,15.023418114614486
+fig_S5.62,Gender gradient SE: Maurer-Fazio and Lei (92): China,2.3245923013787277
+fig_S5.62,Gender gradient: Nunley et al. (93): United States,8.051304458939176
+fig_S5.62,Gender gradient SE: Nunley et al. (93): United States,15.307250359500014
+fig_S5.62,Gender gradient: Oreopoulos (94): Canada,0.29189397076495716
+fig_S5.62,Gender gradient SE: Oreopoulos (94): Canada,1.7947572258175526
+fig_S5.62,Gender gradient: Patacchini et al. (95): Italy,15.808287142346913
+fig_S5.62,Gender gradient SE: Patacchini et al. (95): Italy,12.628689346359582
+fig_S5.62,"Gender gradient: Pedulla (96): United States, field experiment",5.514209556506572
+fig_S5.62,"Gender gradient SE: Pedulla (96): United States, field experiment",13.108055453006594
+fig_S5.62,Gender gradient: Ramos et al. (99): Spain and the Netherlands,10.882719641925341
+fig_S5.62,Gender gradient SE: Ramos et al. (99): Spain and the Netherlands,8.38710429633309
+fig_S5.62,Gender gradient: Riach and Rich (8): Australia,3.63134112860805
+fig_S5.62,Gender gradient SE: Riach and Rich (8): Australia,9.76043315116816
+fig_S5.62,Gender gradient: Riach and Rich (100): England,12.154614612706496
+fig_S5.62,Gender gradient SE: Riach and Rich (100): England,15.61938710201448
+fig_S5.62,Gender gradient: Rooth (102): Sweden,-26.585564279113093
+fig_S5.62,Gender gradient SE: Rooth (102): Sweden,25.32358142224515
+fig_S5.62,Gender gradient: Ruffle and Shtudiner (103): Israel,-5.344935822111202
+fig_S5.62,Gender gradient SE: Ruffle and Shtudiner (103): Israel,13.475591396439844
+fig_S5.62,"Gender gradient: Di Stasio and Larsen (105): United Kingdom, Germany and Norway",9.06565768340824
+fig_S5.62,"Gender gradient SE: Di Stasio and Larsen (105): United Kingdom, Germany and Norway",4.216374430095406
+fig_S5.62,"Gender gradient: Thomas (4): United States, field experiment",-7.3464371113760345
+fig_S5.62,"Gender gradient SE: Thomas (4): United States, field experiment",12.821280281916852
+fig_S5.62,Gender gradient: Zhou et al. (108): China,2.278274469094508
+fig_S5.62,Gender gradient SE: Zhou et al. (108): China,6.527295879939821
+fig_S5.62,Gender gradient: Meta-analysis,8.954956634341245
+fig_S5.62,Gender gradient SE: Meta-analysis,2.118973737164687
+figs_S4.5_to_S4.61,Study panels drawn by the deposited archive,0
+figs_S4.5_to_S4.61,Plotted estimate and standard error labels produced by the deposited archive,0

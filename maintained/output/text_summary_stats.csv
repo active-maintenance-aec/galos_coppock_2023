@@ -1,0 +1,11 @@
+quantity,value
+Field studies,57
+Field studies with a positive ATE,37
+Occupation CATEs,298
+Mean occupations per study,5.228070175438597
+Median occupations per study,4
+Survey experiments,12
+Survey occupation CATEs,31
+Study-level gender gradients,37
+Gender gradients significant at p <= 0.05,7
+Gender gradients positive and significant at p <= 0.05,7

@@ -1,0 +1,484 @@
+paper_id,table_figure,claim,value_script,value_paper,match,value_rewrite,match_rewrite,defect_locus,notes
+galos_coppock_2023,text,Field studies collected,57,57,1,57,1,NA,Introduction: 'We have obtained or reconstructed the data for a total of 57 such studies'
+galos_coppock_2023,text,Field studies with a positive ATE,37,37,1,37,1,NA,Introduction: 'two-thirds (37 of 57) show a positive effect of being a woman'
+galos_coppock_2023,text,Occupation CATEs meta-analysed,298,298,1,298,1,NA,Nobs row of Table 1
+galos_coppock_2023,text,Mean occupations per study,5.228070175438597,NA,NA,5.228070175438597,NA,NA,Computed by the deposited code and never printed in the article
+galos_coppock_2023,text,Median occupations per study,4,NA,NA,4,NA,NA,Computed by the deposited code and never printed in the article
+galos_coppock_2023,text,Predicted CATE at 0 percent women (pp),-3.0238450714504808,-3.02,1,-3.0238450714504808,1,NA,"Results: 'In an occupation with 0% women, we would expect the average CATE to be -3.02 percentage points'"
+galos_coppock_2023,text,Predicted CATE at 100 percent women (pp),5.129314992673274,5.13,1,5.129314992673274,1,NA,"Results: 'in an occupation with 100% women, we would expect the average CATE to be -3.02 + 8.15 = +5.13 points'"
+galos_coppock_2023,text,"Difference in magnitude, 100 vs 0 percent women (pp)",2.1054699212227934,2.1,0,2.1054699212227934,0,paper_internal,"The article prints 2.10 where the deposited code and the rewrite both give 2.10547, which rounds to 2.11. The published figure is the truncation, not a different number"
+galos_coppock_2023,text,Bootstrapped SE of the difference in magnitude,0.5391649395743355,0.58,0,0.5781064726246576,1,NA,Results: '(bootstrapped SE: 0.58)'
+galos_coppock_2023,text,Power of the average audit study to detect the gender gradient (per cent),NA,19,NA,18.91891891891892,1,NA,Discussion: 'puts the statistical power of the average gender employment audit study to detect the gender gradient at 7/37 = 19%'
+galos_coppock_2023,text_S3,Survey experiments collected,12,12,1,12,1,NA,"Section S3 and fig. S3.4, which plots twelve studies"
+galos_coppock_2023,text_S3,Survey occupation CATEs,31,NA,NA,31,NA,NA,Used by fig. S3.3 and never printed in the article
+galos_coppock_2023,text_S5,Study-level gender gradients estimated,37,37,1,37,1,NA,Section S5: 'can only include studies with three or more occupations (37 studies)'
+galos_coppock_2023,text_S5,Gender gradients significant at p <= 0.05,7,7,1,7,1,NA,Section S5: 'Only 7 of these 37 gender gradient estimates are statistically significant'
+galos_coppock_2023,fig_S3.3,Field experimental gradient,8.153160064123755,NA,NA,8.153160064123755,NA,NA,Fig. S3.3 draws the two fitted lines and prints no numbers
+galos_coppock_2023,fig_S3.3,Field experimental intercept,-3.0238450714504808,NA,NA,-3.0238450714504808,NA,NA,Fig. S3.3 draws the two fitted lines and prints no numbers
+galos_coppock_2023,fig_S3.3,Survey experimental gradient,9.57854229210751,NA,NA,9.57854229210751,NA,NA,Fig. S3.3 draws the two fitted lines and prints no numbers
+galos_coppock_2023,fig_S3.3,Survey experimental intercept,-1.6543531584308664,NA,NA,-1.6543531584308664,NA,NA,Fig. S3.3 draws the two fitted lines and prints no numbers
+galos_coppock_2023,table_1_model1,Intercept,-3.02,-3.02,1,-3.0238450714504808,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model1,Intercept SE,0.81,0.81,1,0.8080781410171963,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model1,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3,3,1,3,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model1,Gender gradient,8.15,8.15,1,8.153160064123755,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model1,Gender gradient SE,1.5,1.5,1,1.4956852034685562,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model1,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3,3,1,3,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model1,Tau squared,12.57,12.57,1,12.573674501275386,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_1_model1,Nobs,298,298,1,298,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_1_model2,Intercept,-2.48,-2.48,1,-2.48123166433165,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model2,Intercept SE,1.58,1.58,1,1.5772126173101657,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model2,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",0,0,1,0,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model2,Gender gradient,8.33,8.33,1,8.33299811142573,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model2,Gender gradient SE,1.58,1.58,1,1.5781947259895377,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model2,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3,3,1,3,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model2,Tau squared,11.71,11.71,1,11.713711361544084,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_1_model2,Nobs,298,298,1,298,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_1_model3,Intercept,-5.43,-5.43,1,-5.425349961723688,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model3,Intercept SE,1.91,1.91,1,1.906967272719708,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model3,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",2,2,1,2,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model3,Gender gradient,8.69,8.69,1,8.689189579347303,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model3,Gender gradient SE,1.56,1.56,1,1.5632593890505595,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model3,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3,3,1,3,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model3,Tau squared,12.56,12.56,1,12.55619353743459,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_1_model3,Nobs,298,298,1,298,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_1_model4,Intercept,-5.2,-5.2,1,-5.202382420851198,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model4,Intercept SE,1.82,1.82,1,1.8172050505450552,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model4,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",2,2,1,2,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model4,Gender gradient,7.97,7.97,1,7.966192088586337,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model4,Gender gradient SE,1.57,1.57,1,1.5692152090253697,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model4,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3,3,1,3,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model4,Tau squared,10.22,10.22,1,10.223884748996856,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_1_model4,Nobs,298,298,1,298,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_1_model5,Intercept,1.05,1.05,1,1.045917816923936,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model5,Intercept SE,1.96,1.96,1,1.9575616397588276,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model5,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",0,0,1,0,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model5,Gender gradient,7.51,7.51,1,7.508041363700906,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model5,Gender gradient SE,1.54,1.54,1,1.543727891112155,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model5,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3,3,1,3,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_1_model5,Tau squared,8.89,8.89,1,8.894693557463096,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_1_model5,Nobs,298,298,1,298,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_2_model1,Intercept,-1.55,-1.55,1,-1.54627695124044,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model1,Intercept SE,1.31,1.31,1,1.313733139451244,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model1,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",0,0,1,0,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model1,Gender gradient,5.7,5.7,1,5.696189323138634,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model1,Gender gradient SE,2.5,2.5,1,2.4989948115303524,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model1,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",1,1,1,1,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model1,Tau squared,6.6,6.6,1,6.598131361408068,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_2_model1,Nobs,91,91,1,91,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_2_model2,Intercept,-3.72,-3.72,1,-3.7206018895404833,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model2,Intercept SE,1.13,1.13,1,1.1342992547035595,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model2,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",2,0,0,2,0,paper_internal,"Published Table 2 prints the Model 2 intercept as -3.72 with no marker. The deposited code's own table output prints -3.72** at p = 0.001, and the numerically identical -3.73 in Model 3 carries its two stars. A dropped marker in the typeset table"
+galos_coppock_2023,table_2_model2,Gender gradient,9.08,9.08,1,9.081324319971516,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model2,Gender gradient SE,2.26,2.26,1,2.260587108812741,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model2,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3,3,1,3,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model2,Tau squared,6.28,6.28,1,6.282848890565278,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_2_model2,Nobs,96,96,1,96,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_2_model3,Intercept,-3.73,-3.73,1,-3.7319448125184262,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model3,Intercept SE,1.14,1.14,1,1.1423599647594622,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model3,"Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three)",2,2,1,2,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model3,Gender gradient,9.11,9.11,1,9.113080832433942,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model3,Gender gradient SE,2.28,2.28,1,2.2756081986099206,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model3,"Gender gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",3,3,1,3,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model3,Majority status,2.19,2.19,1,2.186099357457724,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model3,Majority status SE,1.74,1.74,1,1.7357132811844205,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model3,"Majority status significance stars (0 = none, 1 = one, 2 = two, 3 = three)",0,0,1,0,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model3,Majority x gradient,-3.42,-3.42,1,-3.4185475079574656,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model3,Majority x gradient SE,3.37,3.37,1,3.370246555622467,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model3,"Majority x gradient significance stars (0 = none, 1 = one, 2 = two, 3 = three)",0,0,1,0,1,NA,"Typeset coefficient, standard error and significance marker"
+galos_coppock_2023,table_2_model3,Tau squared,6.44,6.44,1,6.439186919176931,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_2_model3,Nobs,187,187,1,187,1,NA,Goodness-of-fit row of the published table
+galos_coppock_2023,table_S2.1,Studies listed,NA,57,NA,57,1,NA,"Count of the 57 published rows whose cell the rewrite reproduces in this column. The deposit ships no code for table S2.1, which is why value_script is empty"
+galos_coppock_2023,table_S2.1,Subject counts reproduced,NA,57,NA,35,0,archive,"The deposit carries no subject count. Summing residual degrees of freedom plus one over a study's occupations recovers the published total where the CATE regressions were fit on subjects; where the study had several applications per job opening the published total is a multiple of it, and the deposit gives no way to recover the multiplier"
+galos_coppock_2023,table_S2.1,Occupation counts reproduced,NA,57,NA,55,0,paper_internal,"Table S2.1 gives 18 occupations for Gonzalez et al. (89) and 24 for Dahl and Krog (84); figs. S4.37 and S4.32 plot 17 and 21, which is also what the deposited data hold. The article disagrees with itself in two rows"
+galos_coppock_2023,table_S2.1,Majority / minority inclusion reproduced,NA,57,NA,57,1,NA,"Count of the 57 published rows whose cell the rewrite reproduces in this column. The deposit ships no code for table S2.1, which is why value_script is empty"
+galos_coppock_2023,fig_S1.1,ATE: Albert et al. (67): Spain,9.927536231884108,9.9,1,9.927536231884108,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Albert et al. (67): Spain,1.7906004720355049,1.8,1,1.7906004720355049,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Birkelund et al. (76): the Netherlands,8.26942231075691,8.3,1,8.26942231075691,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Birkelund et al. (76): the Netherlands,3.1790963251005047,3.2,1,3.1790963251005047,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,"ATE: Becker et al. (74): Austria, Germany, Switzerland",8.089343652221682,8.1,1,8.089343652221682,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,"ATE SE: Becker et al. (74): Austria, Germany, Switzerland",0.8883180149185802,0.9,1,0.8883180149185802,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Birkelund et al. (76): Germany,7.451350045962384,7.5,1,7.451350045962384,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Birkelund et al. (76): Germany,3.724832255566862,3.7,1,3.724832255566862,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Booth and Leigh (15): Australia,7.209614704842575,7.2,1,7.209614704842575,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Booth and Leigh (15): Australia,1.5553338282635971,1.6,1,1.5553338282635971,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Birkelund et al. (76): Spain,6.163003663003723,6.2,1,6.163003663003723,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Birkelund et al. (76): Spain,2.660575453770793,2.7,1,2.660575453770793,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Hipp (90): Germany,5.1994098610318,5.2,1,5.1994098610318,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Hipp (90): Germany,3.2491555090263886,3.2,1,3.2491555090263886,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Alden et al. (68): Sweden,4.793637734814241,4.8,1,4.793637734814241,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Alden et al. (68): Sweden,2.1988498127820884,2.2,1,2.1988498127820884,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Birkelund et al. (76): United Kingdom,4.764807740948099,4.8,1,4.764807740948099,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Birkelund et al. (76): United Kingdom,3.0587650702107445,3.1,1,3.0587650702107445,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Edo et al. (85): France,4.761904761904864,4.8,1,4.761904761904864,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Edo et al. (85): France,1.0993123019516071,1.1,1,1.0993123019516071,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Ahmed at al. (14): Sweden,4.735654523691575,4.7,1,4.735654523691575,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Ahmed at al. (14): Sweden,1.6214789061756718,1.6,1,1.6214789061756718,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Riach and Rich (100): England,4.123711340206194,4.1,1,4.123711340206194,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Riach and Rich (100): England,1.2375162071239914,1.2,1,1.2375162071239914,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,"ATE: Di Stasio and Larsen (105): United Kingdom, Germany and Norway",3.5938656613410167,3.6,1,3.5938656613410167,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,"ATE SE: Di Stasio and Larsen (105): United Kingdom, Germany and Norway",0.9470328613045512,0.9,1,0.9470328613045512,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Rooth (102): Sweden,3.4406254402028464,3.4,1,3.4406254402028464,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Rooth (102): Sweden,2.7138567738255746,2.7,1,2.7138567738255746,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Arai et al. (69): Sweden (enhanced CVs),2.9867046533713406,3,1,2.9867046533713406,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Arai et al. (69): Sweden (enhanced CVs),3.85468358397225,3.9,1,3.85468358397225,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Carlsson (13): Sweden,2.8500619578689914,2.9,1,2.8500619578689914,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Carlsson (13): Sweden,0.997847983260217,1,1,0.997847983260217,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Mavlikeeva and Asanov (11): Russia,2.700382031596535,2.7,1,2.700382031596535,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Mavlikeeva and Asanov (11): Russia,0.9745648869773432,1,1,0.9745648869773432,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Carlsson et al. (81): Sweden,2.527824359665234,2.5,1,2.527824359665234,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Carlsson et al. (81): Sweden,1.5339339257680713,1.5,1,1.5339339257680713,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Birkelund et al. (76): Norway,2.4065458045884514,2.4,1,2.4065458045884514,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Birkelund et al. (76): Norway,3.9834296135203298,4,1,3.9834296135203298,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Berson (75): France,2.000000000000091,2,1,2.000000000000091,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Berson (75): France,0.625132581009476,0.6,1,0.625132581009476,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,"ATE: Pedulla (96): United States, field experiment",1.999786878840603,2,1,1.999786878840603,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,"ATE SE: Pedulla (96): United States, field experiment",1.337563913970477,1.3,1,1.337563913970477,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Ramos et al. (99): Spain and the Netherlands,1.9257788710984904,1.9,1,1.9257788710984904,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Ramos et al. (99): Spain and the Netherlands,0.9173223525543166,0.9,1,0.9173223525543166,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Birkelund et al. (76): United States,1.895478790957556,1.9,1,1.895478790957556,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Birkelund et al. (76): United States,4.070514895121482,4.1,1,4.070514895121482,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Zhou et al. (108): China,1.850496602194888,1.9,1,1.850496602194888,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Zhou et al. (108): China,0.27657483305262864,0.3,1,0.27657483305262864,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Saeed et al. (104): Pakistan,1.8092105263157143,1.8,1,1.8092105263157143,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Saeed et al. (104): Pakistan,1.870541421478708,1.9,1,1.870541421478708,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Carlsson and Eriksson (80): Sweden,1.8048198138621605,1.8,1,1.8048198138621605,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Carlsson and Eriksson (80): Sweden,0.7203671064721264,0.7,1,0.7203671064721264,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Oreopoulos (94): Canada,1.1518712716646036,1.2,1,1.1518712716646036,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Oreopoulos (94): Canada,0.31930285594513347,0.3,1,0.31930285594513347,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Maurer-Fazio and Lei (92): China,1.0912698412699062,1.1,1,1.0912698412699062,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Maurer-Fazio and Lei (92): China,0.4123414262006168,0.4,1,0.4123414262006168,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Ahmed at al. (66): Sweden,1.0828909759084877,1.1,1,1.0828909759084877,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Ahmed at al. (66): Sweden,1.4293923188541044,1.4,1,1.4293923188541044,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,"ATE: Correll et al. (83): United States, field experiment",0.912932389937148,0.9,1,0.912932389937148,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,"ATE SE: Correll et al. (83): United States, field experiment",1.147169531223046,1.1,1,1.147169531223046,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Nunley et al. (93): United States,0.8796370446605494,0.9,1,0.8796370446605494,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Nunley et al. (93): United States,0.6600808096963703,0.7,1,0.6600808096963703,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Ruffle and Shtudiner (103): Israel,0.8283132530121133,0.8,1,0.8283132530121133,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Ruffle and Shtudiner (103): Israel,1.150109927168199,1.2,1,1.150109927168199,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Banerjee et al. (73): India,0.4094290802937244,0.4,1,0.4094290802937244,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Banerjee et al. (73): India,1.5840142193780322,1.6,1,1.5840142193780322,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Patacchini et al. (95): Italy,0.4019051851565455,0.4,1,0.4019051851565455,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Patacchini et al. (95): Italy,1.301579084733513,1.3,1,1.301579084733513,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Galarza and Yamada (88): Peru,0.3134796238244737,0.3,1,0.3134796238244737,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Galarza and Yamada (88): Peru,0.997753169054199,1,1,0.997753169054199,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Yavorsky (107): United States,0.2856236115521971,0.3,1,0.2856236115521971,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Yavorsky (107): United States,0.7751513709649017,0.8,1,0.7751513709649017,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Jackson (91): United Kingdom,0.0390624999999921,0,1,0.0390624999999921,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Jackson (91): United Kingdom,0.2551212938289447,0.3,1,0.2551212938289447,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Dahl and Krog (84): Denmark,-0.05757052389177396,-0.1,1,-0.05757052389177396,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Dahl and Krog (84): Denmark,3.783888065520845,3.8,1,3.783888065520845,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Bursell (77): Sweden,-0.07239597255658879,-0.1,1,-0.07239597255658879,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Bursell (77): Sweden,1.5137272425336703,1.5,1,1.5137272425336703,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,"ATE: Thomas (4): United States, field experiment",-0.2025537805788827,-0.2,1,-0.2025537805788827,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,"ATE SE: Thomas (4): United States, field experiment",1.392080315321958,1.4,1,1.392080315321958,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Baert et al. (71): Belgium,-1.0416666666666756,-1,1,-1.0416666666666756,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Baert et al. (71): Belgium,1.3001549204461211,1.3,1,1.3001549204461211,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Asali et al. (70): Georgia,-1.6363636363636382,-1.6,1,-1.6363636363636382,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Asali et al. (70): Georgia,1.2591706754870082,1.3,1,1.2591706754870082,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Horváth (16): China,-1.6792481041525742,-1.7,1,-1.6792481041525742,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Horváth (16): China,0.7978633804260828,0.8,1,0.7978633804260828,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Petit (97): France,-1.698513800424534,-1.7,1,-1.698513800424534,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Petit (97): France,2.1479690646568494,2.1,1,2.1479690646568494,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,"ATE: Quadlin (98): United States, field experiment",-2.089268755935493,-2.1,1,-2.089268755935493,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,"ATE SE: Quadlin (98): United States, field experiment",1.4615783205361124,1.5,1,1.4615783205361124,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Galarza and Yamada (87): Peru,-2.1161825726141092,-2.1,1,-2.1161825726141092,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Galarza and Yamada (87): Peru,0.9473197893474564,0.9,1,0.9473197893474564,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Riach and Rich (8): Australia,-2.4217961654893596,-2.4,1,-2.4217961654893596,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Riach and Rich (8): Australia,1.2093672767956205,1.2,1,1.2093672767956205,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Bygren et al. (78): Sweden,-2.5009485816527883,-2.5,1,-2.5009485816527883,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Bygren et al. (78): Sweden,2.107748700586604,2.1,1,2.107748700586604,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Baert et al. (72): Belgium,-2.546296296296417,-2.5,1,-2.546296296296417,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Baert et al. (72): Belgium,3.0772886501745957,3.1,1,3.0772886501745957,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Capéau et al. (82): Belgium,-2.734834494742352,-2.7,1,-2.734834494742352,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Capéau et al. (82): Belgium,2.6492254763442116,2.6,1,2.6492254763442116,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Gonzalez et al. (89): Spain,-3.2608012871171197,-3.3,1,-3.2608012871171197,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Gonzalez et al. (89): Spain,0.6737779214529236,0.7,1,0.6737779214529236,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Busetta et al. (79): Italy,-3.456106068871697,-3.5,1,-3.456106068871697,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Busetta et al. (79): Italy,0.3399679284201418,0.3,1,0.3399679284201418,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Wu (106): China,-3.571428571428431,-3.6,1,-3.571428571428431,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Wu (106): China,2.687010142088893,2.7,1,2.687010142088893,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Erlandsson (86): Sweden,-3.6716002822599783,-3.7,1,-3.6716002822599783,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Erlandsson (86): Sweden,2.4670439091056444,2.5,1,2.4670439091056444,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,"ATE: Rivera and Tilcsik (101): United States, field experiment",-3.797468354430362,-3.8,1,-3.797468354430362,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,"ATE SE: Rivera and Tilcsik (101): United States, field experiment",3.285514319458328,3.3,1,3.285514319458328,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Arai et al. (69): Sweden (equivalent CVs),-6.3112745098039404,-6.3,1,-6.3112745098039404,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Arai et al. (69): Sweden (equivalent CVs),3.992416006944822,4,1,3.992416006944822,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Neumark et al. (9): United States,-12.307692307692344,-12.3,1,-12.307692307692344,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Neumark et al. (9): United States,8.384117784722884,8.4,1,8.384117784722884,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE: Meta-analysis,1.1901505479625971,1.2,1,1.1901505479625971,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S1.1,ATE SE: Meta-analysis,0.4233089145760646,0.4,1,0.4233089145760646,1,NA,Printed beside the point in fig. S1.1
+galos_coppock_2023,fig_S3.4,ATE: Bell and Klein (122): United States,11.907810499359824,11.9,1,11.907810499359824,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE SE: Bell and Klein (122): United States,8.560232460063235,8.6,1,8.560232460063235,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,"ATE: Carlsson et al. (124): Iceland, Norway, Sweden",8.046241157427726,8,1,8.046241157427726,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,"ATE SE: Carlsson et al. (124): Iceland, Norway, Sweden",3.1312989771182465,3.1,1,3.1312989771182465,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,"ATE: Pedulla (96): United States, survey experiment",5.490404579998666,5.5,1,5.490404579998666,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,"ATE SE: Pedulla (96): United States, survey experiment",2.4220207785749612,2.4,1,2.4220207785749612,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE: Mari and Luijkx (126): the Netherlands,5.194603009859847,5.2,1,5.194603009859847,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE SE: Mari and Luijkx (126): the Netherlands,3.127440896105781,3.1,1,3.127440896105781,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,"ATE: Thomas (4): United States, survey experiment",4.3285953915423345,4.3,1,4.3285953915423345,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,"ATE SE: Thomas (4): United States, survey experiment",2.166281047816863,2.2,1,2.166281047816863,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE: Bertogg et al. (125): Norway,2.583438722371988,2.6,1,2.583438722371988,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE SE: Bertogg et al. (125): Norway,1.109011594116912,1.1,1,1.109011594116912,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE: Bertogg et al. (125): Bulgaria,2.3705853349371453,2.4,1,2.3705853349371453,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE SE: Bertogg et al. (125): Bulgaria,0.9515452097184752,1,1,0.9515452097184752,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE: Bertogg et al. (125): Switzerland,2.2342446736396444,2.2,1,2.2342446736396444,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE SE: Bertogg et al. (125): Switzerland,0.7220696291175842,0.7,1,0.7220696291175842,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE: Bertogg et al. (125): Greece,1.7011103680662147,1.7,1,1.7011103680662147,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE SE: Bertogg et al. (125): Greece,0.7009648885165377,0.7,1,0.7009648885165377,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE: Blommaert et al. (123): the Netherlands,0.7123161764708911,0.7,1,0.7123161764708911,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE SE: Blommaert et al. (123): the Netherlands,0.9087422459533588,0.9,1,0.9087422459533588,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE: Di Stasio (127): Italy,0.397996537926722,0.4,1,0.397996537926722,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE SE: Di Stasio (127): Italy,2.4853066074796417,2.5,1,2.4853066074796417,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE: Di Stasio and Werfhorst (128): England and the Netherlands,-0.06431572829231272,-0.1,1,-0.06431572829231272,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE SE: Di Stasio and Werfhorst (128): England and the Netherlands,3.0225289063834615,3,1,3.0225289063834615,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE: Meta-analysis,2.106822513018533,2.1,1,2.106822513018533,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S3.4,ATE SE: Meta-analysis,0.35456533041974053,0.4,1,0.35456533041974053,1,NA,Printed beside the point in fig. S3.4
+galos_coppock_2023,fig_S5.62,Gender gradient: Albert et al. (67): Spain,139.8165053342534,139.8,1,139.81650533425298,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Albert et al. (67): Spain,43.881660037050395,43.9,1,43.881660037050125,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Birkelund et al. (76): Spain,49.913046583951136,49.9,1,49.913046583951235,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Birkelund et al. (76): Spain,23.741815476385703,23.7,1,23.74181547638566,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Mavlikeeva and Asanov (11): Russia,32.8528947195993,32.9,1,32.85289471959932,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Mavlikeeva and Asanov (11): Russia,4.899129636531107,4.9,1,4.899129636531109,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Ahmed at al. (14): Sweden,28.96428516746053,29,1,28.964285167460535,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Ahmed at al. (14): Sweden,7.571673316638934,7.6,1,7.57167331663894,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Birkelund et al. (76): the Netherlands,26.967204497725497,27,1,26.96720449772551,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Birkelund et al. (76): the Netherlands,19.810504879067626,19.8,1,19.810504879067626,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Patacchini et al. (95): Italy,15.808287142346911,15.8,1,15.80828714234694,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Patacchini et al. (95): Italy,12.628689346359582,12.6,1,12.62868934635966,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Maurer-Fazio and Lei (92): China,15.023418114614486,15,1,15.023418114614492,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Maurer-Fazio and Lei (92): China,2.3245923013787277,2.3,1,2.3245923013787277,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Carlsson and Eriksson (80): Sweden,13.079671668605984,13.1,1,13.079671668606002,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Carlsson and Eriksson (80): Sweden,8.594357335657447,8.6,1,8.594357335657453,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Erlandsson (86): Sweden,12.202157541223414,12.2,1,12.202157541223425,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Erlandsson (86): Sweden,31.209220858494596,31.2,1,31.209220858494444,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Galarza and Yamada (88): Peru,12.156049682980466,12.2,1,12.156049682980465,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Galarza and Yamada (88): Peru,28.736319889538063,28.7,1,28.736319889538063,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Riach and Rich (100): England,12.154614612706496,12.2,1,12.154614612706489,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Riach and Rich (100): England,15.61938710201448,15.6,1,15.619387102014477,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Ramos et al. (99): Spain and the Netherlands,10.88271964192534,10.9,1,10.882719641925355,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Ramos et al. (99): Spain and the Netherlands,8.38710429633309,8.4,1,8.387104296333096,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Galarza and Yamada (87): Peru,9.760891497669498,9.8,1,9.7608914976695,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Galarza and Yamada (87): Peru,11.530164056481494,11.5,1,11.530164056481505,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,"Gender gradient: Di Stasio and Larsen (105): United Kingdom, Germany and Norway",9.06565768340824,9.1,1,9.065657683408274,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,"Gender gradient SE: Di Stasio and Larsen (105): United Kingdom, Germany and Norway",4.216374430095406,4.2,1,4.216374430095406,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Arai et al. (69): Sweden (equivalent CVs),8.121372867348486,8.1,1,8.1213728673485,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Arai et al. (69): Sweden (equivalent CVs),16.988246145653076,17,1,16.98824614565308,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Nunley et al. (93): United States,8.051304458939176,8.1,1,8.051304458939159,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Nunley et al. (93): United States,15.307250359500014,15.3,1,15.30725035950007,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Edo et al. (85): France,7.36287477691454,7.4,1,7.362874776914552,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Edo et al. (85): France,5.904420724167175,5.9,1,5.904420724167167,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Gonzalez et al. (89): Spain,7.315072303607376,7.3,1,7.315072303607384,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Gonzalez et al. (89): Spain,3.3054183276580194,3.3,1,3.305418327658023,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Arai et al. (69): Sweden (enhanced CVs),7.160212979834855,7.2,1,7.160212979834855,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Arai et al. (69): Sweden (enhanced CVs),22.27430443644756,22.3,1,22.27430443644756,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Asali et al. (70): Georgia,6.971238706214396,7,1,6.971238706214394,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Asali et al. (70): Georgia,4.916866121483327,4.9,1,4.916866121483324,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Birkelund et al. (76): United States,6.829763459623778,6.8,1,6.829763459623768,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Birkelund et al. (76): United States,19.235855429821367,19.2,1,19.23585542982136,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,"Gender gradient: Pedulla (96): United States, field experiment",5.514209556506572,5.5,1,5.514209556506576,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,"Gender gradient SE: Pedulla (96): United States, field experiment",13.108055453006594,13.1,1,13.108055453006603,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Carlsson (13): Sweden,4.061344535422362,4.1,1,4.0613445354223545,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Carlsson (13): Sweden,8.5777161234400765,8.6,1,8.577716123440073,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Bygren et al. (78): Sweden,3.773098197209957,3.8,1,3.773098197209942,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Bygren et al. (78): Sweden,16.241567645422705,16.2,1,16.241567645422712,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Riach and Rich (8): Australia,3.63134112860805,3.6,1,3.631341128608052,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Riach and Rich (8): Australia,9.76043315116816,9.8,1,9.76043315116816,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Zhou et al. (108): China,2.278274469094508,2.3,1,2.278274469094511,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Zhou et al. (108): China,6.527295879939821,6.5,1,6.5272958799398255,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Ahmed at al. (66): Sweden,1.0458587543514448,1,1,1.0458587543514457,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Ahmed at al. (66): Sweden,6.690671152086121,6.7,1,6.690671152086117,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Oreopoulos (94): Canada,0.29189397076495716,0.3,1,0.2918939707649595,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Oreopoulos (94): Canada,1.7947572258175526,1.8,1,1.7947572258175524,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Birkelund et al. (76): Germany,-0.46771572999304833,-0.5,1,-0.4677157299930287,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Birkelund et al. (76): Germany,27.752327570834137,27.8,1,27.752327570834137,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Carlsson et al. (81): Sweden,-3.530473707463769,-3.5,1,-3.530473707463756,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Carlsson et al. (81): Sweden,10.549517423872738,10.5,1,10.5495174238727,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Ruffle and Shtudiner (103): Israel,-5.344935822111202,-5.3,1,-5.344935822111199,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Ruffle and Shtudiner (103): Israel,13.475591396439844,13.5,1,13.47559139643984,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Dahl and Krog (84): Denmark,-6.050146933542991,-6.1,1,-6.050146933542993,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Dahl and Krog (84): Denmark,20.86704578400379,20.9,1,20.867045784003786,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,"Gender gradient: Thomas (4): United States, field experiment",-7.346437111376035,-7.3,1,-7.346437111376028,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,"Gender gradient SE: Thomas (4): United States, field experiment",12.821280281916852,12.8,1,12.821280281916843,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Birkelund et al. (76): United Kingdom,-7.521008419743763,-7.5,1,-7.521008419743779,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Birkelund et al. (76): United Kingdom,35.09118562008963,35.1,1,35.09118562008963,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Birkelund et al. (76): Norway,-11.500194056532935,-11.5,1,-11.500194056532926,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Birkelund et al. (76): Norway,18.83164602270189,18.8,1,18.831646022701875,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Booth and Leigh (15): Australia,-26.40755655625277,-26.4,1,-26.407556556252953,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Booth and Leigh (15): Australia,61.08259416494624,61.1,1,61.082594164946435,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Rooth (102): Sweden,-26.585564279113093,-26.6,1,-26.585564279113093,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Rooth (102): Sweden,25.32358142224515,25.3,1,25.323581422245145,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient: Meta-analysis,8.954956634341245,9,1,8.954956634341249,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S5.62,Gender gradient SE: Meta-analysis,2.118973737164687,2.1,1,2.1189737371646884,1,NA,Printed beside the point in fig. S5.62
+galos_coppock_2023,fig_S4.5,"Plotted estimate and standard error labels, Ahmed at al. (14): Sweden",NA,16,NA,16,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.5,"Occupation gender composition labels, Ahmed at al. (14): Sweden",NA,15,NA,15,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.5,"Occupation sample size labels, Ahmed at al. (14): Sweden",NA,15,NA,15,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.6,"Plotted estimate and standard error labels, Ahmed at al. (66): Sweden",NA,11,NA,11,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.6,"Occupation gender composition labels, Ahmed at al. (66): Sweden",NA,10,NA,10,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.6,"Occupation sample size labels, Ahmed at al. (66): Sweden",NA,10,NA,10,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.7,"Plotted estimate and standard error labels, Albert et al. (67): Spain",NA,4,NA,4,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.7,"Occupation gender composition labels, Albert et al. (67): Spain",NA,3,NA,3,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.7,"Occupation sample size labels, Albert et al. (67): Spain",NA,3,NA,3,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.8,"Plotted estimate and standard error labels, Alden et al. (68): Sweden",NA,2,NA,2,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.8,"Occupation gender composition labels, Alden et al. (68): Sweden",NA,2,NA,2,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.8,"Occupation sample size labels, Alden et al. (68): Sweden",NA,2,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.9,"Plotted estimate and standard error labels, Arai et al. (69): Sweden (equivalent CVs)",NA,6,NA,6,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.9,"Occupation gender composition labels, Arai et al. (69): Sweden (equivalent CVs)",NA,5,NA,5,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.9,"Occupation sample size labels, Arai et al. (69): Sweden (equivalent CVs)",NA,5,NA,5,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.10,"Plotted estimate and standard error labels, Arai et al. (69): Sweden (enhanced CVs)",NA,6,NA,6,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.10,"Occupation gender composition labels, Arai et al. (69): Sweden (enhanced CVs)",NA,5,NA,5,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.10,"Occupation sample size labels, Arai et al. (69): Sweden (enhanced CVs)",NA,5,NA,5,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.11,"Plotted estimate and standard error labels, Asali et al. (70): Georgia",NA,10,NA,10,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.11,"Occupation gender composition labels, Asali et al. (70): Georgia",NA,9,NA,9,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.11,"Occupation sample size labels, Asali et al. (70): Georgia",NA,9,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.12,"Plotted estimate and standard error labels, Mavlikeeva and Asanov (11): Russia",NA,7,NA,7,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.12,"Occupation gender composition labels, Mavlikeeva and Asanov (11): Russia",NA,6,NA,6,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.12,"Occupation sample size labels, Mavlikeeva and Asanov (11): Russia",NA,6,NA,6,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.13,"Plotted estimate and standard error labels, Baert et al. (71): Belgium",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.13,"Occupation gender composition labels, Baert et al. (71): Belgium",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.13,"Occupation sample size labels, Baert et al. (71): Belgium",NA,1,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.14,"Plotted estimate and standard error labels, Baert et al. (72): Belgium",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.14,"Occupation gender composition labels, Baert et al. (72): Belgium",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.14,"Occupation sample size labels, Baert et al. (72): Belgium",NA,1,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.15,"Plotted estimate and standard error labels, Banerjee et al. (73): India",NA,2,NA,2,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.15,"Occupation gender composition labels, Banerjee et al. (73): India",NA,2,NA,2,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.15,"Occupation sample size labels, Banerjee et al. (73): India",NA,2,NA,2,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.16,"Plotted estimate and standard error labels, Becker et al. (74): Austria, Germany, Switzerland",NA,2,NA,2,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.16,"Occupation gender composition labels, Becker et al. (74): Austria, Germany, Switzerland",NA,2,NA,2,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.16,"Occupation sample size labels, Becker et al. (74): Austria, Germany, Switzerland",NA,2,NA,2,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.17,"Plotted estimate and standard error labels, Berson (75): France",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.17,"Occupation gender composition labels, Berson (75): France",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.17,"Occupation sample size labels, Berson (75): France",NA,1,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.18,"Plotted estimate and standard error labels, Birkelund et al. (76): Germany",NA,7,NA,7,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.18,"Occupation gender composition labels, Birkelund et al. (76): Germany",NA,6,NA,6,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.18,"Occupation sample size labels, Birkelund et al. (76): Germany",NA,6,NA,6,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.19,"Plotted estimate and standard error labels, Birkelund et al. (76): the Netherlands",NA,7,NA,7,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.19,"Occupation gender composition labels, Birkelund et al. (76): the Netherlands",NA,6,NA,6,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.19,"Occupation sample size labels, Birkelund et al. (76): the Netherlands",NA,6,NA,6,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.20,"Plotted estimate and standard error labels, Birkelund et al. (76): Norway",NA,7,NA,7,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.20,"Occupation gender composition labels, Birkelund et al. (76): Norway",NA,6,NA,6,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.20,"Occupation sample size labels, Birkelund et al. (76): Norway",NA,6,NA,6,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.21,"Plotted estimate and standard error labels, Birkelund et al. (76): Spain",NA,7,NA,7,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.21,"Occupation gender composition labels, Birkelund et al. (76): Spain",NA,6,NA,6,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.21,"Occupation sample size labels, Birkelund et al. (76): Spain",NA,6,NA,6,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.22,"Plotted estimate and standard error labels, Birkelund et al. (76): United Kingdom",NA,7,NA,7,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.22,"Occupation gender composition labels, Birkelund et al. (76): United Kingdom",NA,6,NA,6,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.22,"Occupation sample size labels, Birkelund et al. (76): United Kingdom",NA,6,NA,6,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.23,"Plotted estimate and standard error labels, Birkelund et al. (76): United States",NA,7,NA,7,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.23,"Occupation gender composition labels, Birkelund et al. (76): United States",NA,6,NA,6,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.23,"Occupation sample size labels, Birkelund et al. (76): United States",NA,6,NA,6,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.24,"Plotted estimate and standard error labels, Booth and Leigh (15): Australia",NA,5,NA,5,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.24,"Occupation gender composition labels, Booth and Leigh (15): Australia",NA,4,NA,4,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.24,"Occupation sample size labels, Booth and Leigh (15): Australia",NA,4,NA,4,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.25,"Plotted estimate and standard error labels, Bursell (77): Sweden",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.25,"Occupation gender composition labels, Bursell (77): Sweden",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.25,"Occupation sample size labels, Bursell (77): Sweden",NA,1,NA,1,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.26,"Plotted estimate and standard error labels, Busetta et al. (79): Italy",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.26,"Occupation gender composition labels, Busetta et al. (79): Italy",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.26,"Occupation sample size labels, Busetta et al. (79): Italy",NA,1,NA,1,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.27,"Plotted estimate and standard error labels, Bygren et al. (78): Sweden",NA,14,NA,14,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.27,"Occupation gender composition labels, Bygren et al. (78): Sweden",NA,13,NA,13,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.27,"Occupation sample size labels, Bygren et al. (78): Sweden",NA,13,NA,13,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.28,"Plotted estimate and standard error labels, Carlsson (13): Sweden",NA,14,NA,14,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.28,"Occupation gender composition labels, Carlsson (13): Sweden",NA,13,NA,13,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.28,"Occupation sample size labels, Carlsson (13): Sweden",NA,13,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.29,"Plotted estimate and standard error labels, Carlsson and Eriksson (80): Sweden",NA,8,NA,8,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.29,"Occupation gender composition labels, Carlsson and Eriksson (80): Sweden",NA,7,NA,7,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.29,"Occupation sample size labels, Carlsson and Eriksson (80): Sweden",NA,7,NA,7,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.30,"Plotted estimate and standard error labels, Carlsson et al. (81): Sweden",NA,4,NA,4,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.30,"Occupation gender composition labels, Carlsson et al. (81): Sweden",NA,3,NA,3,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.30,"Occupation sample size labels, Carlsson et al. (81): Sweden",NA,3,NA,3,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.31,"Plotted estimate and standard error labels, Correll et al. (83): United States, field experiment",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.31,"Occupation gender composition labels, Correll et al. (83): United States, field experiment",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.31,"Occupation sample size labels, Correll et al. (83): United States, field experiment",NA,1,NA,1,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.32,"Plotted estimate and standard error labels, Dahl and Krog (84): Denmark",NA,22,NA,22,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.32,"Occupation gender composition labels, Dahl and Krog (84): Denmark",NA,21,NA,21,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.32,"Occupation sample size labels, Dahl and Krog (84): Denmark",NA,21,NA,3,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.33,"Plotted estimate and standard error labels, Edo et al. (85): France",NA,4,NA,4,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.33,"Occupation gender composition labels, Edo et al. (85): France",NA,3,NA,3,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.33,"Occupation sample size labels, Edo et al. (85): France",NA,3,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.34,"Plotted estimate and standard error labels, Erlandsson (86): Sweden",NA,4,NA,4,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.34,"Occupation gender composition labels, Erlandsson (86): Sweden",NA,3,NA,3,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.34,"Occupation sample size labels, Erlandsson (86): Sweden",NA,3,NA,3,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.35,"Plotted estimate and standard error labels, Galarza and Yamada (87): Peru",NA,4,NA,4,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.35,"Occupation gender composition labels, Galarza and Yamada (87): Peru",NA,3,NA,3,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.35,"Occupation sample size labels, Galarza and Yamada (87): Peru",NA,3,NA,3,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.36,"Plotted estimate and standard error labels, Galarza and Yamada (88): Peru",NA,4,NA,4,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.36,"Occupation gender composition labels, Galarza and Yamada (88): Peru",NA,3,NA,3,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.36,"Occupation sample size labels, Galarza and Yamada (88): Peru",NA,3,NA,3,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.37,"Plotted estimate and standard error labels, Gonzalez et al. (89): Spain",NA,18,NA,18,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.37,"Occupation gender composition labels, Gonzalez et al. (89): Spain",NA,17,NA,17,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.37,"Occupation sample size labels, Gonzalez et al. (89): Spain",NA,17,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.38,"Plotted estimate and standard error labels, Hipp (90): Germany",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.38,"Occupation gender composition labels, Hipp (90): Germany",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.38,"Occupation sample size labels, Hipp (90): Germany",NA,1,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.39,"Plotted estimate and standard error labels, Horváth (16): China",NA,2,NA,2,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.39,"Occupation gender composition labels, Horváth (16): China",NA,2,NA,2,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.39,"Occupation sample size labels, Horváth (16): China",NA,2,NA,2,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.40,"Plotted estimate and standard error labels, Jackson (91): United Kingdom",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.40,"Occupation gender composition labels, Jackson (91): United Kingdom",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.40,"Occupation sample size labels, Jackson (91): United Kingdom",NA,1,NA,1,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.41,"Plotted estimate and standard error labels, Maurer-Fazio and Lei (92): China",NA,5,NA,5,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.41,"Occupation gender composition labels, Maurer-Fazio and Lei (92): China",NA,4,NA,4,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.41,"Occupation sample size labels, Maurer-Fazio and Lei (92): China",NA,4,NA,4,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.42,"Plotted estimate and standard error labels, Neumark et al. (9): United States",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.42,"Occupation gender composition labels, Neumark et al. (9): United States",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.42,"Occupation sample size labels, Neumark et al. (9): United States",NA,1,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.43,"Plotted estimate and standard error labels, Nunley et al. (93): United States",NA,7,NA,7,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.43,"Occupation gender composition labels, Nunley et al. (93): United States",NA,6,NA,6,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.43,"Occupation sample size labels, Nunley et al. (93): United States",NA,6,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.44,"Plotted estimate and standard error labels, Oreopoulos (94): Canada",NA,22,NA,22,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.44,"Occupation gender composition labels, Oreopoulos (94): Canada",NA,21,NA,21,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.44,"Occupation sample size labels, Oreopoulos (94): Canada",NA,21,NA,1,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.45,"Plotted estimate and standard error labels, Patacchini et al. (95): Italy",NA,8,NA,8,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.45,"Occupation gender composition labels, Patacchini et al. (95): Italy",NA,7,NA,7,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.45,"Occupation sample size labels, Patacchini et al. (95): Italy",NA,7,NA,7,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.46,"Plotted estimate and standard error labels, Pedulla (96): United States, field experiment",NA,5,NA,5,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.46,"Occupation gender composition labels, Pedulla (96): United States, field experiment",NA,4,NA,4,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.46,"Occupation sample size labels, Pedulla (96): United States, field experiment",NA,4,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.47,"Plotted estimate and standard error labels, Petit (97): France",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.47,"Occupation gender composition labels, Petit (97): France",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.47,"Occupation sample size labels, Petit (97): France",NA,1,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.48,"Plotted estimate and standard error labels, Quadlin (98): United States, field experiment",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.48,"Occupation gender composition labels, Quadlin (98): United States, field experiment",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.48,"Occupation sample size labels, Quadlin (98): United States, field experiment",NA,1,NA,1,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.49,"Plotted estimate and standard error labels, Ramos et al. (99): Spain and the Netherlands",NA,8,NA,8,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.49,"Occupation gender composition labels, Ramos et al. (99): Spain and the Netherlands",NA,7,NA,7,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.49,"Occupation sample size labels, Ramos et al. (99): Spain and the Netherlands",NA,7,NA,7,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.50,"Plotted estimate and standard error labels, Riach and Rich (8): Australia",NA,8,NA,8,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.50,"Occupation gender composition labels, Riach and Rich (8): Australia",NA,7,NA,7,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.50,"Occupation sample size labels, Riach and Rich (8): Australia",NA,7,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.51,"Plotted estimate and standard error labels, Riach and Rich (100): England",NA,5,NA,5,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.51,"Occupation gender composition labels, Riach and Rich (100): England",NA,4,NA,4,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.51,"Occupation sample size labels, Riach and Rich (100): England",NA,4,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.52,"Plotted estimate and standard error labels, Rivera and Tilcsik (101): United States, field experiment",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.52,"Occupation gender composition labels, Rivera and Tilcsik (101): United States, field experiment",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.52,"Occupation sample size labels, Rivera and Tilcsik (101): United States, field experiment",NA,1,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.53,"Plotted estimate and standard error labels, Rooth (102): Sweden",NA,8,NA,8,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.53,"Occupation gender composition labels, Rooth (102): Sweden",NA,7,NA,7,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.53,"Occupation sample size labels, Rooth (102): Sweden",NA,7,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.54,"Plotted estimate and standard error labels, Ruffle and Shtudiner (103): Israel",NA,11,NA,11,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.54,"Occupation gender composition labels, Ruffle and Shtudiner (103): Israel",NA,10,NA,10,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.54,"Occupation sample size labels, Ruffle and Shtudiner (103): Israel",NA,10,NA,1,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.55,"Plotted estimate and standard error labels, Saeed et al. (104): Pakistan",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.55,"Occupation gender composition labels, Saeed et al. (104): Pakistan",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.55,"Occupation sample size labels, Saeed et al. (104): Pakistan",NA,1,NA,1,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.56,"Plotted estimate and standard error labels, Di Stasio and Larsen (105): United Kingdom, Germany and Norway",NA,11,NA,11,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.56,"Occupation gender composition labels, Di Stasio and Larsen (105): United Kingdom, Germany and Norway",NA,10,NA,10,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.56,"Occupation sample size labels, Di Stasio and Larsen (105): United Kingdom, Germany and Norway",NA,10,NA,10,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.57,"Plotted estimate and standard error labels, Thomas (4): United States, field experiment",NA,5,NA,5,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.57,"Occupation gender composition labels, Thomas (4): United States, field experiment",NA,4,NA,4,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.57,"Occupation sample size labels, Thomas (4): United States, field experiment",NA,4,NA,4,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.58,"Plotted estimate and standard error labels, Wu (106): China",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.58,"Occupation gender composition labels, Wu (106): China",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.58,"Occupation sample size labels, Wu (106): China",NA,1,NA,1,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.59,"Plotted estimate and standard error labels, Yavorsky (107): United States",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.59,"Occupation gender composition labels, Yavorsky (107): United States",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.59,"Occupation sample size labels, Yavorsky (107): United States",NA,1,NA,1,1,NA,Count of the sample sizes printed on the published panel that equal the deposited residual degrees of freedom plus one
+galos_coppock_2023,fig_S4.60,"Plotted estimate and standard error labels, Zhou et al. (108): China",NA,5,NA,5,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.60,"Occupation gender composition labels, Zhou et al. (108): China",NA,4,NA,4,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.60,"Occupation sample size labels, Zhou et al. (108): China",NA,4,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,fig_S4.61,"Plotted estimate and standard error labels, Capéau et al. (82): Belgium",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.61,"Occupation gender composition labels, Capéau et al. (82): Belgium",NA,1,NA,1,1,NA,Count of the labels printed on the published panel that the rewrite reproduces
+galos_coppock_2023,fig_S4.61,"Occupation sample size labels, Capéau et al. (82): Belgium",NA,1,NA,0,0,archive,The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest
+galos_coppock_2023,figs_S4.5_to_S4.61,Study panels drawn by the deposited archive,0,57,0,57,1,NA,The published appendix draws one panel per study; the deposited loop draws none
+galos_coppock_2023,figs_S4.5_to_S4.61,Plotted estimate and standard error labels produced by the deposited archive,0,335,0,335,1,NA,The published appendix draws one panel per study; the deposited loop draws none

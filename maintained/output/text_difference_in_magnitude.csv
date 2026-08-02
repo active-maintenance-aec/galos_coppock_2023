@@ -1,0 +1,5 @@
+quantity,value
+Predicted CATE at 0 percent women,-3.0238450714504808
+Predicted CATE at 100 percent women,5.129314992673274
+Difference in magnitude,2.1054699212227934
+Bootstrapped SE of the difference in magnitude,0.5781064726246576
