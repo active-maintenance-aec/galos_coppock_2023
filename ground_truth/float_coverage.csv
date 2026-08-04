@@ -1,0 +1,72 @@
+float,printed,covered,share,reason
+Table 1,40,40,1,NA
+Table 2,30,30,1,NA
+Table S2.1,171,171,1,NA
+Figure 1,NA,0,NA,A two-panel diagram of the two gender gradients the theory admits. It plots no estimates and the deposit has no code for it
+Figure 2,NA,0,NA,The same diagram split by advantaged and disadvantaged group. It plots no estimates and the deposit has no code for it
+Figure 3,NA,0,NA,"A summary of the discrimination mechanisms the 51 papers discuss, coded by hand. The deposit carries no mechanism or discipline variable, so nothing in the pipeline can reach it"
+Figure 4,NA,0,NA,"The occupation CATEs against gender composition, with the Table 1 model 1 line. It prints no numbers on its face; its estimates are the 298 CATEs and its line is the Table 1 model 1 row, both covered here"
+Figure 5,NA,0,NA,"The same estimates split by majority and minority status, with the Table 2 model 1 and 2 lines. It prints no numbers on its face and both lines are covered here"
+Figure S1.1,116,116,1,NA
+Figure S2.2,NA,0,NA,"An evidence map of country by year tiles. It prints no numbers; what it asserts is which country-year cells are occupied, and the section S2 sentences describing it are covered here"
+Figure S3.3,NA,4,NA,The survey and field gradients drawn as two fitted lines. It prints no numbers; both fits are recorded here with no published counterpart
+Figure S3.4,26,26,1,NA
+Figure S4.5,46,46,1,NA
+Figure S4.6,31,31,1,NA
+Figure S4.7,10,10,1,NA
+Figure S4.8,6,6,1,NA
+Figure S4.9,16,16,1,NA
+Figure S4.10,16,16,1,NA
+Figure S4.11,28,28,1,NA
+Figure S4.12,19,19,1,NA
+Figure S4.13,3,3,1,NA
+Figure S4.14,3,3,1,NA
+Figure S4.15,6,6,1,NA
+Figure S4.16,6,6,1,NA
+Figure S4.17,3,3,1,NA
+Figure S4.18,19,19,1,NA
+Figure S4.19,19,19,1,NA
+Figure S4.20,19,19,1,NA
+Figure S4.21,19,19,1,NA
+Figure S4.22,19,19,1,NA
+Figure S4.23,19,19,1,NA
+Figure S4.24,13,13,1,NA
+Figure S4.25,3,3,1,NA
+Figure S4.26,3,3,1,NA
+Figure S4.27,40,40,1,NA
+Figure S4.28,40,40,1,NA
+Figure S4.29,22,22,1,NA
+Figure S4.30,10,10,1,NA
+Figure S4.31,3,3,1,NA
+Figure S4.32,64,64,1,NA
+Figure S4.33,10,10,1,NA
+Figure S4.34,10,10,1,NA
+Figure S4.35,10,10,1,NA
+Figure S4.36,10,10,1,NA
+Figure S4.37,52,52,1,NA
+Figure S4.38,3,3,1,NA
+Figure S4.39,6,6,1,NA
+Figure S4.40,3,3,1,NA
+Figure S4.41,13,13,1,NA
+Figure S4.42,3,3,1,NA
+Figure S4.43,19,19,1,NA
+Figure S4.44,64,64,1,NA
+Figure S4.45,22,22,1,NA
+Figure S4.46,13,13,1,NA
+Figure S4.47,3,3,1,NA
+Figure S4.48,3,3,1,NA
+Figure S4.49,22,22,1,NA
+Figure S4.50,22,22,1,NA
+Figure S4.51,13,13,1,NA
+Figure S4.52,3,3,1,NA
+Figure S4.53,22,22,1,NA
+Figure S4.54,31,31,1,NA
+Figure S4.55,3,3,1,NA
+Figure S4.56,31,31,1,NA
+Figure S4.57,13,13,1,NA
+Figure S4.58,3,3,1,NA
+Figure S4.59,3,3,1,NA
+Figure S4.60,13,13,1,NA
+Figure S4.61,3,3,1,NA
+Figure S5.62,76,76,1,NA
+Figure S6.63,NA,0,NA,A PRISMA flow diagram of the literature search. Its counts come from the screening process and no data file in the deposit records them

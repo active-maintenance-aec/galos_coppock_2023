@@ -1,18 +1,34 @@
 # galos_coppock_2023/ground_truth/build_ground_truth.R
 # Output: ground_truth/galos_coppock_2023_ground_truth.csv
-# Depends on: ground_truth/archive_values.csv, maintained/output/ (run run_all.R first)
-# Description: Assemble the number-by-number comparison table.
+# Depends on: ground_truth/archive_values.csv, ground_truth/published_claims.csv,
+#             maintained/in_text_claims.R, maintained/output/ (run run_all.R first)
+# Description: Assemble the number-by-number comparison table, and gate it.
 #
 #   Three columns, three sources, and they are kept apart on purpose. value_paper is typed from
 #   the published article and its supplementary materials and appears nowhere else in this
-#   repository; it is a comparison target and never an input to a calculation. value_script is
-#   read from ground_truth/archive_values.csv, which archive_values.R harvests by running the
-#   deposited code. value_rewrite is read out of maintained/output/. Nothing in this file is
-#   transcribed from a run, and the verdicts are computed rather than asserted.
+#   repository except the extraction; it is a comparison target and never an input to a
+#   calculation. value_script is read from ground_truth/archive_values.csv, which
+#   archive_values.R harvests by running the deposited code. value_rewrite is read out of
+#   maintained/output/. Nothing in this file is transcribed from a run, and the verdicts are
+#   computed rather than asserted.
 #
 #   Every published value carries the number of decimal places at which the article prints it,
 #   so agreement is tested at the precision the reader sees rather than at whatever precision a
-#   double happens to have.
+#   double happens to have, and value_paper is written out as the string the page prints rather
+#   than as a double, which would turn the published 1.50 into 1.5.
+#
+#   Three comparison modes. Most claims are printed values, compared at the article's own
+#   precision. A claim that reduces to a truth value (a majority, a sign, a ranking) is compared
+#   as "holds": the rewrite side is 1 or 0 and the article's side is 1. A claim that names a
+#   rough magnitude ("two-thirds", "over the past four decades", "very similar") is
+#   "approximate": both numbers are recorded and no verdict is returned, because forcing a
+#   string comparison there files an honest hedge as a defect.
+#
+#   Four gates run at the end. Every non-clean-match row must name where the fault lies; every
+#   published float must have coverage, stated as a fraction of the numbers it prints; the
+#   extraction in ground_truth/published_claims.csv must agree with this file's transcription of
+#   the same pages; and maintained/in_text_claims.R must run, print a claim line for every claim
+#   the extraction says needs one, and land on the same numbers this file does.
 
 library(here)
 library(tidyverse)
@@ -35,66 +51,339 @@ forest_s5_62 <- out("figure_s5_62_gender_gradient_forest.csv")
 survey_field <- out("figure_s3_3_survey_field_comparison.csv")
 panels <- out("figure_s4_study_panels.csv")
 study_manifest <- out("table_s2_1_study_manifest.csv")
+evidence_map <- out("figure_s2_2_evidence_map.csv")
+gradients <- out("gender_gradients.csv")
 
 stat <- function(name) summary_stats$value[summary_stats$quantity == name]
 mag <- function(name) magnitude$value[magnitude$quantity == name]
+
+# A stable id for a study label, matching the one ground_truth/extract_published_claims.R
+# builds, so a claim typed here and the same claim read off the published page meet under one
+# claim_id however the two spell the minus sign.
+claim_slug <- function(x) {
+  x |>
+    stringi::stri_trans_general("Latin-ASCII") |>
+    str_to_lower() |>
+    str_replace_all("[^a-z0-9]+", "_") |>
+    str_replace_all("^_|_$", "")
+}
 
 stars_from_p <- function(p) {
   case_when(is.na(p) ~ NA_real_, p < 0.001 ~ 3, p < 0.01 ~ 2, p < 0.05 ~ 1, .default = 0)
 }
 
-# Published values: main text and the two published tables ----
+meta_row <- function(forest, column) {
+  value <- forest[[column]][forest$facet == "Meta"]
+  stopifnot(length(value) == 1)
+  value
+}
+
+gradient_at <- function(type) {
+  value <- survey_field$estimate[survey_field$experiment_type == type &
+                                   survey_field$term == "fraction_female"]
+  stopifnot(length(value) == 1)
+  value
+}
+
+table_1_gradient <- function(model) {
+  value <- table_1$estimate[table_1$model == model & table_1$term == "fraction_female"]
+  stopifnot(length(value) == 1)
+  value
+}
+
+# The earliest year from which at least 95 per cent of the evidence map's country-year cells
+# come. The article dates the boom in audit experimentation to "around 2005", which is a claim
+# about where the mass of the record starts rather than about any one study.
+boom_year <- function() {
+  years <- sort(evidence_map$year)
+  years[ceiling(0.05 * length(years)) + 1]
+}
+
+# Published values: main text and the supplementary sections ----
 # Galos and Coppock (2023), Science Advances 9, eade7979, and its supplementary materials.
-published_text <- tribble(
-  ~table_figure, ~claim, ~value_paper, ~digits, ~value_rewrite, ~notes,
-  "text", "Field studies collected", 57, 0, stat("Field studies"),
+# claim_id ties each row to ground_truth/published_claims.csv and to the block that recomputes
+# it in maintained/in_text_claims.R. A row with no claim_id records a quantity the article does
+# not state.
+text_claims <- tribble(
+  ~claim_id, ~table_figure, ~claim, ~value_paper, ~digits, ~mode, ~value_rewrite, ~locus, ~notes,
+
+  # Abstract
+  "abstract_since_year", "text", "Year the audit experimental record begins",
+    1983, 0, "value", min(evidence_map$year), NA,
+    "Abstract: 'Since 1983, more than 70 employment audit experiments'. The evidence map's earliest country-year cell",
+  "abstract_countries", "text", "Countries the experiments were carried out in",
+    26, 0, "approximate", n_distinct(evidence_map$country), NA,
+    paste("Abstract: 'carried out in more than 26 countries across five continents'. The",
+          "evidence map records the countries of the 57 studies reanalysed here and not those of",
+          "the wider literature the sentence describes, so both numbers are recorded and no",
+          "verdict is returned"),
+  "abstract_continents", "text", "Continents the experiments were carried out across",
+    5, 0, "value", n_distinct(evidence_map$continent), "paper_internal",
+    paste("Abstract: 'carried out in more than 26 countries across five continents'. The",
+          "paper's own evidence map, fig. S2.2, is drawn as six continent facets and section S2",
+          "names Oceania among the regions where the boom occurred. The abstract describes the",
+          "wider literature rather than the 57 studies reanalysed here, but a superset of those",
+          "studies cannot span fewer continents, so five is too few under any reading"),
+  "abstract_mixed_signs", "text", "Study-level effects run in both directions",
+    1, 0, "holds",
+    as.numeric(min(forest_s1_1$estimate[forest_s1_1$facet == "Study estimates"]) < 0 &
+                 max(forest_s1_1$estimate[forest_s1_1$facet == "Study estimates"]) > 0), NA,
+    "Abstract: 'The results are mixed: Some studies find discrimination against men, and others find discrimination against women'",
+
+  # Introduction
+  "intro_riach_ate", "text", "Riach and Rich (8) effect of being a woman (pp)",
+    -2.4, 1, "value",
+    forest_s1_1$estimate[forest_s1_1$study_name_citation == "Riach and Rich (8): Australia"], NA,
+    "Introduction: 'found a -2.4 percentage point effect of being a woman on receiving an invitation to interview'",
+  "intro_riach_se", "text", "Riach and Rich (8) cluster-robust SE",
+    1.2, 1, "value",
+    forest_s1_1$std.error[forest_s1_1$study_name_citation == "Riach and Rich (8): Australia"], NA,
+    "Introduction: '(cluster-robust SE: 1.2 points)'",
+  "intro_neumark_ate", "text", "Neumark et al. (9) effect of being a woman (pp)",
+    -12.3, 1, "value",
+    forest_s1_1$estimate[forest_s1_1$study_name_citation == "Neumark et al. (9): United States"], NA,
+    "Introduction: 'finding a large and negative but nonsignificant effect (-12.3 points, SE: 8.4 points)'",
+  "intro_neumark_se", "text", "Neumark et al. (9) SE",
+    8.4, 1, "value",
+    forest_s1_1$std.error[forest_s1_1$study_name_citation == "Neumark et al. (9): United States"], NA,
+    "Introduction: '(-12.3 points, SE: 8.4 points)'",
+  "intro_studies", "text", "Field studies collected",
+    57, 0, "value", stat("Field studies"), NA,
     "Introduction: 'We have obtained or reconstructed the data for a total of 57 such studies'",
-  "text", "Field studies with a positive ATE", 37, 0, stat("Field studies with a positive ATE"),
+  "intro_positive", "text", "Field studies with a positive ATE",
+    37, 0, "value", stat("Field studies with a positive ATE"), NA,
     "Introduction: 'two-thirds (37 of 57) show a positive effect of being a woman'",
-  "text", "Occupation CATEs meta-analysed", 298, 0, stat("Occupation CATEs"),
-    "Nobs row of Table 1",
-  "text", "Mean occupations per study", NA, 2, stat("Mean occupations per study"),
-    "Computed by the deposited code and never printed in the article",
-  "text", "Median occupations per study", NA, 0, stat("Median occupations per study"),
-    "Computed by the deposited code and never printed in the article",
-  "text", "Predicted CATE at 0 percent women (pp)", -3.02, 2, mag("Predicted CATE at 0 percent women"),
+  "intro_positive_of", "text", "Field studies the 37 positive effects are counted out of",
+    57, 0, "value", stat("Field studies"), NA,
+    "Introduction: the denominator of '37 of 57', restated from the sentence before",
+  "intro_two_thirds", "text", "Share of studies with a positive ATE",
+    0.667, 3, "approximate",
+    stat("Field studies with a positive ATE") / stat("Field studies"), NA,
+    "Introduction: 'two-thirds (37 of 57)'. A spelled-out approximation, recorded with no verdict",
+  "intro_meta_ate", "text", "Random-effects meta-analytic ATE (pp)",
+    1.2, 1, "value", meta_row(forest_s1_1, "estimate"), NA,
+    "Introduction: 'yields an estimate of 1.2 percentage points with an SE of 0.4 points'",
+  "intro_meta_se", "text", "SE of the meta-analytic ATE",
+    0.4, 1, "value", meta_row(forest_s1_1, "std.error"), NA,
+    "Introduction: 'an SE of 0.4 points'",
+
+  # Theory
+  "theory_composition_min", "text", "Gender composition of a fully men-dominated occupation",
+    0, 0, "value", min(round(panels$fraction_female, 10), na.rm = TRUE), NA,
+    "Theory: 'Among occupations that are fully men dominated, gender composition is 0'. The smallest composition the data carry is the floor of the scale rather than the definition itself",
+  "theory_composition_max", "text", "Gender composition of a fully women-dominated occupation",
+    1, 0, "value", ceiling(max(panels$fraction_female, na.rm = TRUE)), NA,
+    "Theory: 'among occupations that are fully women-dominated, gender composition is 1'. The scale's ceiling, recovered from the observed range",
+
+  # Design and answer strategy
+  "design_studies", "text", "Separate audit studies the 51 papers give",
+    57, 0, "value", stat("Field studies"), NA,
+    "Design: 'for a total of 57 separate audit studies'",
+  "design_boom_year", "text", "Year from which the mass of the evidence map dates",
+    2005, 0, "value", boom_year(), NA,
+    "Design: 'The explosion in audit experimentation began around 2005'. Read as the earliest year from which 95 per cent of the country-year cells come",
+  "design_s4_studies", "text", "Studies whose CATE estimates section S4 presents",
+    57, 0, "value", n_distinct(panels$study_name_citation), NA,
+    "Answer strategy: 'We present CATE estimates for all 57 studies in section S4'",
+
+  # Results
+  "results_ci_level", "text", "Confidence level of the region overlaid on fig. 4 (per cent)",
+    95, 0, "value",
+    100 * (2 * pnorm(mean((table_1$conf.high[table_1$model == "Model 1"] -
+                             table_1$estimate[table_1$model == "Model 1"]) /
+                            table_1$std.error[table_1$model == "Model 1"])) - 1), NA,
+    "Results: 'The meta-regression fit and 95% confidence region are overlaid on the data'. Recovered from the half width of the Table 1 model 1 intervals in standard errors",
+  "results_gradient", "text", "Gender gradient quoted into the text",
+    8.15, 2, "value", table_1_gradient("Model 1"), NA,
+    "Results: 'We find that gender gradient is 8.15 with an SE of 1.50'",
+  "results_gradient_se", "text", "SE of the gender gradient quoted into the text",
+    1.50, 2, "value",
+    table_1$std.error[table_1$model == "Model 1" & table_1$term == "fraction_female"], NA,
+    "Results: 'with an SE of 1.50'",
+  "results_cate_0", "text", "Predicted CATE at 0 percent women (pp)",
+    -3.02, 2, "value", mag("Predicted CATE at 0 percent women"), NA,
     "Results: 'In an occupation with 0% women, we would expect the average CATE to be -3.02 percentage points'",
-  "text", "Predicted CATE at 100 percent women (pp)", 5.13, 2, mag("Predicted CATE at 100 percent women"),
+  "results_cate_0_restated", "text", "The same intercept, restated inside the arithmetic",
+    -3.02, 2, "value", mag("Predicted CATE at 0 percent women"), NA,
+    "Results: 'we would expect the average CATE to be -3.02 + 8.15 = +5.13 points'",
+  "results_gradient_restated", "text", "The same gradient, restated inside the arithmetic",
+    8.15, 2, "value", table_1_gradient("Model 1"), NA,
+    "Results: 'we would expect the average CATE to be -3.02 + 8.15 = +5.13 points'",
+  "results_cate_100", "text", "Predicted CATE at 100 percent women (pp)",
+    5.13, 2, "value", mag("Predicted CATE at 100 percent women"), NA,
     "Results: 'in an occupation with 100% women, we would expect the average CATE to be -3.02 + 8.15 = +5.13 points'",
-  "text", "Difference in magnitude, 100 vs 0 percent women (pp)", 2.10, 2, mag("Difference in magnitude"),
+  "results_magnitude_difference", "text", "Difference in magnitude, 100 vs 0 percent women (pp)",
+    2.10, 2, "value", mag("Difference in magnitude"), "paper_internal",
     "Results: 'by a statistically significant 2.10 points'",
-  "text", "Bootstrapped SE of the difference in magnitude", 0.58, 2,
-    mag("Bootstrapped SE of the difference in magnitude"),
+  "results_magnitude_se", "text", "Bootstrapped SE of the difference in magnitude",
+    0.58, 2, "value", mag("Bootstrapped SE of the difference in magnitude"), NA,
     "Results: '(bootstrapped SE: 0.58)'",
-  "text", "Power of the average audit study to detect the gender gradient (per cent)", 19, 0,
-    100 * stat("Gender gradients significant at p <= 0.05") / stat("Study-level gender gradients"),
+  "results_gradient_stable", "text", "Spread of the gender gradient across the five Table 1 models",
+    NA, 2, "approximate",
+    max(table_1$estimate[table_1$term == "fraction_female"]) -
+      min(table_1$estimate[table_1$term == "fraction_female"]), NA,
+    "Results: 'Across these specifications, the estimated gender gradient remains quite stable'. The article states no number, so the spread is recorded with no verdict",
+  "results_minority_steeper", "text", "Gender gradient steeper for minority than majority applicants",
+    1, 0, "holds",
+    as.numeric(table_2$estimate[table_2$model == "Model 2" & table_2$term == "fraction_female"] >
+                 table_2$estimate[table_2$model == "Model 1" & table_2$term == "fraction_female"]), NA,
+    "Results: 'the gender gradient is estimated to be steeper for minority applicants than for majority applicants'",
+  "results_interaction_not_significant", "text",
+    "Majority by gradient interaction not significant at the 0.05 level",
+    1, 0, "holds",
+    as.numeric(table_2$p.value[table_2$model == "Model 3" &
+                                 table_2$term == "fraction_female:ethnicity_fctMajority"] > 0.05), NA,
+    "Results: 'the uncertainty attending to the estimates is too great to declare the difference between them statistically significant'",
+
+  # Discussion
+  "disc_decades", "text", "Decades of audit experimentation synthesized",
+    4, 1, "approximate", (max(evidence_map$year) - min(evidence_map$year)) / 10, NA,
+    "Discussion: 'what has been learned over the past four decades'. A spelled-out approximation",
+  "disc_gradient_positive", "text", "Pooled gender gradient is positive and excludes zero",
+    1, 0, "holds",
+    as.numeric(table_1$estimate[table_1$model == "Model 1" & table_1$term == "fraction_female"] > 0 &
+                 table_1$conf.low[table_1$model == "Model 1" &
+                                    table_1$term == "fraction_female"] > 0), NA,
+    "Discussion: 'The gender gradient is positive: Women are discriminated against where there are few women, and men are discriminated against where there are few men'",
+  "disc_gradient_studies", "text", "Studies with a study-specific gender gradient estimate",
+    37, 0, "value", stat("Study-level gender gradients"), NA,
+    "Discussion: 'we can obtain study-specific gender gradient estimates for 37 of our studies'",
+  "disc_significant", "text", "Study-specific gender gradients reaching significance",
+    7, 0, "value", stat("Gender gradients significant at p <= 0.05"), NA,
+    "Discussion: 'only 7 of which reach statistical significance'",
+  "disc_power_numerator", "text", "Numerator of the power ratio 7/37",
+    7, 0, "value", stat("Gender gradients significant at p <= 0.05"), NA,
+    "Discussion: 'at 7/37 = 19%'",
+  "disc_power_denominator", "text", "Denominator of the power ratio 7/37",
+    37, 0, "value", stat("Study-level gender gradients"), NA,
+    "Discussion: 'at 7/37 = 19%'",
+  "disc_power", "text", "Power of the average audit study to detect the gender gradient (per cent)",
+    19, 0, "value",
+    100 * stat("Gender gradients significant at p <= 0.05") / stat("Study-level gender gradients"), NA,
     "Discussion: 'puts the statistical power of the average gender employment audit study to detect the gender gradient at 7/37 = 19%'",
-  "text_S3", "Survey experiments collected", 12, 0, stat("Survey experiments"),
-    "Section S3 and fig. S3.4, which plots twelve studies",
-  "text_S3", "Survey occupation CATEs", NA, 0, stat("Survey occupation CATEs"),
-    "Used by fig. S3.3 and never printed in the article",
-  "text_S5", "Study-level gender gradients estimated", 37, 0, stat("Study-level gender gradients"),
+  "disc_synthesized", "text", "Studies synthesized",
+    57, 0, "value", stat("Field studies"), NA,
+    "Discussion: 'by synthesizing 57 of them, we learn that gender composition predicts gender bias'",
+  "disc_since_year", "text", "Year since which most of the record dates",
+    2005, 0, "value", boom_year(), NA,
+    "Discussion: 'Most were conducted in North America and Europe since 2005'",
+  "disc_most_europe_north_america", "text",
+    "Most country-year cells are in Europe or North America",
+    1, 0, "holds",
+    as.numeric(sum(evidence_map$continent %in% c("Europe", "N. America")) >
+                 nrow(evidence_map) / 2), NA,
+    "Discussion: 'Most were conducted in North America and Europe since 2005'",
+  "disc_other_continents", "text",
+    "Country-year cells in South America, Asia or Africa",
+    NA, 0, "approximate",
+    sum(evidence_map$continent %in% c("S. America", "Asia", "Africa")), NA,
+    "Discussion: 'only a handful of studies have been conducted in South America, Asia, or Africa'. The article states no number, so the count is recorded with no verdict",
+
+  # Section S1
+  "s1_studies", "text_S1", "Studies in the fig. S1.1 forest plot",
+    57, 0, "value", sum(forest_s1_1$facet == "Study estimates"), NA,
+    "Section S1: 'Figure S1.1 shows a standard forest plot of the 57 studies in our database'",
+  "s1_meta_ate", "text_S1", "Meta-analytic average effect (pp)",
+    1.2, 1, "value", meta_row(forest_s1_1, "estimate"), NA,
+    "Section S1: 'the effect of being a woman (versus a man) is a 1.2 percentage point increase in callback'",
+  "s1_meta_se", "text_S1", "SE of the meta-analytic average",
+    0.4, 1, "value", meta_row(forest_s1_1, "std.error"), NA,
+    "Section S1: '(SE: 0.4)'",
+
+  # Section S2
+  "s2_early_1980s", "text_S2", "Evidence map cells in the 1980s",
+    1, 0, "value", sum(evidence_map$year %/% 10 == 198), NA,
+    "Section S2: 'We see one early study in Australia in the 1980s'",
+  "s2_early_1990s", "text_S2", "Evidence map cells in the 1990s",
+    1, 0, "value", sum(evidence_map$year %/% 10 == 199), NA,
+    "Section S2: 'followed by one study in the United States in the 1990s'",
+  "s2_boom_year", "text_S2", "Year from which the mass of the evidence map dates, restated",
+    2005, 0, "value", boom_year(), NA,
+    "Section S2: 'We see a boom in audit experiments beginning around 2005 in Europe, North America, and Oceania'",
+
+  # Section S3
+  "s3_survey_experiments", "text_S3", "Survey experiments collected",
+    12, 0, "value", stat("Survey experiments"), NA,
+    "Section S3: 'we also collected 12 vignette survey experiments'",
+  "s3_gradients_similar", "text_S3",
+    "Distance between the survey and field gender gradients",
+    NA, 2, "approximate",
+    abs(gradient_at("Survey experiments") - gradient_at("Field experiments")), NA,
+    "Section S3: 'we find that the gender gradient (the slope with respect to gender composition) is very similar across the two experimental settings'. The article states no number, so the distance is recorded with no verdict",
+
+  # Section S4
+  "s4_minimum_cates", "text_S4", "Occupation CATEs a study needs before a gradient is estimated",
+    3, 0, "value", min(gradients$n_occupations), NA,
+    "Section S4: 'When we have a sufficient number of CATEs (3), we can estimate a study-level gender gradient'",
+  "s4_gradients", "text_S4", "Gender gradients estimated across the 57 studies",
+    37, 0, "value", nrow(gradients), NA,
+    "Section S4: 'The 37 gender gradients we are able to estimate are meta-analyzed in Figure S5.62'",
+
+  # Section S5
+  "s5_gradients", "text_S5", "Study-by-study gender gradient estimates meta-analysed",
+    37, 0, "value", sum(forest_s5_62$facet == "Study gender gradient estimates"), NA,
+    "Section S5: 'We can meta-analyze the 37 study-by-study gender gradient estimates'",
+  "s5_minimum_occupations", "text_S5", "Occupations a study needs to enter the meta-analysis",
+    3, 0, "value", min(gradients$n_occupations), NA,
+    "Section S5: 'can only include studies with three or more occupations'",
+  "s5_fixed_effects_minimum", "text_S5",
+    "Occupations a study needs to enter the study fixed effects estimation",
+    2, 0, "value",
+    min(count(panels, study_name_citation)$n[count(panels, study_name_citation)$n > 1]), NA,
+    "Section S5: 'the fixed effects estimation includes the study if it distinguishes among two or more occupations'. The smallest multi-occupation study in the panels",
+  "s5_studies", "text_S5", "Study-level gender gradients estimated",
+    37, 0, "value", stat("Study-level gender gradients"), NA,
     "Section S5: 'can only include studies with three or more occupations (37 studies)'",
-  "text_S5", "Gender gradients significant at p <= 0.05", 7, 0,
-    stat("Gender gradients significant at p <= 0.05"),
+  "s5_meta_gradient", "text_S5", "Meta-analytic average gender gradient",
+    9.0, 1, "value", meta_row(forest_s5_62, "estimate"), NA,
+    "Section S5: 'The meta-analytic average gender gradient is 9.0'",
+  "s5_meta_se", "text_S5", "SE of the meta-analytic average gender gradient",
+    2.1, 1, "value", meta_row(forest_s5_62, "std.error"), NA,
+    "Section S5: 'with a standard error of 2.1'",
+  "s5_similar_to_table_1", "text_S5",
+    "Distance between the gradient meta-analysis and the Table 1 model 1 gradient",
+    NA, 2, "approximate", abs(meta_row(forest_s5_62, "estimate") - table_1_gradient("Model 1")), NA,
+    "Section S5: 'which is quite similar to the gender gradient estimates presented in Table 1'. The article states no number, so the distance is recorded with no verdict",
+  "s5_significant", "text_S5", "Gender gradients significant at p <= 0.05",
+    7, 0, "value", stat("Gender gradients significant at p <= 0.05"), NA,
     "Section S5: 'Only 7 of these 37 gender gradient estimates are statistically significant'",
-  "fig_S3.3", "Field experimental gradient", NA, 2,
+  "s5_significant_of", "text_S5", "Gradients the seven significant ones are counted out of",
+    37, 0, "value", stat("Study-level gender gradients"), NA,
+    "Section S5: 'Only 7 of these 37'",
+
+  # Quantities the pipeline produces and the article never prints
+  NA, "text", "Mean occupations per study",
+    NA, 2, "value", stat("Mean occupations per study"), NA,
+    "Computed by the deposited code and never printed in the article",
+  NA, "text", "Median occupations per study",
+    NA, 0, "value", stat("Median occupations per study"), NA,
+    "Computed by the deposited code and never printed in the article",
+  NA, "text_S3", "Survey occupation CATEs",
+    NA, 0, "value", stat("Survey occupation CATEs"), NA,
+    "Used by fig. S3.3 and never printed in the article",
+  NA, "fig_S3.3", "Field experimental gradient",
+    NA, 2, "value", gradient_at("Field experiments"), NA,
+    "Fig. S3.3 draws the two fitted lines and prints no numbers",
+  NA, "fig_S3.3", "Field experimental intercept",
+    NA, 2, "value",
     survey_field$estimate[survey_field$experiment_type == "Field experiments" &
-                            survey_field$term == "fraction_female"],
+                            survey_field$term == "intercept"], NA,
     "Fig. S3.3 draws the two fitted lines and prints no numbers",
-  "fig_S3.3", "Field experimental intercept", NA, 2,
-    survey_field$estimate[survey_field$experiment_type == "Field experiments" &
-                            survey_field$term == "intercept"],
+  NA, "fig_S3.3", "Survey experimental gradient",
+    NA, 2, "value", gradient_at("Survey experiments"), NA,
     "Fig. S3.3 draws the two fitted lines and prints no numbers",
-  "fig_S3.3", "Survey experimental gradient", NA, 2,
+  NA, "fig_S3.3", "Survey experimental intercept",
+    NA, 2, "value",
     survey_field$estimate[survey_field$experiment_type == "Survey experiments" &
-                            survey_field$term == "fraction_female"],
-    "Fig. S3.3 draws the two fitted lines and prints no numbers",
-  "fig_S3.3", "Survey experimental intercept", NA, 2,
-    survey_field$estimate[survey_field$experiment_type == "Survey experiments" &
-                            survey_field$term == "intercept"],
+                            survey_field$term == "intercept"], NA,
     "Fig. S3.3 draws the two fitted lines and prints no numbers"
 )
+
+# The page's own precision, where it differs from the precision the computed value needs. The
+# article spells "four decades" as a whole number and the evidence map spans 3.8 of them, so the
+# published string is written out at no decimals and the comparison keeps one.
+text_claims <- text_claims |>
+  mutate(paper_digits = if_else(claim_id %in% c("disc_decades"), 0, digits))
 
 # Published values: Tables 1 and 2 ----
 # Coefficients, standard errors and significance markers as typeset on pages 7 and 8.
@@ -133,6 +422,12 @@ rewrite_table_terms <- c(
   `fraction_female:ethnicity_fctMajority` = "Majority x gradient"
 )
 
+# The published tables name their terms in words and the extraction keys them by a short
+# machine name, so the two meet through this map rather than through a slug of the label.
+table_term_ids <- c(Intercept = "intercept", `Gender gradient` = "gradient",
+                    `Majority status` = "majority",
+                    `Majority x gradient` = "majority_x_gradient")
+
 table_rows <- function(published, rewrite, stem) {
   rewrite <- rewrite |>
     mutate(term_label = unname(rewrite_table_terms[term]),
@@ -155,6 +450,10 @@ table_rows <- function(published, rewrite, stem) {
     select(model, term, part, side, value) |>
     pivot_wider(names_from = side, values_from = value) |>
     transmute(
+      claim_id = str_glue(
+        "{stem}_{str_replace(str_to_lower(model), ' ', '')}_{table_term_ids[term]}_",
+        "{case_when(part == 'estimate' ~ 'estimate', part == 'se' ~ 'std_error', .default = 'stars')}"
+      ),
       table_figure = str_glue("{stem}_{str_replace(str_to_lower(model), ' ', '')}"),
       claim = case_when(
         part == "estimate" ~ term,
@@ -184,6 +483,8 @@ gof_rows <- function(published, rewrite, stem) {
     select(model, part, side, value) |>
     pivot_wider(names_from = side, values_from = value) |>
     transmute(
+      claim_id = str_glue("{stem}_{str_replace(str_to_lower(model), ' ', '')}_",
+                          "{if_else(part == 'Nobs', 'nobs', 'tau_squared')}"),
       table_figure = str_glue("{stem}_{str_replace(str_to_lower(model), ' ', '')}"),
       claim = part,
       value_paper = paper,
@@ -275,6 +576,12 @@ manifest_gt <- published_s2_1 |>
   ) |>
   pivot_longer(everything(), names_to = "claim", values_to = "value_rewrite") |>
   transmute(
+    claim_id = unname(c(
+      "Studies listed" = "table_s2_1_studies_listed",
+      "Subject counts reproduced" = "table_s2_1_subjects",
+      "Occupation counts reproduced" = "table_s2_1_occupations",
+      "Majority / minority inclusion reproduced" = "table_s2_1_inclusion"
+    )[claim]),
     table_figure = "table_S2.1",
     claim,
     value_paper = nrow(published_s2_1),
@@ -426,6 +733,8 @@ forest_gt <- function(published, rewrite, figure, stem) {
     select(label, part, side, value) |>
     pivot_wider(names_from = side, values_from = value) |>
     transmute(
+      claim_id = str_glue("{claim_slug(figure)}_{if_else(part == 'estimate', 'est', 'se')}_",
+                          "{claim_slug(label)}"),
       table_figure = figure,
       claim = if_else(part == "estimate",
                       str_glue("{stem}: {label}"),
@@ -688,6 +997,7 @@ panel_gt <- published_panels |>
   select(figure, label, part, side, value) |>
   pivot_wider(names_from = side, values_from = value) |>
   transmute(
+    claim_id = str_glue("{claim_slug(figure)}_{part}"),
     table_figure = str_glue("fig_{figure}"),
     claim = case_when(
       part == "entries" ~ str_glue("Plotted estimate and standard error labels, {label}"),
@@ -709,6 +1019,7 @@ panel_gt <- published_panels |>
 # first study and draws nothing. Recording that as two rows keyed to what archive_values.R
 # harvests keeps the gap visible instead of leaving 171 silently unverifiable rows.
 panel_coverage <- tibble(
+  claim_id = c("s4_panels_published", "s4_panel_entries_published"),
   table_figure = "figs_S4.5_to_S4.61",
   claim = c("Study panels drawn by the deposited archive",
             "Plotted estimate and standard error labels produced by the deposited archive"),
@@ -720,7 +1031,7 @@ panel_coverage <- tibble(
 
 # Assemble ----
 gt <- bind_rows(
-  published_text,
+  text_claims,
   table_rows(published_table_1, table_1, "table_1"),
   gof_rows(published_table_1, table_1, "table_1"),
   table_rows(published_table_2, table_2, "table_2"),
@@ -732,18 +1043,34 @@ gt <- bind_rows(
   panel_gt,
   panel_coverage
 ) |>
-  mutate(table_figure = as.character(table_figure), claim = as.character(claim))
+  mutate(claim_id = as.character(claim_id),
+         table_figure = as.character(table_figure),
+         claim = as.character(claim),
+         mode = replace_na(mode, "value"),
+         # A row in approximate mode carries two precisions: the page's, at which value_paper is
+         # written out, and the fuller one the computed value needs. Rendering "over the past
+         # four decades" as 4.0 would be the article's own hedge restated to a precision it
+         # never claimed.
+         paper_digits = coalesce(paper_digits, digits))
 
 gt <- gt |>
   left_join(archive, by = c("table_figure", "claim"))
 
 # Verdicts ----
 # Agreement is tested at the precision the article prints, which is why every row carries the
-# number of decimals rather than having it inferred from a double.
-agrees <- function(value, target, digits) {
+# number of decimals rather than having it inferred from a double. A row in "holds" mode has no
+# printed value to agree with and asks whether the statement is true, so the rewrite side is
+# already 1 or 0. A row in "approximate" mode returns no verdict at all: the article named a
+# rough magnitude, and a string comparison there would file an honest hedge as a defect.
+# The epsilon is not decoration. Half a unit in the last printed digit is not representable in
+# binary, so a value that agrees exactly at the page's precision can miss by a few parts in
+# 10^16: abs(-0.375 - -0.37) evaluates to 0.005000000000000004 against a tolerance of 0.005.
+# Without it the comparison rejects a truncation the moment one appears.
+agrees <- function(value, target, digits, mode) {
   case_when(
+    mode == "approximate" ~ NA_real_,
     is.na(value) | is.na(target) ~ NA_real_,
-    abs(value - target) <= 0.5 * 10^(-digits) ~ 1,
+    abs(value - target) <= 0.5 * 10^(-digits) + 1e-9 ~ 1,
     .default = 0
   )
 }
@@ -751,23 +1078,32 @@ agrees <- function(value, target, digits) {
 gt <- gt |>
   mutate(
     paper_id = paper_id,
-    match = agrees(value_script, value_paper, digits),
-    match_rewrite = agrees(value_rewrite, value_paper, digits)
+    match = agrees(value_script, value_paper, digits, mode),
+    match_rewrite = agrees(value_rewrite, value_paper, digits, mode)
   )
 
-# defect_locus, set on every row the rewrite does not match ----
+# defect_locus, set on every row carrying an adverse verdict ----
 # A zero here reads as a failure of the rewrite unless the fault is named, and it almost never
-# is the rewrite. Each of the three cases below was established by inspection, not inferred.
+# is the rewrite. Each case below was established by inspection, not inferred. The clause fires
+# on either verdict: a row where the archive fails and the rewrite succeeds is the signature of
+# a defect too, and leaving it unlabelled is how environment drift goes unrecorded.
 gt <- gt |>
   mutate(
     defect_locus = case_when(
-      is.na(match_rewrite) | match_rewrite == 1 ~ NA_character_,
+      !is.na(locus) & (replace_na(match_rewrite, 0) == 0 | replace_na(match, 1) == 0) ~ locus,
+      (is.na(match_rewrite) | match_rewrite == 1) & (is.na(match) | match == 1) ~ NA_character_,
       claim == "Difference in magnitude, 100 vs 0 percent women (pp)" ~ "paper_internal",
       table_figure == "table_2_model2" &
         str_starts(claim, "Intercept significance stars") ~ "paper_internal",
       claim == "Occupation counts reproduced" ~ "paper_internal",
       claim == "Subject counts reproduced" ~ "archive",
       str_starts(claim, "Occupation sample size labels") ~ "archive",
+      # The archive alone fails on these three, and in both cases the deposit is the reason: it
+      # ships the bootstrap at five resamples, and its panel loop errors on the first study and
+      # draws nothing. Left unlabelled they would read as unexplained, which is the shape a
+      # finding takes when nothing names its cause.
+      claim == "Bootstrapped SE of the difference in magnitude" ~ "archive",
+      table_figure == "figs_S4.5_to_S4.61" ~ "archive",
       .default = "unresolved"
     ),
     notes = case_when(
@@ -781,18 +1117,32 @@ gt <- gt |>
         "The deposit carries no subject count. Summing residual degrees of freedom plus one over a study's occupations recovers the published total where the CATE regressions were fit on subjects; where the study had several applications per job opening the published total is a multiple of it, and the deposit gives no way to recover the multiplier",
       str_starts(claim, "Occupation sample size labels") & match_rewrite == 0 ~
         "The published panel prints a sample size the deposit does not carry. Residual degrees of freedom plus one recovers it for the studies whose CATE regressions were fit on subjects and not for the rest",
+      claim == "Bootstrapped SE of the difference in magnitude" & match == 0 ~
+        "The deposit ships analyze_cates.R with sims <- 5 and the published 500 commented out one line above, so the harvest of the deposited code gives 0.54 where the article and the rewrite give 0.58",
       .default = notes
     )
   )
 
+# value_paper is written out as the string the article prints ----
+# Stored as a double it comes back as 1.5 where the page prints 1.50, and the printed precision
+# is the only typographic fact any of the comparisons above depend on. The comparison is done
+# numerically and the string is rendered afterwards, at the digit count each block recorded.
 gt <- gt |>
-  select(paper_id, table_figure, claim, value_script, value_paper, match,
-         value_rewrite, match_rewrite, defect_locus, notes) |>
-  arrange(factor(table_figure, levels = unique(table_figure)))
+  mutate(
+    value_paper_number = value_paper,
+    value_paper = if_else(is.na(value_paper), NA_character_,
+                          sprintf(paste0("%.", paper_digits, "f"), value_paper))
+  )
 
-# Gates ----
-# A published value with no rewrite counterpart is a join that silently found nothing, which
-# would otherwise be indistinguishable from a quantity the pipeline does not produce.
+gt <- gt |>
+  select(paper_id, claim_id, table_figure, claim, value_script, value_paper, match,
+         value_rewrite, match_rewrite, defect_locus, notes,
+         value_paper_number, digits, mode) |>
+  arrange(factor(table_figure, levels = unique(table_figure)), .locale = "en")
+
+# Gate: a published value with no rewrite counterpart ----
+# A join that silently found nothing would otherwise be indistinguishable from a quantity the
+# pipeline does not produce.
 orphans <- gt |> filter(!is.na(value_paper), is.na(value_rewrite))
 
 if (nrow(orphans) > 0) {
@@ -801,7 +1151,216 @@ if (nrow(orphans) > 0) {
                 "Either a label failed to join or an output is missing."))
 }
 
-stopifnot(all(!is.na(gt$defect_locus[!is.na(gt$match_rewrite) & gt$match_rewrite == 0])))
+# Gate: an adverse verdict on either side needs a locus ----
+# Stated on match_rewrite alone it cannot see a row where the archive fails and the rewrite
+# succeeds, which is the shape environment drift takes.
+adverse <- (!is.na(gt$match_rewrite) & gt$match_rewrite == 0) | (!is.na(gt$match) & gt$match == 0)
+clean <- (is.na(gt$match_rewrite) | gt$match_rewrite == 1) & (is.na(gt$match) | gt$match == 1)
+
+if (any(adverse & is.na(gt$defect_locus)) || any(clean & !is.na(gt$defect_locus))) {
+  print(gt |> filter(adverse & is.na(defect_locus)) |> select(claim_id, table_figure, claim))
+  stop("Every row carrying an adverse verdict needs a defect_locus, and a clean match needs none")
+}
+
+# Gate: the extraction and this file must tell the same story about the page ----
+# ground_truth/published_claims.csv is a second transcription of the same published pages, made
+# by reading the supplement's text layer rather than by typing. Two hand transcriptions are free
+# to drift and nothing else compares them. value_paper is forced to character in every reader:
+# a column whose entries all look numeric is guessed as double, which turns the published 1.50
+# into 1.5 and destroys the printed precision the comparison depends on.
+published_claims <- read_csv(
+  here::here("ground_truth", "published_claims.csv"),
+  col_types = cols(.default = col_character(), value_paper = col_character())
+) |>
+  mutate(needs_block = needs_block == "TRUE")
+
+stopifnot(!anyDuplicated(published_claims$claim_id),
+          !anyDuplicated(na.omit(gt$claim_id)),
+          all(na.omit(gt$claim_id) %in% published_claims$claim_id))
+
+transcription <- gt |>
+  drop_na(claim_id) |>
+  select(claim_id, gt_value = value_paper, gt_number = value_paper_number) |>
+  inner_join(select(published_claims, claim_id, extraction_value = value_paper),
+             by = "claim_id") |>
+  filter(!is.na(gt_number)) |>
+  mutate(
+    numbers_agree = abs(gt_number - as.numeric(extraction_value)) < 1e-9,
+    strings_agree = gt_value == extraction_value
+  )
+
+if (any(!transcription$numbers_agree | !transcription$strings_agree)) {
+  print(transcription |> filter(!numbers_agree | !strings_agree), n = 40)
+  stop("The extraction and the ground truth disagree about what the published page prints")
+}
+
+# Gate: every published float is covered, and by how much of what it prints ----
+# The supplement states its own inventory in its front matter, so coverage is checked against
+# that list rather than against whatever the pipeline happens to produce. "At least one row" is
+# not coverage: each float records the fraction of the numbers it prints that the ground truth
+# reaches.
+published_floats <- c("Table 1", "Table 2", "Table S2.1", "Figure 1", "Figure 2", "Figure 3",
+                      "Figure 4", "Figure 5", "Figure S1.1", "Figure S2.2", "Figure S3.3",
+                      "Figure S3.4", str_glue("Figure S4.{5:61}"), "Figure S5.62", "Figure S6.63")
+
+float_of_row <- function(table_figure) {
+  case_when(
+    str_starts(table_figure, "table_1") ~ "Table 1",
+    str_starts(table_figure, "table_2") ~ "Table 2",
+    table_figure == "table_S2.1" ~ "Table S2.1",
+    str_starts(table_figure, "fig_S4\\.") ~ str_replace(table_figure, "fig_S", "Figure S"),
+    str_starts(table_figure, "fig_") ~ str_replace(table_figure, "fig_S", "Figure S"),
+    .default = NA_character_
+  )
+}
+
+# Numbers each float prints on its face, counted from the published page rather than assumed.
+# A figure that prints none still asserts something, and what it asserts is recorded in the
+# reason beside it.
+float_printed <- bind_rows(
+  tibble(float = c("Table 1", "Table 2"),
+         printed = c(3 * nrow(published_table_1) + 2 * n_distinct(published_table_1$model),
+                     3 * nrow(published_table_2) + 2 * n_distinct(published_table_2$model))),
+  tibble(float = "Table S2.1", printed = 3 * nrow(published_s2_1)),
+  tibble(float = "Figure S1.1", printed = 2 * nrow(published_s1_1)),
+  tibble(float = "Figure S3.4", printed = 2 * nrow(published_s3_4)),
+  tibble(float = "Figure S5.62", printed = 2 * nrow(published_s5_62)),
+  published_panels |>
+    transmute(float = str_glue("Figure {figure}"),
+              printed = lengths(split_labels(entries)) + lengths(split_labels(compositions)) +
+                lengths(split_labels(sample_sizes)))
+)
+
+uncovered_reasons <- tribble(
+  ~float, ~reason,
+  "Figure 1", "A two-panel diagram of the two gender gradients the theory admits. It plots no estimates and the deposit has no code for it",
+  "Figure 2", "The same diagram split by advantaged and disadvantaged group. It plots no estimates and the deposit has no code for it",
+  "Figure 3", "A summary of the discrimination mechanisms the 51 papers discuss, coded by hand. The deposit carries no mechanism or discipline variable, so nothing in the pipeline can reach it",
+  "Figure 4", "The occupation CATEs against gender composition, with the Table 1 model 1 line. It prints no numbers on its face; its estimates are the 298 CATEs and its line is the Table 1 model 1 row, both covered here",
+  "Figure 5", "The same estimates split by majority and minority status, with the Table 2 model 1 and 2 lines. It prints no numbers on its face and both lines are covered here",
+  "Figure S2.2", "An evidence map of country by year tiles. It prints no numbers; what it asserts is which country-year cells are occupied, and the section S2 sentences describing it are covered here",
+  "Figure S3.3", "The survey and field gradients drawn as two fitted lines. It prints no numbers; both fits are recorded here with no published counterpart",
+  "Figure S6.63", "A PRISMA flow diagram of the literature search. Its counts come from the screening process and no data file in the deposit records them"
+)
+
+# A row covers one published number, except where a float is summarised rather than recorded
+# cell by cell: a panel's three rows and the manifest's three column rows each account for a
+# whole column of published labels, and the number they account for is the number the page
+# prints. Counting rows instead would report a 57-label panel as three numbers covered.
+float_coverage <-
+  gt |>
+  mutate(
+    float = float_of_row(table_figure),
+    covers = case_when(
+      str_starts(table_figure, "fig_S4\\.") ~ value_paper_number,
+      table_figure == "table_S2.1" & claim != "Studies listed" ~ value_paper_number,
+      table_figure == "table_S2.1" ~ 0,
+      .default = 1
+    )
+  ) |>
+  drop_na(float) |>
+  summarize(covered = sum(covers), .by = float) |>
+  full_join(float_printed, by = "float") |>
+  full_join(tibble(float = published_floats), by = "float") |>
+  left_join(uncovered_reasons, by = "float") |>
+  mutate(covered = replace_na(covered, 0),
+         share = if_else(is.na(printed) | printed == 0, NA_real_, covered / printed))
+
+# Written out so the report can state the fraction rather than assert that a float has a row.
+# "At least one row" is not coverage: one row against a hundred published cells satisfies every
+# check that asks only whether a float appears, which is the failure this file exists to make
+# visible. Only properties of the published floats and of the ground truth go in it.
+float_coverage |>
+  select(float, printed, covered, share, reason) |>
+  arrange(factor(float, levels = published_floats), .locale = "en") |>
+  write_csv(here::here("ground_truth", "float_coverage.csv"))
+
+unlisted <- setdiff(float_coverage$float, published_floats)
+uncovered <- float_coverage |> filter(covered == 0, is.na(reason))
+partial <- float_coverage |> filter(!is.na(share), share < 1)
+
+if (length(unlisted) > 0 || nrow(uncovered) > 0 || nrow(partial) > 0) {
+  print(float_coverage |> filter(covered == 0 | (!is.na(share) & share < 1)), n = 80)
+  stop(str_glue(
+    "Float coverage gate failed. Floats the supplement does not list: ",
+    "{str_c(unlisted, collapse = ', ')}. Floats with no row and no reason: ",
+    "{str_c(uncovered$float, collapse = ', ')}. Floats covered in part: ",
+    "{str_c(partial$float, collapse = ', ')}."
+  ))
+}
+
+# Gate: the second instrument ran, printed, and agrees ----
+# maintained/in_text_claims.R reaches the same claimed numbers out of the same outputs by its
+# own path, doing its own selection, unit conversion and rounding. It is run here rather than
+# read: a block that errors on its first line, or that ends in a bare expression and so prints
+# nothing under source(), satisfies a scan for markers while checking nothing at all.
+#
+# Sourced into its own environment. Both files necessarily read the same outputs and name their
+# objects for what they hold, so a bare source() would replace this script's own
+# `published_claims` and `out()` with the claims file's, and every gate below would then be
+# running against the wrong objects.
+claims_output <- capture.output(
+  source(here::here("maintained", "in_text_claims.R"), local = new.env())
+)
+
+printed_claims <- tibble(line = claims_output) |>
+  filter(str_starts(line, "CLAIM ")) |>
+  transmute(claim_id = str_match(line, "^CLAIM ([^ ]+) = ")[, 2],
+            value_printed = str_match(line, "^CLAIM [^ ]+ = (.*?) \\|\\| ")[, 2])
+
+stopifnot(!anyDuplicated(printed_claims$claim_id),
+          !any(is.na(printed_claims$claim_id)),
+          !any(is.na(printed_claims$value_printed)))
+
+declared <- published_claims$claim_id[published_claims$needs_block]
+must_have_row <- published_claims$claim_id[published_claims$claim_type %in%
+                                             c("pipeline", "descriptive")]
+
+blockless <- setdiff(declared, printed_claims$claim_id)
+invented <- setdiff(printed_claims$claim_id, declared)
+rowless <- setdiff(must_have_row, na.omit(gt$claim_id))
+
+if (length(blockless) > 0 || length(invented) > 0 || length(rowless) > 0) {
+  stop(str_glue(
+    "Coverage gate failed. Claims with no block in maintained/in_text_claims.R ",
+    "({length(blockless)}): {str_c(head(blockless, 40), collapse = ', ')}. ",
+    "Blocks naming a claim the extraction does not declare ({length(invented)}): ",
+    "{str_c(head(invented, 40), collapse = ', ')}. ",
+    "Claims with no ground truth row ({length(rowless)}): ",
+    "{str_c(head(rowless, 40), collapse = ', ')}."
+  ))
+}
+
+stopifnot(nrow(printed_claims) == length(declared))
+
+# The two instruments must land on the same number. in_text_claims.R prints in the article's
+# units and rounding and never reads this file, so a disagreement is one of the two being wrong.
+#
+# The comparison covers every claim except the ones whose value_rewrite is an agreement count.
+# Where a float is summarised rather than recorded cell by cell, this file's rewrite value is
+# how many of the published labels the rewrite reproduces, and that is not a quantity an
+# instrument which never reads the published page can compute: for those claims the claims file
+# prints what the rewrite writes, which is the strongest statement available to it. The two
+# coincide wherever the labels all reproduce and would silently look like agreement, so the
+# exemption is stated on the class of claim rather than on the rows that differ.
+agreement_counts <- str_starts(gt$table_figure, "fig_S4\\.") | gt$table_figure == "table_S2.1"
+
+instrument_disagreements <-
+  gt |>
+  filter(!agreement_counts) |>
+  drop_na(claim_id) |>
+  inner_join(printed_claims, by = "claim_id") |>
+  filter(!is.na(value_rewrite),
+         sprintf(paste0("%.", digits, "f"), value_rewrite) != value_printed)
+
+if (nrow(instrument_disagreements) > 0) {
+  print(instrument_disagreements |>
+          select(claim_id, value_paper, value_rewrite, value_printed), n = 40)
+  stop(str_glue("The ground truth and maintained/in_text_claims.R disagree on ",
+                "{nrow(instrument_disagreements)} claims."))
+}
+
+gt <- gt |> select(-value_paper_number, -digits, -mode)
 
 write_csv(gt, here::here("ground_truth", str_glue("{paper_id}_ground_truth.csv")))
 
@@ -813,5 +1372,13 @@ print(str_glue(
   "{sum(gt$match_rewrite == 0, na.rm = TRUE)} do not, ",
   "{sum(is.na(gt$match_rewrite))} unverifiable."
 ))
-print(gt |> filter(match_rewrite == 0) |> select(table_figure, claim, value_paper, value_rewrite, defect_locus),
+print(str_glue(
+  "Extraction: {nrow(published_claims)} claims, {length(declared)} needing a block, ",
+  "{nrow(printed_claims)} printed by in_text_claims.R, ",
+  "{nrow(transcription)} reconciled against the ground truth, ",
+  "{sum(!agreement_counts & !is.na(gt$claim_id) & !is.na(gt$value_rewrite))} compared across ",
+  "the two instruments, {nrow(instrument_disagreements)} disagreements."
+))
+print(gt |> filter(match_rewrite == 0 | match == 0) |>
+        select(table_figure, claim, value_paper, value_rewrite, defect_locus),
       n = 100, width = 200)

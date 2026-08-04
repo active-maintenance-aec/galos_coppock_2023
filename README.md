@@ -11,7 +11,10 @@
     output](#the-loop-that-cannot-write-its-own-output)
   - [The bootstrap that ships at five
     iterations](#the-bootstrap-that-ships-at-five-iterations)
+- [Errata](#errata)
 - [Number-by-number comparison](#number-by-number-comparison)
+- [The extraction and the two
+  instruments](#the-extraction-and-the-two-instruments)
 - [Tables 1 and 2](#tables-1-and-2)
 - [Figures](#figures)
   - [Figure S1.1](#figure-s11)
@@ -50,10 +53,14 @@ fresh clone in exactly the way a reproduction check exists to catch.
 **Repository layout.** `maintained/` is the maintained rewrite: one
 script per published table or figure, writing to `output/`, which is
 committed so a reader can compare a fresh run against it without
-downloading anything. `ground_truth/` ties every published number to the
-code that produces it. `original/` is created by the download script and
-is deliberately absent from the repository. This file is the
-reproducibility report, also available as a PDF in `report/`.
+downloading anything, plus `in_text_claims.R`, which recomputes every
+claim the article makes and prints it beside the article’s own sentence.
+`ground_truth/` ties every published number to the code that produces it
+and holds the extraction of the published pages. `original/` is created
+by the download script and is deliberately absent from the repository.
+`errata.qmd` renders `galos_coppock_2023_errata.pdf`, the corrections to
+the published article. This file is the reproducibility report, also
+available as a PDF in `report/`.
 
 **License.** CC0 1.0 Universal, matching the terms of the deposit this
 repository maintains. See `LICENSE`.
@@ -66,13 +73,14 @@ source("run_all.R")
 ```
 
 That fetches the deposit, verifies its 19 files, produces every table
-and figure into `maintained/output/`, and rebuilds the number-by-number
-comparison table in `ground_truth/`. Required packages: tidyverse,
-metafor, broom, scales, rsample, modelsummary, knitr, kableExtra, here.
-Paths resolve through `here`, so nothing depends on the working
-directory. The full run takes about two and a half minutes, almost all
-of it in the 500-resample bootstrap behind one standard error in the
-Results section.
+and figure into `maintained/output/`, rebuilds the number-by-number
+comparison table in `ground_truth/` and its gates, and prints the
+recomputed value of every claim the article makes. Required packages:
+tidyverse, metafor, broom, scales, rsample, modelsummary, knitr,
+kableExtra, here. Paths resolve through `here`, so nothing depends on
+the working directory. The full run takes about two and a half minutes,
+almost all of it in the 500-resample bootstrap behind one standard error
+in the Results section.
 
 A successful run overwrites `maintained/output/`, which is committed:
 **`git diff` on that folder is the reproduction check.** The CSV, TeX
@@ -128,7 +136,7 @@ one published table with no deposited source.
 
 ## Does the maintained rewrite reproduce the paper?
 
-The ground truth records 483 values. 450 of the 476 that can be checked
+The ground truth records 533 values. 492 of the 519 that can be checked
 against the article reproduce, including all 57 study-level average
 treatment effects and their standard errors from fig. S1.1, all 12
 survey experiment effects from fig. S3.4, all 37 study-level gender
@@ -136,7 +144,7 @@ gradients from fig. S5.62, every coefficient, standard error,
 tau-squared and sample size in Tables 1 and 2, and all 335
 estimate-and-standard-error labels printed on the 57 study panels.
 
-The 26 that do not divide into two groups: 3 where the article disagrees
+The 27 that do not divide into two groups: 4 where the article disagrees
 with itself, and 23 where the deposit does not carry the quantity the
 published figure prints.
 
@@ -145,12 +153,15 @@ women-dominated than in men-dominated occupations “by a statistically
 significant 2.10 points”. The archive and the rewrite both give 2.10547,
 which rounds to 2.11 at the printed precision; the published figure is
 the truncation. Published Table 2 prints the Model 2 intercept as −3.72
-with no significance stars, where the coefficient’s p-value is 0.001 and
-the numerically identical −3.73 intercept in Model 3 does carry its two
-stars; the estimate and its standard error are right and only the marker
-is missing. Table S2.1 gives 18 occupations for Gonzalez et al. and 24
-for Dahl and Krog, where the corresponding study panels, figs. S4.37 and
-S4.32, plot 17 and 21.
+with no significance stars, where the coefficient’s p-value is 0.00104
+and the numerically identical −3.73 intercept in Model 3 does carry its
+two stars; the estimate and its standard error are right and only the
+marker is missing. Table S2.1 gives 18 occupations for Gonzalez et
+al. and 24 for Dahl and Krog, where the corresponding study panels,
+figs. S4.37 and S4.32, plot 17 and 21. And the abstract says the
+experiments were carried out across five continents, where the paper’s
+own evidence map is drawn as six continent facets and its earliest study
+is Australian.
 
 **The deposit against the figures.** Every study panel labels each
 occupation with three lines: its name, the share of women in it, and a
@@ -165,7 +176,7 @@ per job opening gives, and the deposit provides no way to recover the
 multiplier. The same gap shows up in table S2.1, whose subject counts
 reconstruct for the same 35 studies.
 
-Not one of the 26 is a defect of the rewrite.
+Not one of the 27 is a defect of the rewrite.
 
 # Paper overview
 
@@ -276,6 +287,36 @@ sims <- 5
 The published standard error is 0.58. At five resamples the archive
 prints 0.54.
 
+# Errata
+
+Five statements in the published article do not survive the comparison,
+and they are collected in `galos_coppock_2023_errata.pdf` at the root of
+this repository, which renders from `errata.qmd` and computes every
+corrected number from `maintained/output/` at the time it is rendered.
+**None of them changes a conclusion of the paper.**
+
+| Correction | Evidence |
+|:---|:---|
+| The abstract says the experiments were carried out across five continents | The paper’s own evidence map is drawn as six continent facets, and the earliest study in the record is Australian |
+| Table S2.1 gives 18 occupations for Gonzalez et al. and 24 for Dahl and Krog | Figs. S4.37 and S4.32 plot 17 and 21 occupations for the same two studies, which is what the deposited data hold |
+| Table 2 prints the Model 2 intercept with no significance marker | The p-value is 0.00104 and the numerically identical Model 3 intercept carries two stars |
+| The article cites fig. S6.66 for the PRISMA flow diagram | The supplementary materials list Figs. S1.1 to S6.63 and there is no fig. S6.66 |
+| The Results section states the difference in magnitude as 2.10 points | The archive and the rewrite both give 2.10547, which rounds to 2.11 at the printed precision |
+
+The five corrections, in the order the errata note gives them.
+
+Three of the five are contradictions between two parts of the article,
+and the ground truth marks them `paper_internal`. The other two are a
+dropped typesetting marker and a truncation, both of which the deposited
+code itself gets right.
+
+This is separate from the question of whether the maintained rewrite
+corrected anything in the deposited code. It did not: the rewrite makes
+no analytical change and fixes no bug, and the two changes it does make
+to how the archive runs, raising the bootstrap from five resamples to
+the published five hundred and replacing an `NA` sort key, are described
+above.
+
 # Number-by-number comparison
 
 The ground truth is at
@@ -287,8 +328,8 @@ from the published article and its supplementary materials;
 `value_rewrite` out of `maintained/output/`. The verdicts are computed
 at the precision the article prints rather than asserted.
 
-It records 483 values. 300 of them have both a published counterpart and
-a deposited-code counterpart, and of those 295 match and 5 do not.
+It records 533 values. 299 of them have both a published counterpart and
+a deposited-code counterpart, and of those 294 match and 5 do not.
 
 Most of the published values are inside figures rather than in prose.
 Figures S1.1, S3.4 and S5.62 print the estimate and standard error
@@ -302,6 +343,7 @@ one by one.
 | figs_S4.5_to_S4.61 | 173 | 151 | 22 |
 | fig_S1.1 | 116 | 116 | 0 |
 | fig_S5.62 | 76 | 76 | 0 |
+| text | 40 | 35 | 2 |
 | fig_S3.4 | 26 | 26 | 0 |
 | table_2_model3 | 14 | 14 | 0 |
 | table_1_model1 | 8 | 8 | 0 |
@@ -311,59 +353,150 @@ one by one.
 | table_1_model5 | 8 | 8 | 0 |
 | table_2_model1 | 8 | 8 | 0 |
 | table_2_model2 | 8 | 7 | 1 |
-| text | 8 | 7 | 1 |
+| text_S5 | 8 | 8 | 0 |
 | table_S2.1 | 4 | 2 | 2 |
-| text_S5 | 2 | 2 | 0 |
+| text_S1 | 3 | 3 | 0 |
+| text_S2 | 3 | 3 | 0 |
+| text_S4 | 2 | 2 | 0 |
 | text_S3 | 1 | 1 | 0 |
 
 Where the checkable published numbers are, and how the rewrite does
 against them.
 
 | Location | Quantity | Paper | Rewrite | Where the fault lies |
-|:---|:---|---:|---:|:---|
-| text | Difference in magnitude, 100 vs 0 percent women (pp) | 2.1 | 2.105 | paper_internal |
-| table_2_model2 | Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three) | 0.0 | 2.000 | paper_internal |
-| table_S2.1 | Subject counts reproduced | 57.0 | 35.000 | archive |
-| table_S2.1 | Occupation counts reproduced | 57.0 | 55.000 | paper_internal |
-| fig_S4.8 | Occupation sample size labels, Alden et al. (68): Sweden | 2.0 | 0.000 | archive |
-| fig_S4.11 | Occupation sample size labels, Asali et al. (70): Georgia | 9.0 | 0.000 | archive |
-| fig_S4.13 | Occupation sample size labels, Baert et al. (71): Belgium | 1.0 | 0.000 | archive |
-| fig_S4.14 | Occupation sample size labels, Baert et al. (72): Belgium | 1.0 | 0.000 | archive |
-| fig_S4.17 | Occupation sample size labels, Berson (75): France | 1.0 | 0.000 | archive |
-| fig_S4.28 | Occupation sample size labels, Carlsson (13): Sweden | 13.0 | 0.000 | archive |
-| fig_S4.32 | Occupation sample size labels, Dahl and Krog (84): Denmark | 21.0 | 3.000 | archive |
-| fig_S4.33 | Occupation sample size labels, Edo et al. (85): France | 3.0 | 0.000 | archive |
-| fig_S4.37 | Occupation sample size labels, Gonzalez et al. (89): Spain | 17.0 | 0.000 | archive |
-| fig_S4.38 | Occupation sample size labels, Hipp (90): Germany | 1.0 | 0.000 | archive |
-| fig_S4.42 | Occupation sample size labels, Neumark et al. (9): United States | 1.0 | 0.000 | archive |
-| fig_S4.43 | Occupation sample size labels, Nunley et al. (93): United States | 6.0 | 0.000 | archive |
-| fig_S4.44 | Occupation sample size labels, Oreopoulos (94): Canada | 21.0 | 1.000 | archive |
-| fig_S4.46 | Occupation sample size labels, Pedulla (96): United States, field experiment | 4.0 | 0.000 | archive |
-| fig_S4.47 | Occupation sample size labels, Petit (97): France | 1.0 | 0.000 | archive |
-| fig_S4.50 | Occupation sample size labels, Riach and Rich (8): Australia | 7.0 | 0.000 | archive |
-| fig_S4.51 | Occupation sample size labels, Riach and Rich (100): England | 4.0 | 0.000 | archive |
-| fig_S4.52 | Occupation sample size labels, Rivera and Tilcsik (101): United States, field experiment | 1.0 | 0.000 | archive |
-| fig_S4.53 | Occupation sample size labels, Rooth (102): Sweden | 7.0 | 0.000 | archive |
-| fig_S4.54 | Occupation sample size labels, Ruffle and Shtudiner (103): Israel | 10.0 | 1.000 | archive |
-| fig_S4.60 | Occupation sample size labels, Zhou et al. (108): China | 4.0 | 0.000 | archive |
-| fig_S4.61 | Occupation sample size labels, Capéau et al. (82): Belgium | 1.0 | 0.000 | archive |
+|:---|:---|:---|---:|:---|
+| text | Continents the experiments were carried out across | 5 | 6.000 | paper_internal |
+| text | Difference in magnitude, 100 vs 0 percent women (pp) | 2.10 | 2.105 | paper_internal |
+| table_2_model2 | Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three) | 0 | 2.000 | paper_internal |
+| table_S2.1 | Subject counts reproduced | 57 | 35.000 | archive |
+| table_S2.1 | Occupation counts reproduced | 57 | 55.000 | paper_internal |
+| fig_S4.8 | Occupation sample size labels, Alden et al. (68): Sweden | 2 | 0.000 | archive |
+| fig_S4.11 | Occupation sample size labels, Asali et al. (70): Georgia | 9 | 0.000 | archive |
+| fig_S4.13 | Occupation sample size labels, Baert et al. (71): Belgium | 1 | 0.000 | archive |
+| fig_S4.14 | Occupation sample size labels, Baert et al. (72): Belgium | 1 | 0.000 | archive |
+| fig_S4.17 | Occupation sample size labels, Berson (75): France | 1 | 0.000 | archive |
+| fig_S4.28 | Occupation sample size labels, Carlsson (13): Sweden | 13 | 0.000 | archive |
+| fig_S4.32 | Occupation sample size labels, Dahl and Krog (84): Denmark | 21 | 3.000 | archive |
+| fig_S4.33 | Occupation sample size labels, Edo et al. (85): France | 3 | 0.000 | archive |
+| fig_S4.37 | Occupation sample size labels, Gonzalez et al. (89): Spain | 17 | 0.000 | archive |
+| fig_S4.38 | Occupation sample size labels, Hipp (90): Germany | 1 | 0.000 | archive |
+| fig_S4.42 | Occupation sample size labels, Neumark et al. (9): United States | 1 | 0.000 | archive |
+| fig_S4.43 | Occupation sample size labels, Nunley et al. (93): United States | 6 | 0.000 | archive |
+| fig_S4.44 | Occupation sample size labels, Oreopoulos (94): Canada | 21 | 1.000 | archive |
+| fig_S4.46 | Occupation sample size labels, Pedulla (96): United States, field experiment | 4 | 0.000 | archive |
+| fig_S4.47 | Occupation sample size labels, Petit (97): France | 1 | 0.000 | archive |
+| fig_S4.50 | Occupation sample size labels, Riach and Rich (8): Australia | 7 | 0.000 | archive |
+| fig_S4.51 | Occupation sample size labels, Riach and Rich (100): England | 4 | 0.000 | archive |
+| fig_S4.52 | Occupation sample size labels, Rivera and Tilcsik (101): United States, field experiment | 1 | 0.000 | archive |
+| fig_S4.53 | Occupation sample size labels, Rooth (102): Sweden | 7 | 0.000 | archive |
+| fig_S4.54 | Occupation sample size labels, Ruffle and Shtudiner (103): Israel | 10 | 1.000 | archive |
+| fig_S4.60 | Occupation sample size labels, Zhou et al. (108): China | 4 | 0.000 | archive |
+| fig_S4.61 | Occupation sample size labels, Capéau et al. (82): Belgium | 1 | 0.000 | archive |
 
 Every published value the rewrite does not match, and where the fault
 lies.
 
-The 7 remaining recorded quantities are ones the scripts produce and the
-paper never prints: the mean and median number of occupations per study,
-the count of survey occupation CATEs, and the intercept and slope of the
-two fitted lines in fig. S3.3, which are drawn but never stated
-numerically. They are recorded with no published counterpart rather than
-counted as matches.
+The 11 remaining recorded quantities are ones the scripts produce and
+the paper never prints: the mean and median number of occupations per
+study, the count of survey occupation CATEs, the intercept and slope of
+the two fitted lines in fig. S3.3, which are drawn but never stated
+numerically, and the four distances that stand behind a sentence
+describing two quantities as similar or stable. They are recorded with
+no published counterpart rather than counted as matches.
 
-Four published floats have no row here, and none of them has any source
-in the deposit. Figures 1, 2 and 3 of the article are conceptual
-diagrams and a coding summary rather than analyses of the
-meta-reanalysis data. Figure S6.63 is a PRISMA flow diagram recording
-the literature search, whose counts come from the screening process and
-not from any data file in the deposit.
+A further 3 claims are recorded with a published value and no verdict,
+because the article states them as approximations. “Two-thirds (37 of
+57)” and “over the past four decades” are true at the precision they
+claim and false at any finer one, so both numbers are recorded and
+neither is scored.
+
+**Coverage is recorded as a fraction, not as a yes or no.** A float with
+one row against a hundred published cells satisfies any check that asks
+only whether the float appears, so the build counts the numbers each
+published float prints on its face and requires the ground truth to
+account for all of them. `ground_truth/float_coverage.csv` holds that
+count float by float. Of the 71 floats the article and its supplementary
+front matter list, 64 carry rows here. The 63 that print numbers on
+their faces carry 1,390 published values between them, and the ground
+truth reaches every one, so each of those floats is covered in full. The
+build stops if any float falls below that.
+
+The remaining 7 published floats have no row here, and the build stops
+if a float has neither a row nor a stated reason, since a false reason
+tells the next reader not to look. Figures 1 and 2 are diagrams of the
+two gender gradients the theory admits and plot no estimates. Figure 3
+summarises the discrimination mechanisms the 51 papers discuss, coded by
+hand; the deposit carries no mechanism or discipline variable, so
+nothing in the pipeline can reach it. Figures 4 and 5 print no numbers
+on their faces, and the estimates and lines they draw are the 298
+occupation CATEs and the Table 1 and Table 2 fits, all covered above.
+Figure S2.2 is a map of country-by-year tiles, and what it asserts is
+checked through the section S2 sentences that describe it. Figure S6.63
+is a PRISMA flow diagram whose counts come from the screening process
+and not from any data file in the deposit.
+
+# The extraction and the two instruments
+
+The comparison above answers “does the pipeline reproduce the published
+floats.” It cannot answer “does the pipeline reproduce the published
+article,” because a ground truth built float by float has no way to
+notice a sentence. Two further files close that gap.
+
+**The extraction.** `ground_truth/published_claims.csv` is a
+hand-reviewed list of every numeric claim the article and its
+supplementary materials make: 596 of them, each with the string the page
+prints and a classification.
+
+| Claim type   | No block | Needs a block |
+|:-------------|---------:|--------------:|
+| definitional |        6 |            12 |
+| descriptive  |        0 |            18 |
+| pipeline     |        0 |           500 |
+| structural   |       23 |            27 |
+| transcribed  |        8 |             2 |
+
+The extraction, by claim type. A pipeline or descriptive claim must have
+both a block and a ground truth row; the other three types get a block
+only where the pipeline can reach the quantity, and are otherwise
+verified at the point of use.
+
+The float cells are read off the supplementary PDF’s own text layer by
+`ground_truth/extract_published_claims.R`, which is not part of
+`run_all.R` because this repository does not carry the published PDFs.
+The prose claims, the two published tables and the front matter are
+typed from the page. That makes the extraction a second transcription of
+the same pages the ground truth transcribes, and the build compares the
+two: all 522 published values they share agree, digit for digit.
+
+**The second instrument.** `maintained/in_text_claims.R` recomputes
+every claim the extraction says needs a block, from
+`maintained/output/`, by its own path. It carries the article’s own
+sentence verbatim in a comment above each block and prints one line per
+claim. It never reads the ground truth. `build_ground_truth.R` runs it,
+counts what it printed against what the extraction declares, and stops
+if the two disagree; it then compares the two instruments value by
+value, and stops if they land on different numbers. The 175 claims about
+summarised floats are exempt from that last comparison, because their
+ground-truth value is a count of agreements with the published page and
+an instrument that never reads the page cannot recompute one.
+
+**Three findings came from the extraction and not from the floats.** The
+abstract’s “five continents” against an evidence map drawn as six is the
+first, and it is now the first entry of the errata. The second is the
+article’s own cross-reference to fig. S6.66. The third is a disagreement
+the article has with itself about a date: the introduction says the
+earliest study sent its applications in 1986, while the abstract dates
+the record from 1983 and the deposit’s own study table and evidence map
+both put that study in 1983. Which is right is a fact about the cited
+1987 paper rather than about this deposit, so it is recorded and left
+there rather than corrected.
+
+A fourth is worth stating and is not an erratum either. The Design
+section says the PRISMA search “yielded over 70 papers that met our
+inclusion criteria”, where the PRISMA flow diagram of fig. S6.63 reports
+51 reports included and 89 assessed for eligibility. No reading of the
+diagram gives over 70, and nothing in the deposit records the search, so
+the sentence cannot be corrected from the pipeline.
 
 # Tables 1 and 2
 
@@ -453,12 +586,13 @@ alt="Figure S5.62 as reproduced by the maintained rewrite." />
 
 # Maintained rewrite
 
-The rewrite lives in `maintained/`: `helpers.R` plus fourteen scripts
-covering one cleaning step, three published tables, eight figures, and
-two sets of in-text quantities. It is a translation, not a reanalysis.
-Every estimator, specification and sample restriction is the one the
-paper used, and the published tables come out of `metafor::rma.uni()`
-with the same formulas the archive writes.
+The rewrite lives in `maintained/`: `helpers.R` plus fifteen scripts
+covering one cleaning step, three published tables, eight figures, two
+sets of in-text quantities, and the claims file that recomputes every
+number the article states. It is a translation, not a reanalysis. Every
+estimator, specification and sample restriction is the one the paper
+used, and the published tables come out of `metafor::rma.uni()` with the
+same formulas the archive writes.
 
 ## Architecture
 
@@ -479,6 +613,7 @@ with the same formulas the archive writes.
 | figure_s5_62_gender_gradient_forest.R | Figure S5.62 and its 76 plotted values |
 | text_summary_stats.R | The counts quoted in the text and in section S5 |
 | text_difference_in_magnitude.R | The predicted CATEs and the bootstrapped SE |
+| in_text_claims.R | One printed line per claim the article makes |
 
 The maintained rewrite.
 

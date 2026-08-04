@@ -38,8 +38,16 @@ source(here::here("maintained", "text_difference_in_magnitude.R"))
 
 # Ground truth ----
 # Joins the published values to what the scripts above wrote, so the comparison table is
-# generated rather than transcribed. It has to run last.
+# generated rather than transcribed. It has to run after everything it reads. Its gates run
+# maintained/in_text_claims.R under capture.output and count what it printed, so the file below
+# necessarily runs twice: once for the gate, once for the human-readable log.
 source(here::here("ground_truth", "build_ground_truth.R"))
+
+# In-text claims ----
+# The second instrument. Every claim the article makes, recomputed from maintained/output/ by a
+# separate path from the one the ground truth takes, printed with the article's own sentence
+# beside it in the source.
+source(here::here("maintained", "in_text_claims.R"))
 
 # Deposited archive, again ----
 # The check at the top of this file is a precondition: it says original/ was intact

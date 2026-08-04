@@ -1,0 +1,597 @@
+claim_id,location,claim_type,value_paper,needs_block,claim,notes
+abstract_since_year,Abstract,pipeline,1983,TRUE,Year the audit experimental record on gender begins,
+abstract_experiments,Abstract,structural,70,FALSE,Employment audit experiments conducted since 1983,"A property of the literature the search identified, not of the reanalysed data"
+abstract_countries,Abstract,descriptive,26,TRUE,Countries the experiments were carried out in,"Classed with the continent count beside it in the same clause rather than with the study count, which is a property of the literature the search identified and is repeated verbatim in two later sections. The deposit records the countries of the 57 studies reanalysed and not those of the wider literature, so the ground truth records both numbers and returns no verdict"
+abstract_continents,Abstract,descriptive,5,TRUE,Continents the experiments were carried out across,
+intro_riach_resumes,"Introduction, p. 1",transcribed,1982,FALSE,Resumes sent by Riach and Rich (8),A fact about the cited study
+intro_riach_openings,"Introduction, p. 1",transcribed,991,FALSE,Job openings applied to by Riach and Rich (8),A fact about the cited study
+intro_riach_year,"Introduction, p. 1",transcribed,1986,TRUE,Year Riach and Rich (8) sent their applications,
+intro_riach_ate,"Introduction, p. 1",pipeline,-2.4,TRUE,"Riach and Rich (8) effect of being a woman, in percentage points",
+intro_riach_se,"Introduction, p. 1",pipeline,1.2,TRUE,Riach and Rich (8) cluster-robust standard error,
+intro_neumark_applicants,"Introduction, p. 1",transcribed,130,FALSE,Applicants in Neumark et al. (9),A fact about the cited study
+intro_neumark_jobs,"Introduction, p. 1",transcribed,65,FALSE,Restaurant jobs in Neumark et al. (9),A fact about the cited study
+intro_neumark_year,"Introduction, p. 1",transcribed,1994,TRUE,Year Neumark et al. (9) was conducted,
+intro_neumark_ate,"Introduction, p. 1",pipeline,-12.3,TRUE,"Neumark et al. (9) effect of being a woman, in percentage points",
+intro_neumark_se,"Introduction, p. 1",pipeline,8.4,TRUE,Neumark et al. (9) standard error,
+intro_literature_studies,"Introduction, p. 1",structural,70,FALSE,Employment audit studies randomizing applicant gender conducted in total,A property of the literature the search identified
+intro_studies,"Introduction, p. 1",pipeline,57,TRUE,Studies whose data were obtained or reconstructed,
+intro_papers,"Introduction, p. 1",structural,51,TRUE,Papers reporting the 57 studies,
+intro_positive,"Introduction, p. 1",pipeline,37,TRUE,Studies showing a positive effect of being a woman,
+intro_positive_of,"Introduction, p. 1",pipeline,57,TRUE,Studies the 37 positive effects are counted out of,
+intro_two_thirds,"Introduction, p. 1",descriptive,0.667,TRUE,"Share of studies with a positive effect, described as two-thirds",A spelled-out number; no token scan sees it
+intro_meta_ate,"Introduction, p. 1",pipeline,1.2,TRUE,"Random-effects meta-analytic average treatment effect, in percentage points",
+intro_meta_se,"Introduction, p. 1",pipeline,0.4,TRUE,Standard error of the meta-analytic average treatment effect,
+theory_composition_min,"Theory, p. 2",definitional,0,TRUE,Gender composition of a fully men-dominated occupation,
+theory_composition_max,"Theory, p. 2",definitional,1,TRUE,Gender composition of a fully women-dominated occupation,
+theory_parity,"Theory, p. 2",definitional,50,FALSE,"Gender composition an employer correcting an imbalance is said to aim at, in per cent","A description of hiring policy, not a quantity the deposit records"
+theory_yougov,"Theory, p. 3",transcribed,37,FALSE,"Share of men in a 2019 YouGov poll who believe diversity efforts disadvantage males, in per cent",Copied from the cited poll
+theory_yougov_year,"Theory, p. 3",transcribed,2019,FALSE,Year of the YouGov poll,Copied from the cited poll
+theory_pew,"Theory, p. 3",transcribed,28,FALSE,"Share of men in a 2020 Pew poll saying women's gains came at their expense, in per cent",Copied from the cited poll
+theory_pew_year,"Theory, p. 3",transcribed,2020,FALSE,Year of the Pew Research poll,Copied from the cited poll
+theory_range_upper,"Theory, p. 3",definitional,50,FALSE,"Upper end of the gender composition range over which popular discourse expects a negative gradient, in per cent","A statement about the claim being characterised, not about the data"
+mech_papers,"Mechanisms, p. 4",structural,51,TRUE,Papers whose theory sections were coded for mechanisms,
+mech_studies,"Mechanisms, p. 4",structural,57,TRUE,Studies the 51 coded papers encompass,
+mech_categories,"Mechanisms, p. 4",structural,5,TRUE,Broad mechanism categories the papers were coded into,A spelled-out number; the coding is not in the deposit
+mech_sixth,"Mechanisms, p. 4",structural,6,TRUE,Category index of the residual mechanism category,A spelled-out number; the coding is not in the deposit
+mech_theory_groups,"Mechanisms, p. 4",structural,5,TRUE,Groups of theories said to be represented in multiple disciplines,A spelled-out number; the coding is not in the deposit
+mech_economics,"Mechanisms, p. 4",structural,24,TRUE,Included studies published in economics journals,"Printed as a parenthetical, which a citation filter drops"
+mech_sociology,"Mechanisms, p. 4",structural,14,TRUE,Included studies published in sociology journals,"Printed as a parenthetical, which a citation filter drops"
+mech_other_journals,"Mechanisms, p. 4",structural,13,TRUE,"Included studies published in interdisciplinary, psychology or management science journals","Printed as a parenthetical, which a citation filter drops"
+design_prisma_papers,"Design, p. 5",structural,70,TRUE,Papers the PRISMA search process is said to have yielded that met the inclusion criteria,
+design_microdata_papers,"Design, p. 5",structural,51,TRUE,Papers whose microdata were obtained or reconstructed,
+design_studies,"Design, p. 5",pipeline,57,TRUE,Separate audit studies the 51 papers give,
+design_prisma_figure,"Design, p. 5",structural,66,TRUE,Running index of the supplementary figure the article cites for the PRISMA flow diagram,The article prints fig. S6.66; the supplement numbers its figures section.index and its last is S6.63
+design_evidence_map_figure,"Design, p. 5",structural,2,TRUE,Running index of the supplementary figure the article cites for the evidence map,"Printed as fig. S.2.2, with a stray period the figure itself does not carry"
+design_boom_year,"Design, p. 5",descriptive,2005,TRUE,Year around which the explosion in audit experimentation began,
+design_isco_version,"Design, p. 5",definitional,08,FALSE,ISCO classification version used to code occupations,"A property of the coding scheme, not a quantity in the deposit"
+design_isco_digits,"Design, p. 5",definitional,2,FALSE,Digits of the ISCO submajor group level,A spelled-out number; a property of the coding scheme
+design_zero_callback,"Answer strategy, p. 6",structural,5,TRUE,Occupation settings in which no applicant of either gender received a callback,A spelled-out number; the deposit carries no callback rates
+design_s4_studies,"Answer strategy, p. 6",pipeline,57,TRUE,Studies whose CATE estimates section S4 presents,
+results_ci_level,"Results, p. 6",definitional,95,TRUE,"Confidence level of the region overlaid on fig. 4, in per cent",
+results_gradient,"Results, p. 6",pipeline,8.15,TRUE,"Gender gradient, quoted from column 1 of Table 1 into the text",
+results_gradient_se,"Results, p. 6",pipeline,1.50,TRUE,"Standard error of the gender gradient, quoted into the text",
+results_cate_0,"Results, p. 6",pipeline,-3.02,TRUE,"Expected CATE in an occupation with no women, in percentage points",
+results_cate_0_restated,"Results, p. 6",pipeline,-3.02,TRUE,"The same intercept, restated inside the arithmetic of the following clause",
+results_gradient_restated,"Results, p. 6",pipeline,8.15,TRUE,"The same gradient, restated inside the arithmetic of the following clause",
+results_cate_100,"Results, p. 6",pipeline,5.13,TRUE,"Expected CATE in an occupation with only women, in percentage points",
+results_magnitude_difference,"Results, p. 6",pipeline,2.10,TRUE,"Difference in the magnitude of the two predicted biases, in percentage points",
+results_magnitude_se,"Results, p. 6",pipeline,0.58,TRUE,Bootstrapped standard error of that difference,
+results_fe_first_column,"Results, p. 6",structural,2,TRUE,First column of Table 1 carrying fixed effects,
+results_fe_last_column,"Results, p. 6",structural,5,TRUE,Last column of Table 1 carrying fixed effects,
+disc_decades,"Discussion, p. 7",descriptive,4,TRUE,Decades of audit experimentation the paper synthesizes,A spelled-out number: over the past four decades
+disc_gradient_studies,"Discussion, p. 7",pipeline,37,TRUE,Studies with a study-specific gender gradient estimate,
+disc_significant,"Discussion, p. 7",pipeline,7,TRUE,Study-specific gender gradients reaching statistical significance,
+disc_power_numerator,"Discussion, p. 7",pipeline,7,TRUE,Numerator of the power ratio 7/37,
+disc_power_denominator,"Discussion, p. 7",pipeline,37,TRUE,Denominator of the power ratio 7/37,
+disc_power,"Discussion, p. 7",pipeline,19,TRUE,"Statistical power of the average audit study to detect the gender gradient, in per cent",
+disc_literature_studies,"Discussion, p. 8",structural,70,FALSE,Audit studies the record currently stands at,A property of the literature the search identified
+disc_synthesized,"Discussion, p. 8",pipeline,57,TRUE,Studies synthesized here,
+disc_since_year,"Discussion, p. 8",descriptive,2005,TRUE,Year since which most studies were conducted in North America and Europe,
+fig4_note_column,"Fig. 4 caption, p. 6",structural,1,TRUE,Column of Table 1 the fig. 4 regression line is derived from,
+fig5_note_column_1,"Fig. 5 caption, p. 8",structural,1,TRUE,First column of Table 2 the fig. 5 regression lines are derived from,
+fig5_note_column_2,"Fig. 5 caption, p. 8",structural,2,TRUE,Second column of Table 2 the fig. 5 regression lines are derived from,
+table_1_note_p05,"Table 1 note, p. 7",definitional,0.05,TRUE,One-star significance threshold in Table 1,
+table_1_note_p01,"Table 1 note, p. 7",definitional,0.01,TRUE,Two-star significance threshold in Table 1,
+table_1_note_p001,"Table 1 note, p. 7",definitional,0.001,TRUE,Three-star significance threshold in Table 1,
+table_2_note_p05,"Table 2 note, p. 8",definitional,0.05,TRUE,One-star significance threshold in Table 2,Restates the Table 1 note verbatim
+table_2_note_p01,"Table 2 note, p. 8",definitional,0.01,TRUE,Two-star significance threshold in Table 2,Restates the Table 1 note verbatim
+table_2_note_p001,"Table 2 note, p. 8",definitional,0.001,TRUE,Three-star significance threshold in Table 2,"Restates the Table 1 note verbatim. A quantity stated twice is checked twice, so it gets its own block"
+supp_first_figure,Supplementary front matter,structural,1,TRUE,Running index of the first figure the supplementary front matter lists,"Printed as S1.1: section 1, figure 1"
+supp_last_figure,Supplementary front matter,structural,63,TRUE,Running index of the last figure the supplementary front matter lists,"Printed as S6.63: section 6, figure 63"
+supp_first_section,Supplementary front matter,structural,1,FALSE,First supplementary section number,A property of the document's own numbering
+supp_last_section,Supplementary front matter,structural,6,FALSE,Last supplementary section number,A property of the document's own numbering
+supp_tables,Supplementary front matter,structural,1,TRUE,Tables in the supplementary materials,
+s1_studies,Section S1,pipeline,57,TRUE,Studies in the fig. S1.1 forest plot,
+s1_meta_ate,Section S1,pipeline,1.2,TRUE,"Meta-analytic average effect of being a woman, in percentage points",
+s1_meta_se,Section S1,pipeline,0.4,TRUE,Standard error of the meta-analytic average,
+s2_early_1980s,Section S2,descriptive,1,TRUE,Studies in the evidence map in the 1980s,A spelled-out number: one early study in Australia in the 1980s
+s2_early_1990s,Section S2,descriptive,1,TRUE,Studies in the evidence map in the 1990s,A spelled-out number: one study in the United States in the 1990s
+s2_boom_year,Section S2,descriptive,2005,TRUE,Year around which the evidence map shows a boom,
+s3_survey_experiments,Section S3,pipeline,12,TRUE,Vignette survey experiments collected,
+s3_scale_min,Section S3,definitional,0,FALSE,Lowest value of the hiring likelihood rating scale,"The deposit carries the dichotomized outcome, not the rating"
+s3_scale_max,Section S3,definitional,10,FALSE,Highest value of the hiring likelihood rating scale,"The deposit carries the dichotomized outcome, not the rating"
+s4_minimum_cates,Section S4,definitional,3,TRUE,Occupation CATEs a study needs before a gender gradient is estimated,
+s4_gradients,Section S4,pipeline,37,TRUE,Gender gradients estimated across the 57 studies,
+s5_gradients,Section S5,pipeline,37,TRUE,Study-by-study gender gradient estimates meta-analysed in section S5,
+s5_model_reference,Section S5,structural,5,TRUE,Table 1 model the gender gradient meta-analysis is compared to,
+s5_minimum_occupations,Section S5,definitional,3,TRUE,Occupations a study needs to enter the gender gradient meta-analysis,
+s5_fixed_effects_minimum,Section S5,definitional,2,TRUE,Occupations a study needs to enter the study fixed effects estimation,
+s5_studies,Section S5,pipeline,37,TRUE,Studies with three or more occupations,
+s5_meta_gradient,Section S5,pipeline,9.0,TRUE,Meta-analytic average gender gradient,
+s5_meta_se,Section S5,pipeline,2.1,TRUE,Standard error of the meta-analytic average gender gradient,
+s5_significant,Section S5,pipeline,7,TRUE,Gender gradient estimates that are statistically significant,
+s5_significant_of,Section S5,pipeline,37,TRUE,Gender gradient estimates the seven significant ones are counted out of,
+s6_prisma_year,Section S6,structural,2020,FALSE,PRISMA template version used,A property of the reporting standard
+s6_identified,Fig. S6.63,structural,439,FALSE,Total number of studies identified,Search process; not in the deposit
+s6_databases,Fig. S6.63,structural,238,FALSE,Records identified from databases,Search process; not in the deposit
+s6_prior_gender,Fig. S6.63,structural,82,FALSE,Records from previous meta-analyses focused on gender discrimination,Search process; not in the deposit
+s6_prior_ethnic,Fig. S6.63,structural,119,FALSE,Records from previous meta-analyses focused on ethnic or racial discrimination,Search process; not in the deposit
+s6_duplicates,Fig. S6.63,structural,210,FALSE,Duplicate records removed,Search process; not in the deposit
+s6_automation,Fig. S6.63,structural,0,FALSE,Records marked ineligible by automation tools,Search process; not in the deposit
+s6_other_removed,Fig. S6.63,structural,0,FALSE,Records removed for other reasons,Search process; not in the deposit
+s6_screened,Fig. S6.63,structural,229,FALSE,Records screened against the eligibility criteria,Search process; not in the deposit
+s6_excluded,Fig. S6.63,structural,140,FALSE,Records excluded at screening,Search process; not in the deposit
+s6_sought,Fig. S6.63,structural,89,FALSE,Reports sought for retrieval,Search process; not in the deposit
+s6_not_retrieved,Fig. S6.63,structural,0,FALSE,Reports not retrieved,Search process; not in the deposit
+s6_assessed,Fig. S6.63,structural,89,FALSE,Reports assessed for eligibility,Search process; not in the deposit
+s6_excl_not_randomized,Fig. S6.63,structural,16,FALSE,Reports excluded because gender was not randomized,Search process; not in the deposit
+s6_excl_duplicate_experiment,Fig. S6.63,structural,5,FALSE,Reports excluded as the same experiment in multiple papers,Search process; not in the deposit
+s6_excl_outcome,Fig. S6.63,structural,2,FALSE,Reports excluded for a different outcome variable,Search process; not in the deposit
+s6_excl_data,Fig. S6.63,structural,12,FALSE,Reports excluded because the data could not be obtained,Search process; not in the deposit
+s6_excl_unpublished,Fig. S6.63,structural,3,FALSE,Reports excluded as unpublished,Search process; not in the deposit
+s6_included_papers,Fig. S6.63,structural,51,TRUE,Reports included in the review,
+s6_included_studies,Fig. S6.63,structural,57,TRUE,Separate audit studies included in the review,
+abstract_mixed_signs,Abstract,descriptive,1,TRUE,Study-level effects run in both directions,"'The results are mixed: Some studies find discrimination against men, and others find discrimination against women'"
+results_gradient_stable,"Results, p. 6",descriptive,,TRUE,Gender gradient remains quite stable across the five Table 1 models,"No number is printed, so the spread across the five models is recorded with no verdict"
+results_minority_steeper,"Results, p. 6",descriptive,1,TRUE,Gender gradient steeper for minority than for majority applicants,
+results_interaction_not_significant,"Results, p. 6",descriptive,1,TRUE,Majority by gradient interaction not significant at the 0.05 level,
+disc_gradient_positive,"Discussion, p. 7",descriptive,1,TRUE,Pooled gender gradient is positive,
+disc_most_europe_north_america,"Discussion, p. 8",descriptive,1,TRUE,Most studies were conducted in North America and Europe,
+disc_other_continents,"Discussion, p. 8",descriptive,,TRUE,"Only a handful of studies in South America, Asia or Africa","No number is printed, so the count is recorded with no verdict"
+s3_gradients_similar,Section S3,descriptive,,TRUE,Survey and field gender gradients are very similar,"No number is printed, so the distance between the two fits is recorded with no verdict"
+s5_similar_to_table_1,Section S5,descriptive,,TRUE,Gradient meta-analysis is quite similar to the Table 1 estimates,"No number is printed, so the distance from the Table 1 model 1 gradient is recorded with no verdict"
+s4_panels_published,Figs. S4.5 to S4.61,structural,57,TRUE,Study panels the published appendix draws,
+s4_panel_entries_published,Figs. S4.5 to S4.61,structural,335,TRUE,Estimate and standard error labels printed across the 57 published panels,
+table_1_model1_intercept_estimate,table_1_model1,pipeline,-3.02,TRUE,"Table 1 model1, Intercept",
+table_1_model1_intercept_std_error,table_1_model1,pipeline,0.81,TRUE,"Table 1 model1, Intercept standard error",
+table_1_model1_intercept_stars,table_1_model1,pipeline,3,TRUE,"Table 1 model1, Intercept significance stars",
+table_1_model1_gradient_estimate,table_1_model1,pipeline,8.15,TRUE,"Table 1 model1, Gender gradient",
+table_1_model1_gradient_std_error,table_1_model1,pipeline,1.50,TRUE,"Table 1 model1, Gender gradient standard error",
+table_1_model1_gradient_stars,table_1_model1,pipeline,3,TRUE,"Table 1 model1, Gender gradient significance stars",
+table_1_model2_intercept_estimate,table_1_model2,pipeline,-2.48,TRUE,"Table 1 model2, Intercept",
+table_1_model2_intercept_std_error,table_1_model2,pipeline,1.58,TRUE,"Table 1 model2, Intercept standard error",
+table_1_model2_intercept_stars,table_1_model2,pipeline,0,TRUE,"Table 1 model2, Intercept significance stars",
+table_1_model2_gradient_estimate,table_1_model2,pipeline,8.33,TRUE,"Table 1 model2, Gender gradient",
+table_1_model2_gradient_std_error,table_1_model2,pipeline,1.58,TRUE,"Table 1 model2, Gender gradient standard error",
+table_1_model2_gradient_stars,table_1_model2,pipeline,3,TRUE,"Table 1 model2, Gender gradient significance stars",
+table_1_model3_intercept_estimate,table_1_model3,pipeline,-5.43,TRUE,"Table 1 model3, Intercept",
+table_1_model3_intercept_std_error,table_1_model3,pipeline,1.91,TRUE,"Table 1 model3, Intercept standard error",
+table_1_model3_intercept_stars,table_1_model3,pipeline,2,TRUE,"Table 1 model3, Intercept significance stars",
+table_1_model3_gradient_estimate,table_1_model3,pipeline,8.69,TRUE,"Table 1 model3, Gender gradient",
+table_1_model3_gradient_std_error,table_1_model3,pipeline,1.56,TRUE,"Table 1 model3, Gender gradient standard error",
+table_1_model3_gradient_stars,table_1_model3,pipeline,3,TRUE,"Table 1 model3, Gender gradient significance stars",
+table_1_model4_intercept_estimate,table_1_model4,pipeline,-5.20,TRUE,"Table 1 model4, Intercept",
+table_1_model4_intercept_std_error,table_1_model4,pipeline,1.82,TRUE,"Table 1 model4, Intercept standard error",
+table_1_model4_intercept_stars,table_1_model4,pipeline,2,TRUE,"Table 1 model4, Intercept significance stars",
+table_1_model4_gradient_estimate,table_1_model4,pipeline,7.97,TRUE,"Table 1 model4, Gender gradient",
+table_1_model4_gradient_std_error,table_1_model4,pipeline,1.57,TRUE,"Table 1 model4, Gender gradient standard error",
+table_1_model4_gradient_stars,table_1_model4,pipeline,3,TRUE,"Table 1 model4, Gender gradient significance stars",
+table_1_model5_intercept_estimate,table_1_model5,pipeline,1.05,TRUE,"Table 1 model5, Intercept",
+table_1_model5_intercept_std_error,table_1_model5,pipeline,1.96,TRUE,"Table 1 model5, Intercept standard error",
+table_1_model5_intercept_stars,table_1_model5,pipeline,0,TRUE,"Table 1 model5, Intercept significance stars",
+table_1_model5_gradient_estimate,table_1_model5,pipeline,7.51,TRUE,"Table 1 model5, Gender gradient",
+table_1_model5_gradient_std_error,table_1_model5,pipeline,1.54,TRUE,"Table 1 model5, Gender gradient standard error",
+table_1_model5_gradient_stars,table_1_model5,pipeline,3,TRUE,"Table 1 model5, Gender gradient significance stars",
+table_1_model1_tau_squared,table_1_model1,pipeline,12.57,TRUE,"Table 1 model1, tau squared",
+table_1_model1_nobs,table_1_model1,pipeline,298,TRUE,"Table 1 model1, observations",
+table_1_model2_tau_squared,table_1_model2,pipeline,11.71,TRUE,"Table 1 model2, tau squared",
+table_1_model2_nobs,table_1_model2,pipeline,298,TRUE,"Table 1 model2, observations",
+table_1_model3_tau_squared,table_1_model3,pipeline,12.56,TRUE,"Table 1 model3, tau squared",
+table_1_model3_nobs,table_1_model3,pipeline,298,TRUE,"Table 1 model3, observations",
+table_1_model4_tau_squared,table_1_model4,pipeline,10.22,TRUE,"Table 1 model4, tau squared",
+table_1_model4_nobs,table_1_model4,pipeline,298,TRUE,"Table 1 model4, observations",
+table_1_model5_tau_squared,table_1_model5,pipeline,8.89,TRUE,"Table 1 model5, tau squared",
+table_1_model5_nobs,table_1_model5,pipeline,298,TRUE,"Table 1 model5, observations",
+table_2_model1_intercept_estimate,table_2_model1,pipeline,-1.55,TRUE,"Table 2 model1, Intercept",
+table_2_model1_intercept_std_error,table_2_model1,pipeline,1.31,TRUE,"Table 2 model1, Intercept standard error",
+table_2_model1_intercept_stars,table_2_model1,pipeline,0,TRUE,"Table 2 model1, Intercept significance stars",
+table_2_model1_gradient_estimate,table_2_model1,pipeline,5.70,TRUE,"Table 2 model1, Gender gradient",
+table_2_model1_gradient_std_error,table_2_model1,pipeline,2.50,TRUE,"Table 2 model1, Gender gradient standard error",
+table_2_model1_gradient_stars,table_2_model1,pipeline,1,TRUE,"Table 2 model1, Gender gradient significance stars",
+table_2_model2_intercept_estimate,table_2_model2,pipeline,-3.72,TRUE,"Table 2 model2, Intercept",
+table_2_model2_intercept_std_error,table_2_model2,pipeline,1.13,TRUE,"Table 2 model2, Intercept standard error",
+table_2_model2_intercept_stars,table_2_model2,pipeline,0,TRUE,"Table 2 model2, Intercept significance stars",
+table_2_model2_gradient_estimate,table_2_model2,pipeline,9.08,TRUE,"Table 2 model2, Gender gradient",
+table_2_model2_gradient_std_error,table_2_model2,pipeline,2.26,TRUE,"Table 2 model2, Gender gradient standard error",
+table_2_model2_gradient_stars,table_2_model2,pipeline,3,TRUE,"Table 2 model2, Gender gradient significance stars",
+table_2_model3_intercept_estimate,table_2_model3,pipeline,-3.73,TRUE,"Table 2 model3, Intercept",
+table_2_model3_intercept_std_error,table_2_model3,pipeline,1.14,TRUE,"Table 2 model3, Intercept standard error",
+table_2_model3_intercept_stars,table_2_model3,pipeline,2,TRUE,"Table 2 model3, Intercept significance stars",
+table_2_model3_gradient_estimate,table_2_model3,pipeline,9.11,TRUE,"Table 2 model3, Gender gradient",
+table_2_model3_gradient_std_error,table_2_model3,pipeline,2.28,TRUE,"Table 2 model3, Gender gradient standard error",
+table_2_model3_gradient_stars,table_2_model3,pipeline,3,TRUE,"Table 2 model3, Gender gradient significance stars",
+table_2_model3_majority_estimate,table_2_model3,pipeline,2.19,TRUE,"Table 2 model3, Majority status",
+table_2_model3_majority_std_error,table_2_model3,pipeline,1.74,TRUE,"Table 2 model3, Majority status standard error",
+table_2_model3_majority_stars,table_2_model3,pipeline,0,TRUE,"Table 2 model3, Majority status significance stars",
+table_2_model3_majority_x_gradient_estimate,table_2_model3,pipeline,-3.42,TRUE,"Table 2 model3, Majority x gradient",
+table_2_model3_majority_x_gradient_std_error,table_2_model3,pipeline,3.37,TRUE,"Table 2 model3, Majority x gradient standard error",
+table_2_model3_majority_x_gradient_stars,table_2_model3,pipeline,0,TRUE,"Table 2 model3, Majority x gradient significance stars",
+table_2_model1_tau_squared,table_2_model1,pipeline,6.60,TRUE,"Table 2 model1, tau squared",
+table_2_model1_nobs,table_2_model1,pipeline,91,TRUE,"Table 2 model1, observations",
+table_2_model2_tau_squared,table_2_model2,pipeline,6.28,TRUE,"Table 2 model2, tau squared",
+table_2_model2_nobs,table_2_model2,pipeline,96,TRUE,"Table 2 model2, observations",
+table_2_model3_tau_squared,table_2_model3,pipeline,6.44,TRUE,"Table 2 model3, tau squared",
+table_2_model3_nobs,table_2_model3,pipeline,187,TRUE,"Table 2 model3, observations",
+table_s2_1_studies_listed,table_S2.1,pipeline,57,TRUE,Studies listed in table S2.1,The ground truth compares how many of these cells the rewrite reproduces
+table_s2_1_subjects,table_S2.1,pipeline,57,TRUE,Subject counts printed in table S2.1,The ground truth compares how many of these cells the rewrite reproduces
+table_s2_1_occupations,table_S2.1,pipeline,57,TRUE,Occupation counts printed in table S2.1,The ground truth compares how many of these cells the rewrite reproduces
+table_s2_1_inclusion,table_S2.1,pipeline,57,TRUE,Majority / minority inclusion flags printed in table S2.1,The ground truth compares how many of these cells the rewrite reproduces
+fig_s1_1_est_albert_et_al_67_spain,fig_S1.1,pipeline,9.9,TRUE,Estimate printed beside Albert et al. (67): Spain in fig. S1.1,
+fig_s1_1_se_albert_et_al_67_spain,fig_S1.1,pipeline,1.8,TRUE,Standard error printed beside Albert et al. (67): Spain in fig. S1.1,
+fig_s1_1_est_birkelund_et_al_76_the_netherlands,fig_S1.1,pipeline,8.3,TRUE,Estimate printed beside Birkelund et al. (76): the Netherlands in fig. S1.1,
+fig_s1_1_se_birkelund_et_al_76_the_netherlands,fig_S1.1,pipeline,3.2,TRUE,Standard error printed beside Birkelund et al. (76): the Netherlands in fig. S1.1,
+fig_s1_1_est_becker_et_al_74_austria_germany_switzerland,fig_S1.1,pipeline,8.1,TRUE,"Estimate printed beside Becker et al. (74): Austria, Germany, Switzerland in fig. S1.1",
+fig_s1_1_se_becker_et_al_74_austria_germany_switzerland,fig_S1.1,pipeline,0.9,TRUE,"Standard error printed beside Becker et al. (74): Austria, Germany, Switzerland in fig. S1.1",
+fig_s1_1_est_birkelund_et_al_76_germany,fig_S1.1,pipeline,7.5,TRUE,Estimate printed beside Birkelund et al. (76): Germany in fig. S1.1,
+fig_s1_1_se_birkelund_et_al_76_germany,fig_S1.1,pipeline,3.7,TRUE,Standard error printed beside Birkelund et al. (76): Germany in fig. S1.1,
+fig_s1_1_est_booth_and_leigh_15_australia,fig_S1.1,pipeline,7.2,TRUE,Estimate printed beside Booth and Leigh (15): Australia in fig. S1.1,
+fig_s1_1_se_booth_and_leigh_15_australia,fig_S1.1,pipeline,1.6,TRUE,Standard error printed beside Booth and Leigh (15): Australia in fig. S1.1,
+fig_s1_1_est_birkelund_et_al_76_spain,fig_S1.1,pipeline,6.2,TRUE,Estimate printed beside Birkelund et al. (76): Spain in fig. S1.1,
+fig_s1_1_se_birkelund_et_al_76_spain,fig_S1.1,pipeline,2.7,TRUE,Standard error printed beside Birkelund et al. (76): Spain in fig. S1.1,
+fig_s1_1_est_hipp_90_germany,fig_S1.1,pipeline,5.2,TRUE,Estimate printed beside Hipp (90): Germany in fig. S1.1,
+fig_s1_1_se_hipp_90_germany,fig_S1.1,pipeline,3.2,TRUE,Standard error printed beside Hipp (90): Germany in fig. S1.1,
+fig_s1_1_est_alden_et_al_68_sweden,fig_S1.1,pipeline,4.8,TRUE,Estimate printed beside Alden et al. (68): Sweden in fig. S1.1,
+fig_s1_1_se_alden_et_al_68_sweden,fig_S1.1,pipeline,2.2,TRUE,Standard error printed beside Alden et al. (68): Sweden in fig. S1.1,
+fig_s1_1_est_birkelund_et_al_76_united_kingdom,fig_S1.1,pipeline,4.8,TRUE,Estimate printed beside Birkelund et al. (76): United Kingdom in fig. S1.1,
+fig_s1_1_se_birkelund_et_al_76_united_kingdom,fig_S1.1,pipeline,3.1,TRUE,Standard error printed beside Birkelund et al. (76): United Kingdom in fig. S1.1,
+fig_s1_1_est_edo_et_al_85_france,fig_S1.1,pipeline,4.8,TRUE,Estimate printed beside Edo et al. (85): France in fig. S1.1,
+fig_s1_1_se_edo_et_al_85_france,fig_S1.1,pipeline,1.1,TRUE,Standard error printed beside Edo et al. (85): France in fig. S1.1,
+fig_s1_1_est_ahmed_at_al_14_sweden,fig_S1.1,pipeline,4.7,TRUE,Estimate printed beside Ahmed at al. (14): Sweden in fig. S1.1,
+fig_s1_1_se_ahmed_at_al_14_sweden,fig_S1.1,pipeline,1.6,TRUE,Standard error printed beside Ahmed at al. (14): Sweden in fig. S1.1,
+fig_s1_1_est_riach_and_rich_100_england,fig_S1.1,pipeline,4.1,TRUE,Estimate printed beside Riach and Rich (100): England in fig. S1.1,
+fig_s1_1_se_riach_and_rich_100_england,fig_S1.1,pipeline,1.2,TRUE,Standard error printed beside Riach and Rich (100): England in fig. S1.1,
+fig_s1_1_est_di_stasio_and_larsen_105_united_kingdom_germany_and_norway,fig_S1.1,pipeline,3.6,TRUE,"Estimate printed beside Di Stasio and Larsen (105): United Kingdom, Germany and Norway in fig. S1.1",
+fig_s1_1_se_di_stasio_and_larsen_105_united_kingdom_germany_and_norway,fig_S1.1,pipeline,0.9,TRUE,"Standard error printed beside Di Stasio and Larsen (105): United Kingdom, Germany and Norway in fig. S1.1",
+fig_s1_1_est_rooth_102_sweden,fig_S1.1,pipeline,3.4,TRUE,Estimate printed beside Rooth (102): Sweden in fig. S1.1,
+fig_s1_1_se_rooth_102_sweden,fig_S1.1,pipeline,2.7,TRUE,Standard error printed beside Rooth (102): Sweden in fig. S1.1,
+fig_s1_1_est_arai_et_al_69_sweden_enhanced_cvs,fig_S1.1,pipeline,3.0,TRUE,Estimate printed beside Arai et al. (69): Sweden (enhanced CVs) in fig. S1.1,
+fig_s1_1_se_arai_et_al_69_sweden_enhanced_cvs,fig_S1.1,pipeline,3.9,TRUE,Standard error printed beside Arai et al. (69): Sweden (enhanced CVs) in fig. S1.1,
+fig_s1_1_est_carlsson_13_sweden,fig_S1.1,pipeline,2.9,TRUE,Estimate printed beside Carlsson (13): Sweden in fig. S1.1,
+fig_s1_1_se_carlsson_13_sweden,fig_S1.1,pipeline,1.0,TRUE,Standard error printed beside Carlsson (13): Sweden in fig. S1.1,
+fig_s1_1_est_mavlikeeva_and_asanov_11_russia,fig_S1.1,pipeline,2.7,TRUE,Estimate printed beside Mavlikeeva and Asanov (11): Russia in fig. S1.1,
+fig_s1_1_se_mavlikeeva_and_asanov_11_russia,fig_S1.1,pipeline,1.0,TRUE,Standard error printed beside Mavlikeeva and Asanov (11): Russia in fig. S1.1,
+fig_s1_1_est_carlsson_et_al_81_sweden,fig_S1.1,pipeline,2.5,TRUE,Estimate printed beside Carlsson et al. (81): Sweden in fig. S1.1,
+fig_s1_1_se_carlsson_et_al_81_sweden,fig_S1.1,pipeline,1.5,TRUE,Standard error printed beside Carlsson et al. (81): Sweden in fig. S1.1,
+fig_s1_1_est_birkelund_et_al_76_norway,fig_S1.1,pipeline,2.4,TRUE,Estimate printed beside Birkelund et al. (76): Norway in fig. S1.1,
+fig_s1_1_se_birkelund_et_al_76_norway,fig_S1.1,pipeline,4.0,TRUE,Standard error printed beside Birkelund et al. (76): Norway in fig. S1.1,
+fig_s1_1_est_berson_75_france,fig_S1.1,pipeline,2.0,TRUE,Estimate printed beside Berson (75): France in fig. S1.1,
+fig_s1_1_se_berson_75_france,fig_S1.1,pipeline,0.6,TRUE,Standard error printed beside Berson (75): France in fig. S1.1,
+fig_s1_1_est_pedulla_96_united_states_field_experiment,fig_S1.1,pipeline,2.0,TRUE,"Estimate printed beside Pedulla (96): United States, field experiment in fig. S1.1",
+fig_s1_1_se_pedulla_96_united_states_field_experiment,fig_S1.1,pipeline,1.3,TRUE,"Standard error printed beside Pedulla (96): United States, field experiment in fig. S1.1",
+fig_s1_1_est_ramos_et_al_99_spain_and_the_netherlands,fig_S1.1,pipeline,1.9,TRUE,Estimate printed beside Ramos et al. (99): Spain and the Netherlands in fig. S1.1,
+fig_s1_1_se_ramos_et_al_99_spain_and_the_netherlands,fig_S1.1,pipeline,0.9,TRUE,Standard error printed beside Ramos et al. (99): Spain and the Netherlands in fig. S1.1,
+fig_s1_1_est_birkelund_et_al_76_united_states,fig_S1.1,pipeline,1.9,TRUE,Estimate printed beside Birkelund et al. (76): United States in fig. S1.1,
+fig_s1_1_se_birkelund_et_al_76_united_states,fig_S1.1,pipeline,4.1,TRUE,Standard error printed beside Birkelund et al. (76): United States in fig. S1.1,
+fig_s1_1_est_zhou_et_al_108_china,fig_S1.1,pipeline,1.9,TRUE,Estimate printed beside Zhou et al. (108): China in fig. S1.1,
+fig_s1_1_se_zhou_et_al_108_china,fig_S1.1,pipeline,0.3,TRUE,Standard error printed beside Zhou et al. (108): China in fig. S1.1,
+fig_s1_1_est_saeed_et_al_104_pakistan,fig_S1.1,pipeline,1.8,TRUE,Estimate printed beside Saeed et al. (104): Pakistan in fig. S1.1,
+fig_s1_1_se_saeed_et_al_104_pakistan,fig_S1.1,pipeline,1.9,TRUE,Standard error printed beside Saeed et al. (104): Pakistan in fig. S1.1,
+fig_s1_1_est_carlsson_and_eriksson_80_sweden,fig_S1.1,pipeline,1.8,TRUE,Estimate printed beside Carlsson and Eriksson (80): Sweden in fig. S1.1,
+fig_s1_1_se_carlsson_and_eriksson_80_sweden,fig_S1.1,pipeline,0.7,TRUE,Standard error printed beside Carlsson and Eriksson (80): Sweden in fig. S1.1,
+fig_s1_1_est_oreopoulos_94_canada,fig_S1.1,pipeline,1.2,TRUE,Estimate printed beside Oreopoulos (94): Canada in fig. S1.1,
+fig_s1_1_se_oreopoulos_94_canada,fig_S1.1,pipeline,0.3,TRUE,Standard error printed beside Oreopoulos (94): Canada in fig. S1.1,
+fig_s1_1_est_maurer_fazio_and_lei_92_china,fig_S1.1,pipeline,1.1,TRUE,Estimate printed beside Maurer−Fazio and Lei (92): China in fig. S1.1,
+fig_s1_1_se_maurer_fazio_and_lei_92_china,fig_S1.1,pipeline,0.4,TRUE,Standard error printed beside Maurer−Fazio and Lei (92): China in fig. S1.1,
+fig_s1_1_est_ahmed_at_al_66_sweden,fig_S1.1,pipeline,1.1,TRUE,Estimate printed beside Ahmed at al. (66): Sweden in fig. S1.1,
+fig_s1_1_se_ahmed_at_al_66_sweden,fig_S1.1,pipeline,1.4,TRUE,Standard error printed beside Ahmed at al. (66): Sweden in fig. S1.1,
+fig_s1_1_est_correll_et_al_83_united_states_field_experiment,fig_S1.1,pipeline,0.9,TRUE,"Estimate printed beside Correll et al. (83): United States, field experiment in fig. S1.1",
+fig_s1_1_se_correll_et_al_83_united_states_field_experiment,fig_S1.1,pipeline,1.1,TRUE,"Standard error printed beside Correll et al. (83): United States, field experiment in fig. S1.1",
+fig_s1_1_est_nunley_et_al_93_united_states,fig_S1.1,pipeline,0.9,TRUE,Estimate printed beside Nunley et al. (93): United States in fig. S1.1,
+fig_s1_1_se_nunley_et_al_93_united_states,fig_S1.1,pipeline,0.7,TRUE,Standard error printed beside Nunley et al. (93): United States in fig. S1.1,
+fig_s1_1_est_ruffle_and_shtudiner_103_israel,fig_S1.1,pipeline,0.8,TRUE,Estimate printed beside Ruffle and Shtudiner (103): Israel in fig. S1.1,
+fig_s1_1_se_ruffle_and_shtudiner_103_israel,fig_S1.1,pipeline,1.2,TRUE,Standard error printed beside Ruffle and Shtudiner (103): Israel in fig. S1.1,
+fig_s1_1_est_banerjee_et_al_73_india,fig_S1.1,pipeline,0.4,TRUE,Estimate printed beside Banerjee et al. (73): India in fig. S1.1,
+fig_s1_1_se_banerjee_et_al_73_india,fig_S1.1,pipeline,1.6,TRUE,Standard error printed beside Banerjee et al. (73): India in fig. S1.1,
+fig_s1_1_est_patacchini_et_al_95_italy,fig_S1.1,pipeline,0.4,TRUE,Estimate printed beside Patacchini et al. (95): Italy in fig. S1.1,
+fig_s1_1_se_patacchini_et_al_95_italy,fig_S1.1,pipeline,1.3,TRUE,Standard error printed beside Patacchini et al. (95): Italy in fig. S1.1,
+fig_s1_1_est_galarza_and_yamada_88_peru,fig_S1.1,pipeline,0.3,TRUE,Estimate printed beside Galarza and Yamada (88): Peru in fig. S1.1,
+fig_s1_1_se_galarza_and_yamada_88_peru,fig_S1.1,pipeline,1.0,TRUE,Standard error printed beside Galarza and Yamada (88): Peru in fig. S1.1,
+fig_s1_1_est_yavorsky_107_united_states,fig_S1.1,pipeline,0.3,TRUE,Estimate printed beside Yavorsky (107): United States in fig. S1.1,
+fig_s1_1_se_yavorsky_107_united_states,fig_S1.1,pipeline,0.8,TRUE,Standard error printed beside Yavorsky (107): United States in fig. S1.1,
+fig_s1_1_est_jackson_91_united_kingdom,fig_S1.1,pipeline,0.0,TRUE,Estimate printed beside Jackson (91): United Kingdom in fig. S1.1,
+fig_s1_1_se_jackson_91_united_kingdom,fig_S1.1,pipeline,0.3,TRUE,Standard error printed beside Jackson (91): United Kingdom in fig. S1.1,
+fig_s1_1_est_dahl_and_krog_84_denmark,fig_S1.1,pipeline,-0.1,TRUE,Estimate printed beside Dahl and Krog (84): Denmark in fig. S1.1,
+fig_s1_1_se_dahl_and_krog_84_denmark,fig_S1.1,pipeline,3.8,TRUE,Standard error printed beside Dahl and Krog (84): Denmark in fig. S1.1,
+fig_s1_1_est_bursell_77_sweden,fig_S1.1,pipeline,-0.1,TRUE,Estimate printed beside Bursell (77): Sweden in fig. S1.1,
+fig_s1_1_se_bursell_77_sweden,fig_S1.1,pipeline,1.5,TRUE,Standard error printed beside Bursell (77): Sweden in fig. S1.1,
+fig_s1_1_est_thomas_4_united_states_field_experiment,fig_S1.1,pipeline,-0.2,TRUE,"Estimate printed beside Thomas (4): United States, field experiment in fig. S1.1",
+fig_s1_1_se_thomas_4_united_states_field_experiment,fig_S1.1,pipeline,1.4,TRUE,"Standard error printed beside Thomas (4): United States, field experiment in fig. S1.1",
+fig_s1_1_est_baert_et_al_71_belgium,fig_S1.1,pipeline,-1.0,TRUE,Estimate printed beside Baert et al. (71): Belgium in fig. S1.1,
+fig_s1_1_se_baert_et_al_71_belgium,fig_S1.1,pipeline,1.3,TRUE,Standard error printed beside Baert et al. (71): Belgium in fig. S1.1,
+fig_s1_1_est_asali_et_al_70_georgia,fig_S1.1,pipeline,-1.6,TRUE,Estimate printed beside Asali et al. (70): Georgia in fig. S1.1,
+fig_s1_1_se_asali_et_al_70_georgia,fig_S1.1,pipeline,1.3,TRUE,Standard error printed beside Asali et al. (70): Georgia in fig. S1.1,
+fig_s1_1_est_horvath_16_china,fig_S1.1,pipeline,-1.7,TRUE,Estimate printed beside Horváth (16): China in fig. S1.1,
+fig_s1_1_se_horvath_16_china,fig_S1.1,pipeline,0.8,TRUE,Standard error printed beside Horváth (16): China in fig. S1.1,
+fig_s1_1_est_petit_97_france,fig_S1.1,pipeline,-1.7,TRUE,Estimate printed beside Petit (97): France in fig. S1.1,
+fig_s1_1_se_petit_97_france,fig_S1.1,pipeline,2.1,TRUE,Standard error printed beside Petit (97): France in fig. S1.1,
+fig_s1_1_est_quadlin_98_united_states_field_experiment,fig_S1.1,pipeline,-2.1,TRUE,"Estimate printed beside Quadlin (98): United States, field experiment in fig. S1.1",
+fig_s1_1_se_quadlin_98_united_states_field_experiment,fig_S1.1,pipeline,1.5,TRUE,"Standard error printed beside Quadlin (98): United States, field experiment in fig. S1.1",
+fig_s1_1_est_galarza_and_yamada_87_peru,fig_S1.1,pipeline,-2.1,TRUE,Estimate printed beside Galarza and Yamada (87): Peru in fig. S1.1,
+fig_s1_1_se_galarza_and_yamada_87_peru,fig_S1.1,pipeline,0.9,TRUE,Standard error printed beside Galarza and Yamada (87): Peru in fig. S1.1,
+fig_s1_1_est_riach_and_rich_8_australia,fig_S1.1,pipeline,-2.4,TRUE,Estimate printed beside Riach and Rich (8): Australia in fig. S1.1,
+fig_s1_1_se_riach_and_rich_8_australia,fig_S1.1,pipeline,1.2,TRUE,Standard error printed beside Riach and Rich (8): Australia in fig. S1.1,
+fig_s1_1_est_bygren_et_al_78_sweden,fig_S1.1,pipeline,-2.5,TRUE,Estimate printed beside Bygren et al. (78): Sweden in fig. S1.1,
+fig_s1_1_se_bygren_et_al_78_sweden,fig_S1.1,pipeline,2.1,TRUE,Standard error printed beside Bygren et al. (78): Sweden in fig. S1.1,
+fig_s1_1_est_baert_et_al_72_belgium,fig_S1.1,pipeline,-2.5,TRUE,Estimate printed beside Baert et al. (72): Belgium in fig. S1.1,
+fig_s1_1_se_baert_et_al_72_belgium,fig_S1.1,pipeline,3.1,TRUE,Standard error printed beside Baert et al. (72): Belgium in fig. S1.1,
+fig_s1_1_est_capeau_et_al_82_belgium,fig_S1.1,pipeline,-2.7,TRUE,Estimate printed beside Capéau et al. (82): Belgium in fig. S1.1,
+fig_s1_1_se_capeau_et_al_82_belgium,fig_S1.1,pipeline,2.6,TRUE,Standard error printed beside Capéau et al. (82): Belgium in fig. S1.1,
+fig_s1_1_est_gonzalez_et_al_89_spain,fig_S1.1,pipeline,-3.3,TRUE,Estimate printed beside Gonzalez et al. (89): Spain in fig. S1.1,
+fig_s1_1_se_gonzalez_et_al_89_spain,fig_S1.1,pipeline,0.7,TRUE,Standard error printed beside Gonzalez et al. (89): Spain in fig. S1.1,
+fig_s1_1_est_busetta_et_al_79_italy,fig_S1.1,pipeline,-3.5,TRUE,Estimate printed beside Busetta et al. (79): Italy in fig. S1.1,
+fig_s1_1_se_busetta_et_al_79_italy,fig_S1.1,pipeline,0.3,TRUE,Standard error printed beside Busetta et al. (79): Italy in fig. S1.1,
+fig_s1_1_est_wu_106_china,fig_S1.1,pipeline,-3.6,TRUE,Estimate printed beside Wu (106): China in fig. S1.1,
+fig_s1_1_se_wu_106_china,fig_S1.1,pipeline,2.7,TRUE,Standard error printed beside Wu (106): China in fig. S1.1,
+fig_s1_1_est_erlandsson_86_sweden,fig_S1.1,pipeline,-3.7,TRUE,Estimate printed beside Erlandsson (86): Sweden in fig. S1.1,
+fig_s1_1_se_erlandsson_86_sweden,fig_S1.1,pipeline,2.5,TRUE,Standard error printed beside Erlandsson (86): Sweden in fig. S1.1,
+fig_s1_1_est_rivera_and_tilcsik_101_united_states_field_experiment,fig_S1.1,pipeline,-3.8,TRUE,"Estimate printed beside Rivera and Tilcsik (101): United States, field experiment in fig. S1.1",
+fig_s1_1_se_rivera_and_tilcsik_101_united_states_field_experiment,fig_S1.1,pipeline,3.3,TRUE,"Standard error printed beside Rivera and Tilcsik (101): United States, field experiment in fig. S1.1",
+fig_s1_1_est_arai_et_al_69_sweden_equivalent_cvs,fig_S1.1,pipeline,-6.3,TRUE,Estimate printed beside Arai et al. (69): Sweden (equivalent CVs) in fig. S1.1,
+fig_s1_1_se_arai_et_al_69_sweden_equivalent_cvs,fig_S1.1,pipeline,4.0,TRUE,Standard error printed beside Arai et al. (69): Sweden (equivalent CVs) in fig. S1.1,
+fig_s1_1_est_neumark_et_al_9_united_states,fig_S1.1,pipeline,-12.3,TRUE,Estimate printed beside Neumark et al. (9): United States in fig. S1.1,
+fig_s1_1_se_neumark_et_al_9_united_states,fig_S1.1,pipeline,8.4,TRUE,Standard error printed beside Neumark et al. (9): United States in fig. S1.1,
+fig_s1_1_est_meta_analysis,fig_S1.1,pipeline,1.2,TRUE,Estimate printed beside Meta−analysis in fig. S1.1,
+fig_s1_1_se_meta_analysis,fig_S1.1,pipeline,0.4,TRUE,Standard error printed beside Meta−analysis in fig. S1.1,
+fig_s3_4_est_bell_and_klein_122_united_states,fig_S3.4,pipeline,11.9,TRUE,Estimate printed beside Bell and Klein (122): United States in fig. S3.4,
+fig_s3_4_se_bell_and_klein_122_united_states,fig_S3.4,pipeline,8.6,TRUE,Standard error printed beside Bell and Klein (122): United States in fig. S3.4,
+fig_s3_4_est_carlsson_et_al_124_iceland_norway_sweden,fig_S3.4,pipeline,8.0,TRUE,"Estimate printed beside Carlsson et al. (124): Iceland, Norway, Sweden in fig. S3.4",
+fig_s3_4_se_carlsson_et_al_124_iceland_norway_sweden,fig_S3.4,pipeline,3.1,TRUE,"Standard error printed beside Carlsson et al. (124): Iceland, Norway, Sweden in fig. S3.4",
+fig_s3_4_est_pedulla_96_united_states_survey_experiment,fig_S3.4,pipeline,5.5,TRUE,"Estimate printed beside Pedulla (96): United States, survey experiment in fig. S3.4",
+fig_s3_4_se_pedulla_96_united_states_survey_experiment,fig_S3.4,pipeline,2.4,TRUE,"Standard error printed beside Pedulla (96): United States, survey experiment in fig. S3.4",
+fig_s3_4_est_mari_and_luijkx_126_the_netherlands,fig_S3.4,pipeline,5.2,TRUE,Estimate printed beside Mari and Luijkx (126): the Netherlands in fig. S3.4,
+fig_s3_4_se_mari_and_luijkx_126_the_netherlands,fig_S3.4,pipeline,3.1,TRUE,Standard error printed beside Mari and Luijkx (126): the Netherlands in fig. S3.4,
+fig_s3_4_est_thomas_4_united_states_survey_experiment,fig_S3.4,pipeline,4.3,TRUE,"Estimate printed beside Thomas (4): United States, survey experiment in fig. S3.4",
+fig_s3_4_se_thomas_4_united_states_survey_experiment,fig_S3.4,pipeline,2.2,TRUE,"Standard error printed beside Thomas (4): United States, survey experiment in fig. S3.4",
+fig_s3_4_est_bertogg_et_al_125_norway,fig_S3.4,pipeline,2.6,TRUE,Estimate printed beside Bertogg et al. (125): Norway in fig. S3.4,
+fig_s3_4_se_bertogg_et_al_125_norway,fig_S3.4,pipeline,1.1,TRUE,Standard error printed beside Bertogg et al. (125): Norway in fig. S3.4,
+fig_s3_4_est_bertogg_et_al_125_bulgaria,fig_S3.4,pipeline,2.4,TRUE,Estimate printed beside Bertogg et al. (125): Bulgaria in fig. S3.4,
+fig_s3_4_se_bertogg_et_al_125_bulgaria,fig_S3.4,pipeline,1.0,TRUE,Standard error printed beside Bertogg et al. (125): Bulgaria in fig. S3.4,
+fig_s3_4_est_bertogg_et_al_125_switzerland,fig_S3.4,pipeline,2.2,TRUE,Estimate printed beside Bertogg et al. (125): Switzerland in fig. S3.4,
+fig_s3_4_se_bertogg_et_al_125_switzerland,fig_S3.4,pipeline,0.7,TRUE,Standard error printed beside Bertogg et al. (125): Switzerland in fig. S3.4,
+fig_s3_4_est_bertogg_et_al_125_greece,fig_S3.4,pipeline,1.7,TRUE,Estimate printed beside Bertogg et al. (125): Greece in fig. S3.4,
+fig_s3_4_se_bertogg_et_al_125_greece,fig_S3.4,pipeline,0.7,TRUE,Standard error printed beside Bertogg et al. (125): Greece in fig. S3.4,
+fig_s3_4_est_blommaert_et_al_123_the_netherlands,fig_S3.4,pipeline,0.7,TRUE,Estimate printed beside Blommaert et al. (123): the Netherlands in fig. S3.4,
+fig_s3_4_se_blommaert_et_al_123_the_netherlands,fig_S3.4,pipeline,0.9,TRUE,Standard error printed beside Blommaert et al. (123): the Netherlands in fig. S3.4,
+fig_s3_4_est_di_stasio_127_italy,fig_S3.4,pipeline,0.4,TRUE,Estimate printed beside Di Stasio (127): Italy in fig. S3.4,
+fig_s3_4_se_di_stasio_127_italy,fig_S3.4,pipeline,2.5,TRUE,Standard error printed beside Di Stasio (127): Italy in fig. S3.4,
+fig_s3_4_est_di_stasio_and_werfhorst_128_england_and_the_netherlands,fig_S3.4,pipeline,-0.1,TRUE,Estimate printed beside Di Stasio and Werfhorst (128): England and the Netherlands in fig. S3.4,
+fig_s3_4_se_di_stasio_and_werfhorst_128_england_and_the_netherlands,fig_S3.4,pipeline,3.0,TRUE,Standard error printed beside Di Stasio and Werfhorst (128): England and the Netherlands in fig. S3.4,
+fig_s3_4_est_meta_analysis,fig_S3.4,pipeline,2.1,TRUE,Estimate printed beside Meta−analysis in fig. S3.4,
+fig_s3_4_se_meta_analysis,fig_S3.4,pipeline,0.4,TRUE,Standard error printed beside Meta−analysis in fig. S3.4,
+fig_s5_62_est_albert_et_al_67_spain,fig_S5.62,pipeline,139.8,TRUE,Estimate printed beside Albert et al. (67): Spain in fig. S5.62,
+fig_s5_62_se_albert_et_al_67_spain,fig_S5.62,pipeline,43.9,TRUE,Standard error printed beside Albert et al. (67): Spain in fig. S5.62,
+fig_s5_62_est_birkelund_et_al_76_spain,fig_S5.62,pipeline,49.9,TRUE,Estimate printed beside Birkelund et al. (76): Spain in fig. S5.62,
+fig_s5_62_se_birkelund_et_al_76_spain,fig_S5.62,pipeline,23.7,TRUE,Standard error printed beside Birkelund et al. (76): Spain in fig. S5.62,
+fig_s5_62_est_mavlikeeva_and_asanov_11_russia,fig_S5.62,pipeline,32.9,TRUE,Estimate printed beside Mavlikeeva and Asanov (11): Russia in fig. S5.62,
+fig_s5_62_se_mavlikeeva_and_asanov_11_russia,fig_S5.62,pipeline,4.9,TRUE,Standard error printed beside Mavlikeeva and Asanov (11): Russia in fig. S5.62,
+fig_s5_62_est_ahmed_at_al_14_sweden,fig_S5.62,pipeline,29.0,TRUE,Estimate printed beside Ahmed at al. (14): Sweden in fig. S5.62,
+fig_s5_62_se_ahmed_at_al_14_sweden,fig_S5.62,pipeline,7.6,TRUE,Standard error printed beside Ahmed at al. (14): Sweden in fig. S5.62,
+fig_s5_62_est_birkelund_et_al_76_the_netherlands,fig_S5.62,pipeline,27.0,TRUE,Estimate printed beside Birkelund et al. (76): the Netherlands in fig. S5.62,
+fig_s5_62_se_birkelund_et_al_76_the_netherlands,fig_S5.62,pipeline,19.8,TRUE,Standard error printed beside Birkelund et al. (76): the Netherlands in fig. S5.62,
+fig_s5_62_est_patacchini_et_al_95_italy,fig_S5.62,pipeline,15.8,TRUE,Estimate printed beside Patacchini et al. (95): Italy in fig. S5.62,
+fig_s5_62_se_patacchini_et_al_95_italy,fig_S5.62,pipeline,12.6,TRUE,Standard error printed beside Patacchini et al. (95): Italy in fig. S5.62,
+fig_s5_62_est_maurer_fazio_and_lei_92_china,fig_S5.62,pipeline,15.0,TRUE,Estimate printed beside Maurer−Fazio and Lei (92): China in fig. S5.62,
+fig_s5_62_se_maurer_fazio_and_lei_92_china,fig_S5.62,pipeline,2.3,TRUE,Standard error printed beside Maurer−Fazio and Lei (92): China in fig. S5.62,
+fig_s5_62_est_carlsson_and_eriksson_80_sweden,fig_S5.62,pipeline,13.1,TRUE,Estimate printed beside Carlsson and Eriksson (80): Sweden in fig. S5.62,
+fig_s5_62_se_carlsson_and_eriksson_80_sweden,fig_S5.62,pipeline,8.6,TRUE,Standard error printed beside Carlsson and Eriksson (80): Sweden in fig. S5.62,
+fig_s5_62_est_erlandsson_86_sweden,fig_S5.62,pipeline,12.2,TRUE,Estimate printed beside Erlandsson (86): Sweden in fig. S5.62,
+fig_s5_62_se_erlandsson_86_sweden,fig_S5.62,pipeline,31.2,TRUE,Standard error printed beside Erlandsson (86): Sweden in fig. S5.62,
+fig_s5_62_est_galarza_and_yamada_88_peru,fig_S5.62,pipeline,12.2,TRUE,Estimate printed beside Galarza and Yamada (88): Peru in fig. S5.62,
+fig_s5_62_se_galarza_and_yamada_88_peru,fig_S5.62,pipeline,28.7,TRUE,Standard error printed beside Galarza and Yamada (88): Peru in fig. S5.62,
+fig_s5_62_est_riach_and_rich_100_england,fig_S5.62,pipeline,12.2,TRUE,Estimate printed beside Riach and Rich (100): England in fig. S5.62,
+fig_s5_62_se_riach_and_rich_100_england,fig_S5.62,pipeline,15.6,TRUE,Standard error printed beside Riach and Rich (100): England in fig. S5.62,
+fig_s5_62_est_ramos_et_al_99_spain_and_the_netherlands,fig_S5.62,pipeline,10.9,TRUE,Estimate printed beside Ramos et al. (99): Spain and the Netherlands in fig. S5.62,
+fig_s5_62_se_ramos_et_al_99_spain_and_the_netherlands,fig_S5.62,pipeline,8.4,TRUE,Standard error printed beside Ramos et al. (99): Spain and the Netherlands in fig. S5.62,
+fig_s5_62_est_galarza_and_yamada_87_peru,fig_S5.62,pipeline,9.8,TRUE,Estimate printed beside Galarza and Yamada (87): Peru in fig. S5.62,
+fig_s5_62_se_galarza_and_yamada_87_peru,fig_S5.62,pipeline,11.5,TRUE,Standard error printed beside Galarza and Yamada (87): Peru in fig. S5.62,
+fig_s5_62_est_di_stasio_and_larsen_105_united_kingdom_germany_and_norway,fig_S5.62,pipeline,9.1,TRUE,"Estimate printed beside Di Stasio and Larsen (105): United Kingdom, Germany and Norway in fig. S5.62",
+fig_s5_62_se_di_stasio_and_larsen_105_united_kingdom_germany_and_norway,fig_S5.62,pipeline,4.2,TRUE,"Standard error printed beside Di Stasio and Larsen (105): United Kingdom, Germany and Norway in fig. S5.62",
+fig_s5_62_est_arai_et_al_69_sweden_equivalent_cvs,fig_S5.62,pipeline,8.1,TRUE,Estimate printed beside Arai et al. (69): Sweden (equivalent CVs) in fig. S5.62,
+fig_s5_62_se_arai_et_al_69_sweden_equivalent_cvs,fig_S5.62,pipeline,17.0,TRUE,Standard error printed beside Arai et al. (69): Sweden (equivalent CVs) in fig. S5.62,
+fig_s5_62_est_nunley_et_al_93_united_states,fig_S5.62,pipeline,8.1,TRUE,Estimate printed beside Nunley et al. (93): United States in fig. S5.62,
+fig_s5_62_se_nunley_et_al_93_united_states,fig_S5.62,pipeline,15.3,TRUE,Standard error printed beside Nunley et al. (93): United States in fig. S5.62,
+fig_s5_62_est_edo_et_al_85_france,fig_S5.62,pipeline,7.4,TRUE,Estimate printed beside Edo et al. (85): France in fig. S5.62,
+fig_s5_62_se_edo_et_al_85_france,fig_S5.62,pipeline,5.9,TRUE,Standard error printed beside Edo et al. (85): France in fig. S5.62,
+fig_s5_62_est_gonzalez_et_al_89_spain,fig_S5.62,pipeline,7.3,TRUE,Estimate printed beside Gonzalez et al. (89): Spain in fig. S5.62,
+fig_s5_62_se_gonzalez_et_al_89_spain,fig_S5.62,pipeline,3.3,TRUE,Standard error printed beside Gonzalez et al. (89): Spain in fig. S5.62,
+fig_s5_62_est_arai_et_al_69_sweden_enhanced_cvs,fig_S5.62,pipeline,7.2,TRUE,Estimate printed beside Arai et al. (69): Sweden (enhanced CVs) in fig. S5.62,
+fig_s5_62_se_arai_et_al_69_sweden_enhanced_cvs,fig_S5.62,pipeline,22.3,TRUE,Standard error printed beside Arai et al. (69): Sweden (enhanced CVs) in fig. S5.62,
+fig_s5_62_est_asali_et_al_70_georgia,fig_S5.62,pipeline,7.0,TRUE,Estimate printed beside Asali et al. (70): Georgia in fig. S5.62,
+fig_s5_62_se_asali_et_al_70_georgia,fig_S5.62,pipeline,4.9,TRUE,Standard error printed beside Asali et al. (70): Georgia in fig. S5.62,
+fig_s5_62_est_birkelund_et_al_76_united_states,fig_S5.62,pipeline,6.8,TRUE,Estimate printed beside Birkelund et al. (76): United States in fig. S5.62,
+fig_s5_62_se_birkelund_et_al_76_united_states,fig_S5.62,pipeline,19.2,TRUE,Standard error printed beside Birkelund et al. (76): United States in fig. S5.62,
+fig_s5_62_est_pedulla_96_united_states_field_experiment,fig_S5.62,pipeline,5.5,TRUE,"Estimate printed beside Pedulla (96): United States, field experiment in fig. S5.62",
+fig_s5_62_se_pedulla_96_united_states_field_experiment,fig_S5.62,pipeline,13.1,TRUE,"Standard error printed beside Pedulla (96): United States, field experiment in fig. S5.62",
+fig_s5_62_est_carlsson_13_sweden,fig_S5.62,pipeline,4.1,TRUE,Estimate printed beside Carlsson (13): Sweden in fig. S5.62,
+fig_s5_62_se_carlsson_13_sweden,fig_S5.62,pipeline,8.6,TRUE,Standard error printed beside Carlsson (13): Sweden in fig. S5.62,
+fig_s5_62_est_bygren_et_al_78_sweden,fig_S5.62,pipeline,3.8,TRUE,Estimate printed beside Bygren et al. (78): Sweden in fig. S5.62,
+fig_s5_62_se_bygren_et_al_78_sweden,fig_S5.62,pipeline,16.2,TRUE,Standard error printed beside Bygren et al. (78): Sweden in fig. S5.62,
+fig_s5_62_est_riach_and_rich_8_australia,fig_S5.62,pipeline,3.6,TRUE,Estimate printed beside Riach and Rich (8): Australia in fig. S5.62,
+fig_s5_62_se_riach_and_rich_8_australia,fig_S5.62,pipeline,9.8,TRUE,Standard error printed beside Riach and Rich (8): Australia in fig. S5.62,
+fig_s5_62_est_zhou_et_al_108_china,fig_S5.62,pipeline,2.3,TRUE,Estimate printed beside Zhou et al. (108): China in fig. S5.62,
+fig_s5_62_se_zhou_et_al_108_china,fig_S5.62,pipeline,6.5,TRUE,Standard error printed beside Zhou et al. (108): China in fig. S5.62,
+fig_s5_62_est_ahmed_at_al_66_sweden,fig_S5.62,pipeline,1.0,TRUE,Estimate printed beside Ahmed at al. (66): Sweden in fig. S5.62,
+fig_s5_62_se_ahmed_at_al_66_sweden,fig_S5.62,pipeline,6.7,TRUE,Standard error printed beside Ahmed at al. (66): Sweden in fig. S5.62,
+fig_s5_62_est_oreopoulos_94_canada,fig_S5.62,pipeline,0.3,TRUE,Estimate printed beside Oreopoulos (94): Canada in fig. S5.62,
+fig_s5_62_se_oreopoulos_94_canada,fig_S5.62,pipeline,1.8,TRUE,Standard error printed beside Oreopoulos (94): Canada in fig. S5.62,
+fig_s5_62_est_birkelund_et_al_76_germany,fig_S5.62,pipeline,-0.5,TRUE,Estimate printed beside Birkelund et al. (76): Germany in fig. S5.62,
+fig_s5_62_se_birkelund_et_al_76_germany,fig_S5.62,pipeline,27.8,TRUE,Standard error printed beside Birkelund et al. (76): Germany in fig. S5.62,
+fig_s5_62_est_carlsson_et_al_81_sweden,fig_S5.62,pipeline,-3.5,TRUE,Estimate printed beside Carlsson et al. (81): Sweden in fig. S5.62,
+fig_s5_62_se_carlsson_et_al_81_sweden,fig_S5.62,pipeline,10.5,TRUE,Standard error printed beside Carlsson et al. (81): Sweden in fig. S5.62,
+fig_s5_62_est_ruffle_and_shtudiner_103_israel,fig_S5.62,pipeline,-5.3,TRUE,Estimate printed beside Ruffle and Shtudiner (103): Israel in fig. S5.62,
+fig_s5_62_se_ruffle_and_shtudiner_103_israel,fig_S5.62,pipeline,13.5,TRUE,Standard error printed beside Ruffle and Shtudiner (103): Israel in fig. S5.62,
+fig_s5_62_est_dahl_and_krog_84_denmark,fig_S5.62,pipeline,-6.1,TRUE,Estimate printed beside Dahl and Krog (84): Denmark in fig. S5.62,
+fig_s5_62_se_dahl_and_krog_84_denmark,fig_S5.62,pipeline,20.9,TRUE,Standard error printed beside Dahl and Krog (84): Denmark in fig. S5.62,
+fig_s5_62_est_thomas_4_united_states_field_experiment,fig_S5.62,pipeline,-7.3,TRUE,"Estimate printed beside Thomas (4): United States, field experiment in fig. S5.62",
+fig_s5_62_se_thomas_4_united_states_field_experiment,fig_S5.62,pipeline,12.8,TRUE,"Standard error printed beside Thomas (4): United States, field experiment in fig. S5.62",
+fig_s5_62_est_birkelund_et_al_76_united_kingdom,fig_S5.62,pipeline,-7.5,TRUE,Estimate printed beside Birkelund et al. (76): United Kingdom in fig. S5.62,
+fig_s5_62_se_birkelund_et_al_76_united_kingdom,fig_S5.62,pipeline,35.1,TRUE,Standard error printed beside Birkelund et al. (76): United Kingdom in fig. S5.62,
+fig_s5_62_est_birkelund_et_al_76_norway,fig_S5.62,pipeline,-11.5,TRUE,Estimate printed beside Birkelund et al. (76): Norway in fig. S5.62,
+fig_s5_62_se_birkelund_et_al_76_norway,fig_S5.62,pipeline,18.8,TRUE,Standard error printed beside Birkelund et al. (76): Norway in fig. S5.62,
+fig_s5_62_est_booth_and_leigh_15_australia,fig_S5.62,pipeline,-26.4,TRUE,Estimate printed beside Booth and Leigh (15): Australia in fig. S5.62,
+fig_s5_62_se_booth_and_leigh_15_australia,fig_S5.62,pipeline,61.1,TRUE,Standard error printed beside Booth and Leigh (15): Australia in fig. S5.62,
+fig_s5_62_est_rooth_102_sweden,fig_S5.62,pipeline,-26.6,TRUE,Estimate printed beside Rooth (102): Sweden in fig. S5.62,
+fig_s5_62_se_rooth_102_sweden,fig_S5.62,pipeline,25.3,TRUE,Standard error printed beside Rooth (102): Sweden in fig. S5.62,
+fig_s5_62_est_meta_analysis,fig_S5.62,pipeline,9.0,TRUE,Estimate printed beside Meta−analysis in fig. S5.62,
+fig_s5_62_se_meta_analysis,fig_S5.62,pipeline,2.1,TRUE,Standard error printed beside Meta−analysis in fig. S5.62,
+s4_5_entries,fig_S4.5,pipeline,16,TRUE,"Plotted estimate and standard error labels, Ahmed at al. (14): Sweden",Count of the labels the published panel prints
+s4_5_compositions,fig_S4.5,pipeline,15,TRUE,"Occupation gender composition labels, Ahmed at al. (14): Sweden",Count of the labels the published panel prints
+s4_5_sample_sizes,fig_S4.5,pipeline,15,TRUE,"Occupation sample size labels, Ahmed at al. (14): Sweden",Count of the labels the published panel prints
+s4_6_entries,fig_S4.6,pipeline,11,TRUE,"Plotted estimate and standard error labels, Ahmed at al. (66): Sweden",Count of the labels the published panel prints
+s4_6_compositions,fig_S4.6,pipeline,10,TRUE,"Occupation gender composition labels, Ahmed at al. (66): Sweden",Count of the labels the published panel prints
+s4_6_sample_sizes,fig_S4.6,pipeline,10,TRUE,"Occupation sample size labels, Ahmed at al. (66): Sweden",Count of the labels the published panel prints
+s4_7_entries,fig_S4.7,pipeline,4,TRUE,"Plotted estimate and standard error labels, Albert et al. (67): Spain",Count of the labels the published panel prints
+s4_7_compositions,fig_S4.7,pipeline,3,TRUE,"Occupation gender composition labels, Albert et al. (67): Spain",Count of the labels the published panel prints
+s4_7_sample_sizes,fig_S4.7,pipeline,3,TRUE,"Occupation sample size labels, Albert et al. (67): Spain",Count of the labels the published panel prints
+s4_8_entries,fig_S4.8,pipeline,2,TRUE,"Plotted estimate and standard error labels, Alden et al. (68): Sweden",Count of the labels the published panel prints
+s4_8_compositions,fig_S4.8,pipeline,2,TRUE,"Occupation gender composition labels, Alden et al. (68): Sweden",Count of the labels the published panel prints
+s4_8_sample_sizes,fig_S4.8,pipeline,2,TRUE,"Occupation sample size labels, Alden et al. (68): Sweden",Count of the labels the published panel prints
+s4_9_entries,fig_S4.9,pipeline,6,TRUE,"Plotted estimate and standard error labels, Arai et al. (69): Sweden (equivalent CVs)",Count of the labels the published panel prints
+s4_9_compositions,fig_S4.9,pipeline,5,TRUE,"Occupation gender composition labels, Arai et al. (69): Sweden (equivalent CVs)",Count of the labels the published panel prints
+s4_9_sample_sizes,fig_S4.9,pipeline,5,TRUE,"Occupation sample size labels, Arai et al. (69): Sweden (equivalent CVs)",Count of the labels the published panel prints
+s4_10_entries,fig_S4.10,pipeline,6,TRUE,"Plotted estimate and standard error labels, Arai et al. (69): Sweden (enhanced CVs)",Count of the labels the published panel prints
+s4_10_compositions,fig_S4.10,pipeline,5,TRUE,"Occupation gender composition labels, Arai et al. (69): Sweden (enhanced CVs)",Count of the labels the published panel prints
+s4_10_sample_sizes,fig_S4.10,pipeline,5,TRUE,"Occupation sample size labels, Arai et al. (69): Sweden (enhanced CVs)",Count of the labels the published panel prints
+s4_11_entries,fig_S4.11,pipeline,10,TRUE,"Plotted estimate and standard error labels, Asali et al. (70): Georgia",Count of the labels the published panel prints
+s4_11_compositions,fig_S4.11,pipeline,9,TRUE,"Occupation gender composition labels, Asali et al. (70): Georgia",Count of the labels the published panel prints
+s4_11_sample_sizes,fig_S4.11,pipeline,9,TRUE,"Occupation sample size labels, Asali et al. (70): Georgia",Count of the labels the published panel prints
+s4_12_entries,fig_S4.12,pipeline,7,TRUE,"Plotted estimate and standard error labels, Mavlikeeva and Asanov (11): Russia",Count of the labels the published panel prints
+s4_12_compositions,fig_S4.12,pipeline,6,TRUE,"Occupation gender composition labels, Mavlikeeva and Asanov (11): Russia",Count of the labels the published panel prints
+s4_12_sample_sizes,fig_S4.12,pipeline,6,TRUE,"Occupation sample size labels, Mavlikeeva and Asanov (11): Russia",Count of the labels the published panel prints
+s4_13_entries,fig_S4.13,pipeline,1,TRUE,"Plotted estimate and standard error labels, Baert et al. (71): Belgium",Count of the labels the published panel prints
+s4_13_compositions,fig_S4.13,pipeline,1,TRUE,"Occupation gender composition labels, Baert et al. (71): Belgium",Count of the labels the published panel prints
+s4_13_sample_sizes,fig_S4.13,pipeline,1,TRUE,"Occupation sample size labels, Baert et al. (71): Belgium",Count of the labels the published panel prints
+s4_14_entries,fig_S4.14,pipeline,1,TRUE,"Plotted estimate and standard error labels, Baert et al. (72): Belgium",Count of the labels the published panel prints
+s4_14_compositions,fig_S4.14,pipeline,1,TRUE,"Occupation gender composition labels, Baert et al. (72): Belgium",Count of the labels the published panel prints
+s4_14_sample_sizes,fig_S4.14,pipeline,1,TRUE,"Occupation sample size labels, Baert et al. (72): Belgium",Count of the labels the published panel prints
+s4_15_entries,fig_S4.15,pipeline,2,TRUE,"Plotted estimate and standard error labels, Banerjee et al. (73): India",Count of the labels the published panel prints
+s4_15_compositions,fig_S4.15,pipeline,2,TRUE,"Occupation gender composition labels, Banerjee et al. (73): India",Count of the labels the published panel prints
+s4_15_sample_sizes,fig_S4.15,pipeline,2,TRUE,"Occupation sample size labels, Banerjee et al. (73): India",Count of the labels the published panel prints
+s4_16_entries,fig_S4.16,pipeline,2,TRUE,"Plotted estimate and standard error labels, Becker et al. (74): Austria, Germany, Switzerland",Count of the labels the published panel prints
+s4_16_compositions,fig_S4.16,pipeline,2,TRUE,"Occupation gender composition labels, Becker et al. (74): Austria, Germany, Switzerland",Count of the labels the published panel prints
+s4_16_sample_sizes,fig_S4.16,pipeline,2,TRUE,"Occupation sample size labels, Becker et al. (74): Austria, Germany, Switzerland",Count of the labels the published panel prints
+s4_17_entries,fig_S4.17,pipeline,1,TRUE,"Plotted estimate and standard error labels, Berson (75): France",Count of the labels the published panel prints
+s4_17_compositions,fig_S4.17,pipeline,1,TRUE,"Occupation gender composition labels, Berson (75): France",Count of the labels the published panel prints
+s4_17_sample_sizes,fig_S4.17,pipeline,1,TRUE,"Occupation sample size labels, Berson (75): France",Count of the labels the published panel prints
+s4_18_entries,fig_S4.18,pipeline,7,TRUE,"Plotted estimate and standard error labels, Birkelund et al. (76): Germany",Count of the labels the published panel prints
+s4_18_compositions,fig_S4.18,pipeline,6,TRUE,"Occupation gender composition labels, Birkelund et al. (76): Germany",Count of the labels the published panel prints
+s4_18_sample_sizes,fig_S4.18,pipeline,6,TRUE,"Occupation sample size labels, Birkelund et al. (76): Germany",Count of the labels the published panel prints
+s4_19_entries,fig_S4.19,pipeline,7,TRUE,"Plotted estimate and standard error labels, Birkelund et al. (76): the Netherlands",Count of the labels the published panel prints
+s4_19_compositions,fig_S4.19,pipeline,6,TRUE,"Occupation gender composition labels, Birkelund et al. (76): the Netherlands",Count of the labels the published panel prints
+s4_19_sample_sizes,fig_S4.19,pipeline,6,TRUE,"Occupation sample size labels, Birkelund et al. (76): the Netherlands",Count of the labels the published panel prints
+s4_20_entries,fig_S4.20,pipeline,7,TRUE,"Plotted estimate and standard error labels, Birkelund et al. (76): Norway",Count of the labels the published panel prints
+s4_20_compositions,fig_S4.20,pipeline,6,TRUE,"Occupation gender composition labels, Birkelund et al. (76): Norway",Count of the labels the published panel prints
+s4_20_sample_sizes,fig_S4.20,pipeline,6,TRUE,"Occupation sample size labels, Birkelund et al. (76): Norway",Count of the labels the published panel prints
+s4_21_entries,fig_S4.21,pipeline,7,TRUE,"Plotted estimate and standard error labels, Birkelund et al. (76): Spain",Count of the labels the published panel prints
+s4_21_compositions,fig_S4.21,pipeline,6,TRUE,"Occupation gender composition labels, Birkelund et al. (76): Spain",Count of the labels the published panel prints
+s4_21_sample_sizes,fig_S4.21,pipeline,6,TRUE,"Occupation sample size labels, Birkelund et al. (76): Spain",Count of the labels the published panel prints
+s4_22_entries,fig_S4.22,pipeline,7,TRUE,"Plotted estimate and standard error labels, Birkelund et al. (76): United Kingdom",Count of the labels the published panel prints
+s4_22_compositions,fig_S4.22,pipeline,6,TRUE,"Occupation gender composition labels, Birkelund et al. (76): United Kingdom",Count of the labels the published panel prints
+s4_22_sample_sizes,fig_S4.22,pipeline,6,TRUE,"Occupation sample size labels, Birkelund et al. (76): United Kingdom",Count of the labels the published panel prints
+s4_23_entries,fig_S4.23,pipeline,7,TRUE,"Plotted estimate and standard error labels, Birkelund et al. (76): United States",Count of the labels the published panel prints
+s4_23_compositions,fig_S4.23,pipeline,6,TRUE,"Occupation gender composition labels, Birkelund et al. (76): United States",Count of the labels the published panel prints
+s4_23_sample_sizes,fig_S4.23,pipeline,6,TRUE,"Occupation sample size labels, Birkelund et al. (76): United States",Count of the labels the published panel prints
+s4_24_entries,fig_S4.24,pipeline,5,TRUE,"Plotted estimate and standard error labels, Booth and Leigh (15): Australia",Count of the labels the published panel prints
+s4_24_compositions,fig_S4.24,pipeline,4,TRUE,"Occupation gender composition labels, Booth and Leigh (15): Australia",Count of the labels the published panel prints
+s4_24_sample_sizes,fig_S4.24,pipeline,4,TRUE,"Occupation sample size labels, Booth and Leigh (15): Australia",Count of the labels the published panel prints
+s4_25_entries,fig_S4.25,pipeline,1,TRUE,"Plotted estimate and standard error labels, Bursell (77): Sweden",Count of the labels the published panel prints
+s4_25_compositions,fig_S4.25,pipeline,1,TRUE,"Occupation gender composition labels, Bursell (77): Sweden",Count of the labels the published panel prints
+s4_25_sample_sizes,fig_S4.25,pipeline,1,TRUE,"Occupation sample size labels, Bursell (77): Sweden",Count of the labels the published panel prints
+s4_26_entries,fig_S4.26,pipeline,1,TRUE,"Plotted estimate and standard error labels, Busetta et al. (79): Italy",Count of the labels the published panel prints
+s4_26_compositions,fig_S4.26,pipeline,1,TRUE,"Occupation gender composition labels, Busetta et al. (79): Italy",Count of the labels the published panel prints
+s4_26_sample_sizes,fig_S4.26,pipeline,1,TRUE,"Occupation sample size labels, Busetta et al. (79): Italy",Count of the labels the published panel prints
+s4_27_entries,fig_S4.27,pipeline,14,TRUE,"Plotted estimate and standard error labels, Bygren et al. (78): Sweden",Count of the labels the published panel prints
+s4_27_compositions,fig_S4.27,pipeline,13,TRUE,"Occupation gender composition labels, Bygren et al. (78): Sweden",Count of the labels the published panel prints
+s4_27_sample_sizes,fig_S4.27,pipeline,13,TRUE,"Occupation sample size labels, Bygren et al. (78): Sweden",Count of the labels the published panel prints
+s4_28_entries,fig_S4.28,pipeline,14,TRUE,"Plotted estimate and standard error labels, Carlsson (13): Sweden",Count of the labels the published panel prints
+s4_28_compositions,fig_S4.28,pipeline,13,TRUE,"Occupation gender composition labels, Carlsson (13): Sweden",Count of the labels the published panel prints
+s4_28_sample_sizes,fig_S4.28,pipeline,13,TRUE,"Occupation sample size labels, Carlsson (13): Sweden",Count of the labels the published panel prints
+s4_29_entries,fig_S4.29,pipeline,8,TRUE,"Plotted estimate and standard error labels, Carlsson and Eriksson (80): Sweden",Count of the labels the published panel prints
+s4_29_compositions,fig_S4.29,pipeline,7,TRUE,"Occupation gender composition labels, Carlsson and Eriksson (80): Sweden",Count of the labels the published panel prints
+s4_29_sample_sizes,fig_S4.29,pipeline,7,TRUE,"Occupation sample size labels, Carlsson and Eriksson (80): Sweden",Count of the labels the published panel prints
+s4_30_entries,fig_S4.30,pipeline,4,TRUE,"Plotted estimate and standard error labels, Carlsson et al. (81): Sweden",Count of the labels the published panel prints
+s4_30_compositions,fig_S4.30,pipeline,3,TRUE,"Occupation gender composition labels, Carlsson et al. (81): Sweden",Count of the labels the published panel prints
+s4_30_sample_sizes,fig_S4.30,pipeline,3,TRUE,"Occupation sample size labels, Carlsson et al. (81): Sweden",Count of the labels the published panel prints
+s4_31_entries,fig_S4.31,pipeline,1,TRUE,"Plotted estimate and standard error labels, Correll et al. (83): United States, field experiment",Count of the labels the published panel prints
+s4_31_compositions,fig_S4.31,pipeline,1,TRUE,"Occupation gender composition labels, Correll et al. (83): United States, field experiment",Count of the labels the published panel prints
+s4_31_sample_sizes,fig_S4.31,pipeline,1,TRUE,"Occupation sample size labels, Correll et al. (83): United States, field experiment",Count of the labels the published panel prints
+s4_32_entries,fig_S4.32,pipeline,22,TRUE,"Plotted estimate and standard error labels, Dahl and Krog (84): Denmark",Count of the labels the published panel prints
+s4_32_compositions,fig_S4.32,pipeline,21,TRUE,"Occupation gender composition labels, Dahl and Krog (84): Denmark",Count of the labels the published panel prints
+s4_32_sample_sizes,fig_S4.32,pipeline,21,TRUE,"Occupation sample size labels, Dahl and Krog (84): Denmark",Count of the labels the published panel prints
+s4_33_entries,fig_S4.33,pipeline,4,TRUE,"Plotted estimate and standard error labels, Edo et al. (85): France",Count of the labels the published panel prints
+s4_33_compositions,fig_S4.33,pipeline,3,TRUE,"Occupation gender composition labels, Edo et al. (85): France",Count of the labels the published panel prints
+s4_33_sample_sizes,fig_S4.33,pipeline,3,TRUE,"Occupation sample size labels, Edo et al. (85): France",Count of the labels the published panel prints
+s4_34_entries,fig_S4.34,pipeline,4,TRUE,"Plotted estimate and standard error labels, Erlandsson (86): Sweden",Count of the labels the published panel prints
+s4_34_compositions,fig_S4.34,pipeline,3,TRUE,"Occupation gender composition labels, Erlandsson (86): Sweden",Count of the labels the published panel prints
+s4_34_sample_sizes,fig_S4.34,pipeline,3,TRUE,"Occupation sample size labels, Erlandsson (86): Sweden",Count of the labels the published panel prints
+s4_35_entries,fig_S4.35,pipeline,4,TRUE,"Plotted estimate and standard error labels, Galarza and Yamada (87): Peru",Count of the labels the published panel prints
+s4_35_compositions,fig_S4.35,pipeline,3,TRUE,"Occupation gender composition labels, Galarza and Yamada (87): Peru",Count of the labels the published panel prints
+s4_35_sample_sizes,fig_S4.35,pipeline,3,TRUE,"Occupation sample size labels, Galarza and Yamada (87): Peru",Count of the labels the published panel prints
+s4_36_entries,fig_S4.36,pipeline,4,TRUE,"Plotted estimate and standard error labels, Galarza and Yamada (88): Peru",Count of the labels the published panel prints
+s4_36_compositions,fig_S4.36,pipeline,3,TRUE,"Occupation gender composition labels, Galarza and Yamada (88): Peru",Count of the labels the published panel prints
+s4_36_sample_sizes,fig_S4.36,pipeline,3,TRUE,"Occupation sample size labels, Galarza and Yamada (88): Peru",Count of the labels the published panel prints
+s4_37_entries,fig_S4.37,pipeline,18,TRUE,"Plotted estimate and standard error labels, Gonzalez et al. (89): Spain",Count of the labels the published panel prints
+s4_37_compositions,fig_S4.37,pipeline,17,TRUE,"Occupation gender composition labels, Gonzalez et al. (89): Spain",Count of the labels the published panel prints
+s4_37_sample_sizes,fig_S4.37,pipeline,17,TRUE,"Occupation sample size labels, Gonzalez et al. (89): Spain",Count of the labels the published panel prints
+s4_38_entries,fig_S4.38,pipeline,1,TRUE,"Plotted estimate and standard error labels, Hipp (90): Germany",Count of the labels the published panel prints
+s4_38_compositions,fig_S4.38,pipeline,1,TRUE,"Occupation gender composition labels, Hipp (90): Germany",Count of the labels the published panel prints
+s4_38_sample_sizes,fig_S4.38,pipeline,1,TRUE,"Occupation sample size labels, Hipp (90): Germany",Count of the labels the published panel prints
+s4_39_entries,fig_S4.39,pipeline,2,TRUE,"Plotted estimate and standard error labels, Horváth (16): China",Count of the labels the published panel prints
+s4_39_compositions,fig_S4.39,pipeline,2,TRUE,"Occupation gender composition labels, Horváth (16): China",Count of the labels the published panel prints
+s4_39_sample_sizes,fig_S4.39,pipeline,2,TRUE,"Occupation sample size labels, Horváth (16): China",Count of the labels the published panel prints
+s4_40_entries,fig_S4.40,pipeline,1,TRUE,"Plotted estimate and standard error labels, Jackson (91): United Kingdom",Count of the labels the published panel prints
+s4_40_compositions,fig_S4.40,pipeline,1,TRUE,"Occupation gender composition labels, Jackson (91): United Kingdom",Count of the labels the published panel prints
+s4_40_sample_sizes,fig_S4.40,pipeline,1,TRUE,"Occupation sample size labels, Jackson (91): United Kingdom",Count of the labels the published panel prints
+s4_41_entries,fig_S4.41,pipeline,5,TRUE,"Plotted estimate and standard error labels, Maurer-Fazio and Lei (92): China",Count of the labels the published panel prints
+s4_41_compositions,fig_S4.41,pipeline,4,TRUE,"Occupation gender composition labels, Maurer-Fazio and Lei (92): China",Count of the labels the published panel prints
+s4_41_sample_sizes,fig_S4.41,pipeline,4,TRUE,"Occupation sample size labels, Maurer-Fazio and Lei (92): China",Count of the labels the published panel prints
+s4_42_entries,fig_S4.42,pipeline,1,TRUE,"Plotted estimate and standard error labels, Neumark et al. (9): United States",Count of the labels the published panel prints
+s4_42_compositions,fig_S4.42,pipeline,1,TRUE,"Occupation gender composition labels, Neumark et al. (9): United States",Count of the labels the published panel prints
+s4_42_sample_sizes,fig_S4.42,pipeline,1,TRUE,"Occupation sample size labels, Neumark et al. (9): United States",Count of the labels the published panel prints
+s4_43_entries,fig_S4.43,pipeline,7,TRUE,"Plotted estimate and standard error labels, Nunley et al. (93): United States",Count of the labels the published panel prints
+s4_43_compositions,fig_S4.43,pipeline,6,TRUE,"Occupation gender composition labels, Nunley et al. (93): United States",Count of the labels the published panel prints
+s4_43_sample_sizes,fig_S4.43,pipeline,6,TRUE,"Occupation sample size labels, Nunley et al. (93): United States",Count of the labels the published panel prints
+s4_44_entries,fig_S4.44,pipeline,22,TRUE,"Plotted estimate and standard error labels, Oreopoulos (94): Canada",Count of the labels the published panel prints
+s4_44_compositions,fig_S4.44,pipeline,21,TRUE,"Occupation gender composition labels, Oreopoulos (94): Canada",Count of the labels the published panel prints
+s4_44_sample_sizes,fig_S4.44,pipeline,21,TRUE,"Occupation sample size labels, Oreopoulos (94): Canada",Count of the labels the published panel prints
+s4_45_entries,fig_S4.45,pipeline,8,TRUE,"Plotted estimate and standard error labels, Patacchini et al. (95): Italy",Count of the labels the published panel prints
+s4_45_compositions,fig_S4.45,pipeline,7,TRUE,"Occupation gender composition labels, Patacchini et al. (95): Italy",Count of the labels the published panel prints
+s4_45_sample_sizes,fig_S4.45,pipeline,7,TRUE,"Occupation sample size labels, Patacchini et al. (95): Italy",Count of the labels the published panel prints
+s4_46_entries,fig_S4.46,pipeline,5,TRUE,"Plotted estimate and standard error labels, Pedulla (96): United States, field experiment",Count of the labels the published panel prints
+s4_46_compositions,fig_S4.46,pipeline,4,TRUE,"Occupation gender composition labels, Pedulla (96): United States, field experiment",Count of the labels the published panel prints
+s4_46_sample_sizes,fig_S4.46,pipeline,4,TRUE,"Occupation sample size labels, Pedulla (96): United States, field experiment",Count of the labels the published panel prints
+s4_47_entries,fig_S4.47,pipeline,1,TRUE,"Plotted estimate and standard error labels, Petit (97): France",Count of the labels the published panel prints
+s4_47_compositions,fig_S4.47,pipeline,1,TRUE,"Occupation gender composition labels, Petit (97): France",Count of the labels the published panel prints
+s4_47_sample_sizes,fig_S4.47,pipeline,1,TRUE,"Occupation sample size labels, Petit (97): France",Count of the labels the published panel prints
+s4_48_entries,fig_S4.48,pipeline,1,TRUE,"Plotted estimate and standard error labels, Quadlin (98): United States, field experiment",Count of the labels the published panel prints
+s4_48_compositions,fig_S4.48,pipeline,1,TRUE,"Occupation gender composition labels, Quadlin (98): United States, field experiment",Count of the labels the published panel prints
+s4_48_sample_sizes,fig_S4.48,pipeline,1,TRUE,"Occupation sample size labels, Quadlin (98): United States, field experiment",Count of the labels the published panel prints
+s4_49_entries,fig_S4.49,pipeline,8,TRUE,"Plotted estimate and standard error labels, Ramos et al. (99): Spain and the Netherlands",Count of the labels the published panel prints
+s4_49_compositions,fig_S4.49,pipeline,7,TRUE,"Occupation gender composition labels, Ramos et al. (99): Spain and the Netherlands",Count of the labels the published panel prints
+s4_49_sample_sizes,fig_S4.49,pipeline,7,TRUE,"Occupation sample size labels, Ramos et al. (99): Spain and the Netherlands",Count of the labels the published panel prints
+s4_50_entries,fig_S4.50,pipeline,8,TRUE,"Plotted estimate and standard error labels, Riach and Rich (8): Australia",Count of the labels the published panel prints
+s4_50_compositions,fig_S4.50,pipeline,7,TRUE,"Occupation gender composition labels, Riach and Rich (8): Australia",Count of the labels the published panel prints
+s4_50_sample_sizes,fig_S4.50,pipeline,7,TRUE,"Occupation sample size labels, Riach and Rich (8): Australia",Count of the labels the published panel prints
+s4_51_entries,fig_S4.51,pipeline,5,TRUE,"Plotted estimate and standard error labels, Riach and Rich (100): England",Count of the labels the published panel prints
+s4_51_compositions,fig_S4.51,pipeline,4,TRUE,"Occupation gender composition labels, Riach and Rich (100): England",Count of the labels the published panel prints
+s4_51_sample_sizes,fig_S4.51,pipeline,4,TRUE,"Occupation sample size labels, Riach and Rich (100): England",Count of the labels the published panel prints
+s4_52_entries,fig_S4.52,pipeline,1,TRUE,"Plotted estimate and standard error labels, Rivera and Tilcsik (101): United States, field experiment",Count of the labels the published panel prints
+s4_52_compositions,fig_S4.52,pipeline,1,TRUE,"Occupation gender composition labels, Rivera and Tilcsik (101): United States, field experiment",Count of the labels the published panel prints
+s4_52_sample_sizes,fig_S4.52,pipeline,1,TRUE,"Occupation sample size labels, Rivera and Tilcsik (101): United States, field experiment",Count of the labels the published panel prints
+s4_53_entries,fig_S4.53,pipeline,8,TRUE,"Plotted estimate and standard error labels, Rooth (102): Sweden",Count of the labels the published panel prints
+s4_53_compositions,fig_S4.53,pipeline,7,TRUE,"Occupation gender composition labels, Rooth (102): Sweden",Count of the labels the published panel prints
+s4_53_sample_sizes,fig_S4.53,pipeline,7,TRUE,"Occupation sample size labels, Rooth (102): Sweden",Count of the labels the published panel prints
+s4_54_entries,fig_S4.54,pipeline,11,TRUE,"Plotted estimate and standard error labels, Ruffle and Shtudiner (103): Israel",Count of the labels the published panel prints
+s4_54_compositions,fig_S4.54,pipeline,10,TRUE,"Occupation gender composition labels, Ruffle and Shtudiner (103): Israel",Count of the labels the published panel prints
+s4_54_sample_sizes,fig_S4.54,pipeline,10,TRUE,"Occupation sample size labels, Ruffle and Shtudiner (103): Israel",Count of the labels the published panel prints
+s4_55_entries,fig_S4.55,pipeline,1,TRUE,"Plotted estimate and standard error labels, Saeed et al. (104): Pakistan",Count of the labels the published panel prints
+s4_55_compositions,fig_S4.55,pipeline,1,TRUE,"Occupation gender composition labels, Saeed et al. (104): Pakistan",Count of the labels the published panel prints
+s4_55_sample_sizes,fig_S4.55,pipeline,1,TRUE,"Occupation sample size labels, Saeed et al. (104): Pakistan",Count of the labels the published panel prints
+s4_56_entries,fig_S4.56,pipeline,11,TRUE,"Plotted estimate and standard error labels, Di Stasio and Larsen (105): United Kingdom, Germany and Norway",Count of the labels the published panel prints
+s4_56_compositions,fig_S4.56,pipeline,10,TRUE,"Occupation gender composition labels, Di Stasio and Larsen (105): United Kingdom, Germany and Norway",Count of the labels the published panel prints
+s4_56_sample_sizes,fig_S4.56,pipeline,10,TRUE,"Occupation sample size labels, Di Stasio and Larsen (105): United Kingdom, Germany and Norway",Count of the labels the published panel prints
+s4_57_entries,fig_S4.57,pipeline,5,TRUE,"Plotted estimate and standard error labels, Thomas (4): United States, field experiment",Count of the labels the published panel prints
+s4_57_compositions,fig_S4.57,pipeline,4,TRUE,"Occupation gender composition labels, Thomas (4): United States, field experiment",Count of the labels the published panel prints
+s4_57_sample_sizes,fig_S4.57,pipeline,4,TRUE,"Occupation sample size labels, Thomas (4): United States, field experiment",Count of the labels the published panel prints
+s4_58_entries,fig_S4.58,pipeline,1,TRUE,"Plotted estimate and standard error labels, Wu (106): China",Count of the labels the published panel prints
+s4_58_compositions,fig_S4.58,pipeline,1,TRUE,"Occupation gender composition labels, Wu (106): China",Count of the labels the published panel prints
+s4_58_sample_sizes,fig_S4.58,pipeline,1,TRUE,"Occupation sample size labels, Wu (106): China",Count of the labels the published panel prints
+s4_59_entries,fig_S4.59,pipeline,1,TRUE,"Plotted estimate and standard error labels, Yavorsky (107): United States",Count of the labels the published panel prints
+s4_59_compositions,fig_S4.59,pipeline,1,TRUE,"Occupation gender composition labels, Yavorsky (107): United States",Count of the labels the published panel prints
+s4_59_sample_sizes,fig_S4.59,pipeline,1,TRUE,"Occupation sample size labels, Yavorsky (107): United States",Count of the labels the published panel prints
+s4_60_entries,fig_S4.60,pipeline,5,TRUE,"Plotted estimate and standard error labels, Zhou et al. (108): China",Count of the labels the published panel prints
+s4_60_compositions,fig_S4.60,pipeline,4,TRUE,"Occupation gender composition labels, Zhou et al. (108): China",Count of the labels the published panel prints
+s4_60_sample_sizes,fig_S4.60,pipeline,4,TRUE,"Occupation sample size labels, Zhou et al. (108): China",Count of the labels the published panel prints
+s4_61_entries,fig_S4.61,pipeline,1,TRUE,"Plotted estimate and standard error labels, Capéau et al. (82): Belgium",Count of the labels the published panel prints
+s4_61_compositions,fig_S4.61,pipeline,1,TRUE,"Occupation gender composition labels, Capéau et al. (82): Belgium",Count of the labels the published panel prints
+s4_61_sample_sizes,fig_S4.61,pipeline,1,TRUE,"Occupation sample size labels, Capéau et al. (82): Belgium",Count of the labels the published panel prints

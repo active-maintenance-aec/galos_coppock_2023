@@ -29,8 +29,37 @@ latex_out <- knitr::is_latex_output()
 
 latex_only <- function(k, f) if (latex_out) f(k) else k
 
+# value_paper is forced to character in every reader of these two files. A column whose entries
+# all look numeric is guessed as double, and that turns the published 1.50 into 1.5.
 gt <- read_csv(here::here("ground_truth", "galos_coppock_2023_ground_truth.csv"),
-               show_col_types = FALSE)
+               col_types = cols(.default = col_character(),
+                                value_paper = col_character(),
+                                value_script = col_double(),
+                                value_rewrite = col_double(),
+                                match = col_double(),
+                                match_rewrite = col_double()))
+
+published_claims <- read_csv(here::here("ground_truth", "published_claims.csv"),
+                             col_types = cols(.default = col_character(),
+                                              value_paper = col_character()),
+                             na = character())
+
+float_coverage <- read_csv(here::here("ground_truth", "float_coverage.csv"),
+                           col_types = cols(float = col_character(),
+                                            printed = col_double(),
+                                            covered = col_double(),
+                                            share = col_double(),
+                                            reason = col_character()))
+
+# Quoted below in the paragraph about the dropped significance marker. Five decimals, not the
+# three the table's own note uses: at three it reads 0.001, which is the threshold for the third
+# star rather than the second, and the finding would be ambiguous inside the rule it names.
+model_2_intercept_p <- read_csv(
+  here::here("maintained", "output", "table_2_ethnicity_meta_regression.csv"),
+  show_col_types = FALSE) |>
+  filter(model == "Model 2", term == "intercept") |>
+  pull(p.value) |>
+  sprintf(fmt = "%.5f")
 ```
 
 This repository holds the actively maintained replication code for Galos and Coppock (2023), together with the reproducibility report that documents what the original archive did and did not do. It is part of a program applying the maintenance proposal in Peer, Orr and Coppock (2021, *PS: Political Science & Politics*, doi [10.1017/S1049096521000366](https://doi.org/10.1017/S1049096521000366)) to a set of published archives.
@@ -44,7 +73,7 @@ This repository holds the actively maintained replication code for Galos and Cop
 
 **The data are not redistributed here.** The deposit is 19 files at Harvard Dataverse, which is the only copy this repository points at. `download_original.R` fetches it and verifies every file against `original_manifest.csv`, which pins the file identifiers, folder paths, sizes and checksums, so the exact bytes this code was written against are recorded in version control even though the bytes themselves are not. The same script stops if `original/` holds anything the manifest does not list, since a stray file makes a working copy differ from a fresh clone in exactly the way a reproduction check exists to catch.
 
-**Repository layout.** `maintained/` is the maintained rewrite: one script per published table or figure, writing to `output/`, which is committed so a reader can compare a fresh run against it without downloading anything. `ground_truth/` ties every published number to the code that produces it. `original/` is created by the download script and is deliberately absent from the repository. This file is the reproducibility report, also available as a PDF in `report/`.
+**Repository layout.** `maintained/` is the maintained rewrite: one script per published table or figure, writing to `output/`, which is committed so a reader can compare a fresh run against it without downloading anything, plus `in_text_claims.R`, which recomputes every claim the article makes and prints it beside the article's own sentence. `ground_truth/` ties every published number to the code that produces it and holds the extraction of the published pages. `original/` is created by the download script and is deliberately absent from the repository. `errata.qmd` renders `galos_coppock_2023_errata.pdf`, the corrections to the published article. This file is the reproducibility report, also available as a PDF in `report/`.
 
 **License.** CC0 1.0 Universal, matching the terms of the deposit this repository maintains. See `LICENSE`.
 
@@ -54,7 +83,7 @@ This repository holds the actively maintained replication code for Galos and Cop
 source("run_all.R")
 ```
 
-That fetches the deposit, verifies its 19 files, produces every table and figure into `maintained/output/`, and rebuilds the number-by-number comparison table in `ground_truth/`. Required packages: tidyverse, metafor, broom, scales, rsample, modelsummary, knitr, kableExtra, here. Paths resolve through `here`, so nothing depends on the working directory. The full run takes about two and a half minutes, almost all of it in the 500-resample bootstrap behind one standard error in the Results section.
+That fetches the deposit, verifies its 19 files, produces every table and figure into `maintained/output/`, rebuilds the number-by-number comparison table in `ground_truth/` and its gates, and prints the recomputed value of every claim the article makes. Required packages: tidyverse, metafor, broom, scales, rsample, modelsummary, knitr, kableExtra, here. Paths resolve through `here`, so nothing depends on the working directory. The full run takes about two and a half minutes, almost all of it in the 500-resample bootstrap behind one standard error in the Results section.
 
 A successful run overwrites `maintained/output/`, which is committed: **`git diff` on that folder is the reproduction check.** The CSV, TeX and PNG files come back byte-identical. The eight figure PDFs always differ, because a PDF records the time it was written, so a changed hash there is not evidence of anything.
 
@@ -69,8 +98,10 @@ n_rewrite_verifiable <- sum(!is.na(gt$match_rewrite))
 n_rewrite_match <- sum(gt$match_rewrite == 1, na.rm = TRUE)
 n_rewrite_fail <- sum(gt$match_rewrite == 0, na.rm = TRUE)
 n_unverifiable <- sum(is.na(gt$value_paper))
-n_locus_archive <- sum(gt$defect_locus == "archive", na.rm = TRUE)
-n_locus_paper <- sum(gt$defect_locus == "paper_internal", na.rm = TRUE)
+# Scoped to the rows the rewrite does not match, since three further rows carry an archive
+# locus while the rewrite matches: the deposit's five-resample bootstrap and its panel loop.
+n_locus_archive <- sum(gt$defect_locus == "archive" & gt$match_rewrite == 0, na.rm = TRUE)
+n_locus_paper <- sum(gt$defect_locus == "paper_internal" & gt$match_rewrite == 0, na.rm = TRUE)
 ```
 
 Two questions, answered before the detail.
@@ -93,7 +124,7 @@ The ground truth records `r n_claims` values. `r n_rewrite_match` of the `r n_re
 
 The `r n_rewrite_fail` that do not divide into two groups: `r n_locus_paper` where the article disagrees with itself, and `r n_locus_archive` where the deposit does not carry the quantity the published figure prints.
 
-**The article against itself.** The paper reports that bias is larger in women-dominated than in men-dominated occupations "by a statistically significant 2.10 points". The archive and the rewrite both give 2.10547, which rounds to 2.11 at the printed precision; the published figure is the truncation. Published Table 2 prints the Model 2 intercept as −3.72 with no significance stars, where the coefficient's p-value is 0.001 and the numerically identical −3.73 intercept in Model 3 does carry its two stars; the estimate and its standard error are right and only the marker is missing. Table S2.1 gives 18 occupations for Gonzalez et al. and 24 for Dahl and Krog, where the corresponding study panels, figs. S4.37 and S4.32, plot 17 and 21.
+**The article against itself.** The paper reports that bias is larger in women-dominated than in men-dominated occupations "by a statistically significant 2.10 points". The archive and the rewrite both give 2.10547, which rounds to 2.11 at the printed precision; the published figure is the truncation. Published Table 2 prints the Model 2 intercept as −3.72 with no significance stars, where the coefficient's p-value is `r model_2_intercept_p` and the numerically identical −3.73 intercept in Model 3 does carry its two stars; the estimate and its standard error are right and only the marker is missing. Table S2.1 gives 18 occupations for Gonzalez et al. and 24 for Dahl and Krog, where the corresponding study panels, figs. S4.37 and S4.32, plot 17 and 21. And the abstract says the experiments were carried out across five continents, where the paper's own evidence map is drawn as six continent facets and its earliest study is Australian.
 
 **The deposit against the figures.** Every study panel labels each occupation with three lines: its name, the share of women in it, and a sample size. The first two reproduce for all 57 panels. The third is only partly recoverable, because the deposit carries no subject counts. What it does carry is the residual degrees of freedom of each occupation's own regression, and `df + 1` equals the published sample size exactly for 167 of the 298 occupations, which is every occupation of 35 of the 57 studies. For the other 22 the published figure is several times larger, which is what a design with several applications per job opening gives, and the deposit provides no way to recover the multiplier. The same gap shows up in table S2.1, whose subject counts reconstruct for the same 35 studies.
 
@@ -191,6 +222,41 @@ sims <- 5
 
 The published standard error is 0.58. At five resamples the archive prints 0.54.
 
+# Errata
+
+Five statements in the published article do not survive the comparison, and they are collected in `galos_coppock_2023_errata.pdf` at the root of this repository, which renders from `errata.qmd` and computes every corrected number from `maintained/output/` at the time it is rendered. **None of them changes a conclusion of the paper.**
+
+```{r errata_table}
+tibble(
+  Correction = c(
+    "The abstract says the experiments were carried out across five continents",
+    "Table S2.1 gives 18 occupations for Gonzalez et al. and 24 for Dahl and Krog",
+    "Table 2 prints the Model 2 intercept with no significance marker",
+    "The article cites fig. S6.66 for the PRISMA flow diagram",
+    "The Results section states the difference in magnitude as 2.10 points"
+  ),
+  Evidence = c(
+    "The paper's own evidence map is drawn as six continent facets, and the earliest study in the record is Australian",
+    "Figs. S4.37 and S4.32 plot 17 and 21 occupations for the same two studies, which is what the deposited data hold",
+    str_glue("The p-value is {model_2_intercept_p} and the numerically identical Model 3 intercept carries two stars"),
+    "The supplementary materials list Figs. S1.1 to S6.63 and there is no fig. S6.66",
+    "The archive and the rewrite both give 2.10547, which rounds to 2.11 at the printed precision"
+  )
+) |>
+  kable(
+    booktabs = TRUE,
+    caption = "The five corrections, in the order the errata note gives them."
+  ) |>
+  latex_only(\(k) k |>
+    kable_styling(latex_options = c("hold_position", "scale_down"), font_size = 8) |>
+    column_spec(1, width = "6cm") |>
+    column_spec(2, width = "8cm"))
+```
+
+Three of the five are contradictions between two parts of the article, and the ground truth marks them `paper_internal`. The other two are a dropped typesetting marker and a truncation, both of which the deposited code itself gets right.
+
+This is separate from the question of whether the maintained rewrite corrected anything in the deposited code. It did not: the rewrite makes no analytical change and fixes no bug, and the two changes it does make to how the archive runs, raising the bootstrap from five resamples to the published five hundred and replacing an `NA` sort key, are described above.
+
 # Number-by-number comparison
 
 The ground truth is at `ground_truth/galos_coppock_2023_ground_truth.csv` and is generated by `ground_truth/build_ground_truth.R`, which runs as the last step of `run_all.R`. Its only typed numbers are the `value_paper` column, read from the published article and its supplementary materials; `value_script` is read from the harvest of the deposited code and `value_rewrite` out of `maintained/output/`. The verdicts are computed at the precision the article prints rather than asserted.
@@ -234,9 +300,39 @@ gt |>
     column_spec(2, width = "7cm"))
 ```
 
-The `r n_unverifiable` remaining recorded quantities are ones the scripts produce and the paper never prints: the mean and median number of occupations per study, the count of survey occupation CATEs, and the intercept and slope of the two fitted lines in fig. S3.3, which are drawn but never stated numerically. They are recorded with no published counterpart rather than counted as matches.
+The `r n_unverifiable` remaining recorded quantities are ones the scripts produce and the paper never prints: the mean and median number of occupations per study, the count of survey occupation CATEs, the intercept and slope of the two fitted lines in fig. S3.3, which are drawn but never stated numerically, and the four distances that stand behind a sentence describing two quantities as similar or stable. They are recorded with no published counterpart rather than counted as matches.
 
-Four published floats have no row here, and none of them has any source in the deposit. Figures 1, 2 and 3 of the article are conceptual diagrams and a coding summary rather than analyses of the meta-reanalysis data. Figure S6.63 is a PRISMA flow diagram recording the literature search, whose counts come from the screening process and not from any data file in the deposit.
+A further `r sum(!is.na(gt$value_paper) & is.na(gt$match_rewrite))` claims are recorded with a published value and no verdict, because the article states them as approximations. "Two-thirds (37 of 57)" and "over the past four decades" are true at the precision they claim and false at any finer one, so both numbers are recorded and neither is scored.
+
+**Coverage is recorded as a fraction, not as a yes or no.** A float with one row against a hundred published cells satisfies any check that asks only whether the float appears, so the build counts the numbers each published float prints on its face and requires the ground truth to account for all of them. `ground_truth/float_coverage.csv` holds that count float by float. Of the `r nrow(float_coverage)` floats the article and its supplementary front matter list, `r sum(float_coverage$covered > 0)` carry rows here. The `r sum(!is.na(float_coverage$printed))` that print numbers on their faces carry `r format(sum(float_coverage$printed, na.rm = TRUE), big.mark = ",")` published values between them, and the ground truth reaches every one, so each of those floats is covered in full. The build stops if any float falls below that.
+
+The remaining `r sum(float_coverage$covered == 0)` published floats have no row here, and the build stops if a float has neither a row nor a stated reason, since a false reason tells the next reader not to look. Figures 1 and 2 are diagrams of the two gender gradients the theory admits and plot no estimates. Figure 3 summarises the discrimination mechanisms the 51 papers discuss, coded by hand; the deposit carries no mechanism or discipline variable, so nothing in the pipeline can reach it. Figures 4 and 5 print no numbers on their faces, and the estimates and lines they draw are the 298 occupation CATEs and the Table 1 and Table 2 fits, all covered above. Figure S2.2 is a map of country-by-year tiles, and what it asserts is checked through the section S2 sentences that describe it. Figure S6.63 is a PRISMA flow diagram whose counts come from the screening process and not from any data file in the deposit.
+
+# The extraction and the two instruments
+
+The comparison above answers "does the pipeline reproduce the published floats." It cannot answer "does the pipeline reproduce the published article," because a ground truth built float by float has no way to notice a sentence. Two further files close that gap.
+
+**The extraction.** `ground_truth/published_claims.csv` is a hand-reviewed list of every numeric claim the article and its supplementary materials make: `r nrow(published_claims)` of them, each with the string the page prints and a classification.
+
+```{r extraction_table}
+published_claims |>
+  count(claim_type, needs_block = needs_block == "TRUE") |>
+  pivot_wider(names_from = needs_block, values_from = n, values_fill = 0) |>
+  rename(`Claim type` = claim_type, `No block` = `FALSE`, `Needs a block` = `TRUE`) |>
+  kable(
+    booktabs = TRUE,
+    caption = "The extraction, by claim type. A pipeline or descriptive claim must have both a block and a ground truth row; the other three types get a block only where the pipeline can reach the quantity, and are otherwise verified at the point of use."
+  ) |>
+  latex_only(\(k) k |> kable_styling(latex_options = "hold_position", font_size = 9))
+```
+
+The float cells are read off the supplementary PDF's own text layer by `ground_truth/extract_published_claims.R`, which is not part of `run_all.R` because this repository does not carry the published PDFs. The prose claims, the two published tables and the front matter are typed from the page. That makes the extraction a second transcription of the same pages the ground truth transcribes, and the build compares the two: all `r sum(!is.na(gt$value_paper) & !is.na(gt$claim_id))` published values they share agree, digit for digit.
+
+**The second instrument.** `maintained/in_text_claims.R` recomputes every claim the extraction says needs a block, from `maintained/output/`, by its own path. It carries the article's own sentence verbatim in a comment above each block and prints one line per claim. It never reads the ground truth. `build_ground_truth.R` runs it, counts what it printed against what the extraction declares, and stops if the two disagree; it then compares the two instruments value by value, and stops if they land on different numbers. The `r sum(str_starts(gt$table_figure, "fig_S4\\.") | gt$table_figure == "table_S2.1")` claims about summarised floats are exempt from that last comparison, because their ground-truth value is a count of agreements with the published page and an instrument that never reads the page cannot recompute one.
+
+**Three findings came from the extraction and not from the floats.** The abstract's "five continents" against an evidence map drawn as six is the first, and it is now the first entry of the errata. The second is the article's own cross-reference to fig. S6.66. The third is a disagreement the article has with itself about a date: the introduction says the earliest study sent its applications in 1986, while the abstract dates the record from 1983 and the deposit's own study table and evidence map both put that study in 1983. Which is right is a fact about the cited 1987 paper rather than about this deposit, so it is recorded and left there rather than corrected.
+
+A fourth is worth stating and is not an erratum either. The Design section says the PRISMA search "yielded over 70 papers that met our inclusion criteria", where the PRISMA flow diagram of fig. S6.63 reports 51 reports included and 89 assessed for eligibility. No reading of the diagram gives over 70, and nothing in the deposit records the search, so the sentence cannot be corrected from the pipeline.
 
 # Tables 1 and 2
 
@@ -344,7 +440,7 @@ knitr::include_graphics(
 
 # Maintained rewrite
 
-The rewrite lives in `maintained/`: `helpers.R` plus fourteen scripts covering one cleaning step, three published tables, eight figures, and two sets of in-text quantities. It is a translation, not a reanalysis. Every estimator, specification and sample restriction is the one the paper used, and the published tables come out of `metafor::rma.uni()` with the same formulas the archive writes.
+The rewrite lives in `maintained/`: `helpers.R` plus fifteen scripts covering one cleaning step, three published tables, eight figures, two sets of in-text quantities, and the claims file that recomputes every number the article states. It is a translation, not a reanalysis. Every estimator, specification and sample restriction is the one the paper used, and the published tables come out of `metafor::rma.uni()` with the same formulas the archive writes.
 
 ## Architecture
 
@@ -365,7 +461,8 @@ tibble(
     "figure_s4_study_panels.R",
     "figure_s5_62_gender_gradient_forest.R",
     "text_summary_stats.R",
-    "text_difference_in_magnitude.R"
+    "text_difference_in_magnitude.R",
+    "in_text_claims.R"
   ),
   Produces = c(
     "Packages, paths, formatting helpers",
@@ -382,7 +479,8 @@ tibble(
     "Figures S4.5 to S4.61 and their 335 plotted values",
     "Figure S5.62 and its 76 plotted values",
     "The counts quoted in the text and in section S5",
-    "The predicted CATEs and the bootstrapped SE"
+    "The predicted CATEs and the bootstrapped SE",
+    "One printed line per claim the article makes"
   )
 ) |>
   kable(
