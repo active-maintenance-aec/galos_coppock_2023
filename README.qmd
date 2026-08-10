@@ -51,15 +51,48 @@ float_coverage <- read_csv(here::here("ground_truth", "float_coverage.csv"),
                                             share = col_double(),
                                             reason = col_character()))
 
-# Quoted below in the paragraph about the dropped significance marker. Five decimals, not the
-# three the table's own note uses: at three it reads 0.001, which is the threshold for the third
-# star rather than the second, and the finding would be ambiguous inside the rule it names.
-model_2_intercept_p <- read_csv(
-  here::here("maintained", "output", "table_2_ethnicity_meta_regression.csv"),
-  show_col_types = FALSE) |>
-  filter(model == "Model 2", term == "intercept") |>
-  pull(p.value) |>
-  sprintf(fmt = "%.5f")
+# The errata spine, written by errata.qmd. Every statement this report makes about the
+# corrections reads it rather than restating them, so the note and the report cannot diverge.
+spine <- read_csv(here::here("errata_entries.csv"), show_col_types = FALSE)
+n_errata <- nrow(spine)
+
+number_word <- function(x) {
+  words <- c("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten")
+  stopifnot(x %in% seq_along(words))
+  words[x]
+}
+
+# The quantities the errata note computes are read here from the same pipeline output, never
+# typed, so a rerun that moves one moves it in both documents.
+table_2 <- read_csv(here::here("maintained", "output", "table_2_ethnicity_meta_regression.csv"),
+                    show_col_types = FALSE)
+model_2_intercept <- table_2 |> filter(model == "Model 2", term == "intercept")
+model_3_intercept <- table_2 |> filter(model == "Model 3", term == "intercept")
+
+# Five decimals, not the three the table's own note uses: at three it reads 0.001, which is the
+# threshold for the third star rather than the second, and the finding would be ambiguous inside
+# the rule it names.
+model_2_intercept_p <- sprintf("%.5f", model_2_intercept$p.value)
+
+magnitude <- read_csv(here::here("maintained", "output", "text_difference_in_magnitude.csv"),
+                      show_col_types = FALSE)
+difference_in_magnitude <- magnitude$value[magnitude$quantity == "Difference in magnitude"]
+
+manifest <- read_csv(here::here("maintained", "output", "table_s2_1_study_manifest.csv"),
+                     show_col_types = FALSE)
+occupations <- function(id) manifest$n_occupations[manifest$study_id == id]
+
+continents <- read_csv(here::here("maintained", "output", "figure_s2_2_evidence_map.csv"),
+                       show_col_types = FALSE) |>
+  pull(continent) |>
+  n_distinct()
+
+# The PRISMA flow diagram is the last supplementary figure, and the article cites it by a number
+# that does not exist. Both indices are read rather than typed.
+prisma_figure <- str_remove(
+  float_coverage$float[str_detect(float_coverage$float, "^Figure S6\\.")], "^Figure ")
+prisma_figure_cited <- published_claims$value_paper[
+  published_claims$claim_id == "design_prisma_figure"]
 ```
 
 This repository holds the actively maintained replication code for Galos and Coppock (2023), together with the reproducibility report that documents what the original archive did and did not do. It is part of a program applying the maintenance proposal in Peer, Orr and Coppock (2021, *PS: Political Science & Politics*, doi [10.1017/S1049096521000366](https://doi.org/10.1017/S1049096521000366)) to a set of published archives.
@@ -124,7 +157,7 @@ The ground truth records `r n_claims` values. `r n_rewrite_match` of the `r n_re
 
 The `r n_rewrite_fail` that do not divide into two groups: `r n_locus_paper` where the article disagrees with itself, and `r n_locus_archive` where the deposit does not carry the quantity the published figure prints.
 
-**The article against itself.** The paper reports that bias is larger in women-dominated than in men-dominated occupations "by a statistically significant 2.10 points". The archive and the rewrite both give 2.10547, which rounds to 2.11 at the printed precision; the published figure is the truncation. Published Table 2 prints the Model 2 intercept as −3.72 with no significance stars, where the coefficient's p-value is `r model_2_intercept_p` and the numerically identical −3.73 intercept in Model 3 does carry its two stars; the estimate and its standard error are right and only the marker is missing. Table S2.1 gives 18 occupations for Gonzalez et al. and 24 for Dahl and Krog, where the corresponding study panels, figs. S4.37 and S4.32, plot 17 and 21. And the abstract says the experiments were carried out across five continents, where the paper's own evidence map is drawn as six continent facets and its earliest study is Australian.
+**The article against itself.** The paper reports that bias is larger in women-dominated than in men-dominated occupations "by a statistically significant 2.10 points". The archive and the rewrite both give `r sprintf("%.5f", difference_in_magnitude)`, which rounds to `r sprintf("%.2f", difference_in_magnitude)` at the printed precision; the published figure is the truncation. Published Table 2 prints the Model 2 intercept as −`r sprintf("%.2f", abs(model_2_intercept$estimate))` with no significance stars, where the coefficient's p-value is `r model_2_intercept_p` and the numerically identical −`r sprintf("%.2f", abs(model_3_intercept$estimate))` intercept in Model 3 does carry its two stars; the estimate and its standard error are right and only the marker is missing. Table S2.1 gives 18 occupations for Gonzalez et al. and 24 for Dahl and Krog, where the corresponding study panels, figs. S4.37 and S4.32, plot `r occupations("gonzalez_1")` and `r occupations("dahl_1")`. The abstract says the experiments were carried out across five continents, where the paper's own evidence map is drawn as `r number_word(continents)` continent facets and its earliest study is Australian.
 
 **The deposit against the figures.** Every study panel labels each occupation with three lines: its name, the share of women in it, and a sample size. The first two reproduce for all 57 panels. The third is only partly recoverable, because the deposit carries no subject counts. What it does carry is the residual degrees of freedom of each occupation's own regression, and `df + 1` equals the published sample size exactly for 167 of the 298 occupations, which is every occupation of 35 of the 57 studies. For the other 22 the published figure is several times larger, which is what a design with several applications per job opening gives, and the deposit provides no way to recover the multiplier. The same gap shows up in table S2.1, whose subject counts reconstruct for the same 35 studies.
 
@@ -224,28 +257,15 @@ The published standard error is 0.58. At five resamples the archive prints 0.54.
 
 # Errata
 
-Five statements in the published article do not survive the comparison, and they are collected in `galos_coppock_2023_errata.pdf` at the root of this repository, which renders from `errata.qmd` and computes every corrected number from `maintained/output/` at the time it is rendered. **None of them changes a conclusion of the paper.**
+`r str_to_sentence(number_word(n_errata))` statements in the published article do not survive the comparison, and they are collected in `galos_coppock_2023_errata.pdf` at the root of this repository, which renders from `errata.qmd` and computes every corrected number from `maintained/output/` at the time it is rendered. **None of them changes a conclusion of the paper.**
 
 ```{r errata_table}
-tibble(
-  Correction = c(
-    "The abstract says the experiments were carried out across five continents",
-    "Table S2.1 gives 18 occupations for Gonzalez et al. and 24 for Dahl and Krog",
-    "Table 2 prints the Model 2 intercept with no significance marker",
-    "The article cites fig. S6.66 for the PRISMA flow diagram",
-    "The Results section states the difference in magnitude as 2.10 points"
-  ),
-  Evidence = c(
-    "The paper's own evidence map is drawn as six continent facets, and the earliest study in the record is Australian",
-    "Figs. S4.37 and S4.32 plot 17 and 21 occupations for the same two studies, which is what the deposited data hold",
-    str_glue("The p-value is {model_2_intercept_p} and the numerically identical Model 3 intercept carries two stars"),
-    "The supplementary materials list Figs. S1.1 to S6.63 and there is no fig. S6.66",
-    "The archive and the rewrite both give 2.10547, which rounds to 2.11 at the printed precision"
-  )
-) |>
+spine |>
+  select(Correction = title, Evidence = note) |>
   kable(
     booktabs = TRUE,
-    caption = "The five corrections, in the order the errata note gives them."
+    caption = str_glue("The {number_word(n_errata)} corrections, in the order the errata note ",
+                       "gives them. Both columns are read from the errata spine.")
   ) |>
   latex_only(\(k) k |>
     kable_styling(latex_options = c("hold_position", "scale_down"), font_size = 8) |>
@@ -253,7 +273,7 @@ tibble(
     column_spec(2, width = "8cm"))
 ```
 
-Three of the five are contradictions between two parts of the article, and the ground truth marks them `paper_internal`. The other two are a dropped typesetting marker and a truncation, both of which the deposited code itself gets right.
+Three of the `r number_word(n_errata)` are contradictions between two parts of the article: the abstract against the paper's own evidence map, table S2.1 against the study panels, and the PRISMA cross-reference against the supplement's own figure numbering. The other two are a dropped typesetting marker and a truncation, both of which the deposited code itself gets right.
 
 This is separate from the question of whether the maintained rewrite corrected anything in the deposited code. It did not: the rewrite makes no analytical change and fixes no bug, and the two changes it does make to how the archive runs, raising the bootstrap from five resamples to the published five hundred and replacing an `NA` sort key, are described above.
 
@@ -306,7 +326,7 @@ A further `r sum(!is.na(gt$value_paper) & is.na(gt$match_rewrite))` claims are r
 
 **Coverage is recorded as a fraction, not as a yes or no.** A float with one row against a hundred published cells satisfies any check that asks only whether the float appears, so the build counts the numbers each published float prints on its face and requires the ground truth to account for all of them. `ground_truth/float_coverage.csv` holds that count float by float. Of the `r nrow(float_coverage)` floats the article and its supplementary front matter list, `r sum(float_coverage$covered > 0)` carry rows here. The `r sum(!is.na(float_coverage$printed))` that print numbers on their faces carry `r format(sum(float_coverage$printed, na.rm = TRUE), big.mark = ",")` published values between them, and the ground truth reaches every one, so each of those floats is covered in full. The build stops if any float falls below that.
 
-The remaining `r sum(float_coverage$covered == 0)` published floats have no row here, and the build stops if a float has neither a row nor a stated reason, since a false reason tells the next reader not to look. Figures 1 and 2 are diagrams of the two gender gradients the theory admits and plot no estimates. Figure 3 summarises the discrimination mechanisms the 51 papers discuss, coded by hand; the deposit carries no mechanism or discipline variable, so nothing in the pipeline can reach it. Figures 4 and 5 print no numbers on their faces, and the estimates and lines they draw are the 298 occupation CATEs and the Table 1 and Table 2 fits, all covered above. Figure S2.2 is a map of country-by-year tiles, and what it asserts is checked through the section S2 sentences that describe it. Figure S6.63 is a PRISMA flow diagram whose counts come from the screening process and not from any data file in the deposit.
+The remaining `r sum(float_coverage$covered == 0)` published floats have no row here, and the build stops if a float has neither a row nor a stated reason, since a false reason tells the next reader not to look. Figures 1 and 2 are diagrams of the two gender gradients the theory admits and plot no estimates. Figure 3 summarises the discrimination mechanisms the 51 papers discuss, coded by hand; the deposit carries no mechanism or discipline variable, so nothing in the pipeline can reach it. Figures 4 and 5 print no numbers on their faces, and the estimates and lines they draw are the 298 occupation CATEs and the Table 1 and Table 2 fits, all covered above. Figure S2.2 is a map of country-by-year tiles, and what it asserts is checked through the section S2 sentences that describe it. Figure `r prisma_figure` is a PRISMA flow diagram whose counts come from the screening process and not from any data file in the deposit.
 
 # The extraction and the two instruments
 
@@ -330,9 +350,9 @@ The float cells are read off the supplementary PDF's own text layer by `ground_t
 
 **The second instrument.** `maintained/in_text_claims.R` recomputes every claim the extraction says needs a block, from `maintained/output/`, by its own path. It carries the article's own sentence verbatim in a comment above each block and prints one line per claim. It never reads the ground truth. `build_ground_truth.R` runs it, counts what it printed against what the extraction declares, and stops if the two disagree; it then compares the two instruments value by value, and stops if they land on different numbers. The `r sum(str_starts(gt$table_figure, "fig_S4\\.") | gt$table_figure == "table_S2.1")` claims about summarised floats are exempt from that last comparison, because their ground-truth value is a count of agreements with the published page and an instrument that never reads the page cannot recompute one.
 
-**Three findings came from the extraction and not from the floats.** The abstract's "five continents" against an evidence map drawn as six is the first, and it is now the first entry of the errata. The second is the article's own cross-reference to fig. S6.66. The third is a disagreement the article has with itself about a date: the introduction says the earliest study sent its applications in 1986, while the abstract dates the record from 1983 and the deposit's own study table and evidence map both put that study in 1983. Which is right is a fact about the cited 1987 paper rather than about this deposit, so it is recorded and left there rather than corrected.
+**Three findings came from the extraction and not from the floats.** The abstract's "five continents" against an evidence map drawn as six is the first, and it is now the first entry of the errata. The second is the article's own cross-reference to fig. S6.`r prisma_figure_cited`. The third is a disagreement the article has with itself about a date: the introduction says the earliest study sent its applications in 1986, while the abstract dates the record from 1983 and the deposit's own study table and evidence map both put that study in 1983. Which is right is a fact about the cited 1987 paper rather than about this deposit, so it is recorded and left there rather than corrected.
 
-A fourth is worth stating and is not an erratum either. The Design section says the PRISMA search "yielded over 70 papers that met our inclusion criteria", where the PRISMA flow diagram of fig. S6.63 reports 51 reports included and 89 assessed for eligibility. No reading of the diagram gives over 70, and nothing in the deposit records the search, so the sentence cannot be corrected from the pipeline.
+A fourth is worth stating and is not an erratum either. The Design section says the PRISMA search "yielded over 70 papers that met our inclusion criteria", where the PRISMA flow diagram of fig. `r prisma_figure` reports 51 reports included and 89 assessed for eligibility. No reading of the diagram gives over 70, and nothing in the deposit records the search, so the sentence cannot be corrected from the pipeline.
 
 # Tables 1 and 2
 

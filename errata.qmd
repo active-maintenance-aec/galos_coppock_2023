@@ -62,41 +62,152 @@ continents <- n_distinct(evidence_map$continent)
 # The supplement numbers its figures section.index: four figures before section S4, then one
 # panel per study, then the gender gradient forest plot and the PRISMA flow diagram.
 last_supplementary_figure <- 4 + n_distinct(panels$study_name_citation) + 2
+
+m2_intercept <- table_2 |> filter(model == "Model 2", term == "intercept")
+m3_intercept <- table_2 |> filter(model == "Model 3", term == "intercept")
 ```
 
-This note lists five corrections to "Gender composition predicts gender bias: A meta-reanalysis of hiring discrimination audit experiments," published in *Science Advances* 9, eade7979, doi [10.1126/sciadv.ade7979](https://doi.org/10.1126/sciadv.ade7979): three misstated numbers, one dropped significance marker, and one cross-reference to a figure that does not exist. **None of them changes a conclusion of the paper.** The gender gradient, the estimates in Tables 1 and 2, and every study-level effect in the supplementary materials are unaffected.
+```{r entries}
+# THE ERRATA SPINE. Every correction is defined once, here, and every place that states one
+# reads it from this table: the entries below, the reproducibility report's errata table, and
+# any later edition, each through errata_entries.csv written at the bottom of this file. The
+# alternative is a second hand-typed copy of the same five corrections, which is how a note and
+# a README come to disagree about which numbers the article got wrong.
+#
+# [[...]] marks the span that changes. Each renderer supplies its own markup for it: bold here,
+# something else elsewhere. Nothing else in a field is markup, so the same string can be set by
+# either.
+#
+# Numbering is the published note's and is APPEND-ONLY: an entry can already have been cited by
+# number, so a later finding is added at the end and never interleaved, merged or renumbered.
+#
+# `form` is a later edition's choice of macro for the entry: "full" where the published and
+# corrected fields are whole sentences that need setting as blocks, "brief" where the entry is a
+# token replacement. It is an editorial judgment about the entry rather than a fact about the
+# typesetting, which is why it lives here rather than in a second list.
+#
+# Every corrected number is built with str_glue() from maintained/output/, so it is computed at
+# render time rather than typed. The published numbers the article's own pages print are typed,
+# except where the extraction already carries them.
+entries <- tribble(
+  ~entry, ~class, ~source, ~form, ~title, ~location, ~published, ~corrected, ~note,
+
+  1, "quantity", "extraction", "full",
+  "The record spans six continents, not five",
+  "",
+  "Since 1983, more than 70 employment audit experiments, carried out in more than 26 countries across [[five]] continents, have randomized the gender of fictitious applicants to measure the extent of hiring discrimination on the basis of gender.",
+  str_glue("Since 1983, more than 70 employment audit experiments, carried out in more than 26 countries across [[{number_word(continents)}]] continents, have randomized the gender of fictitious applicants to measure the extent of hiring discrimination on the basis of gender."),
+  str_glue(
+    "The paper's own evidence map, fig. S2.2, is drawn as {number_word(continents)} continent ",
+    "facets: {str_c(sort(unique(evidence_map$continent)), collapse = ', ')}. Section S2 names ",
+    "Oceania among the regions where the boom in audit experimentation occurred, and the ",
+    "earliest study in the whole record, the Australian one the introduction discusses, is on ",
+    "that continent. The sentence describes the wider literature rather than the ",
+    "{n_distinct(panels$study_name_citation)} studies reanalysed here, but a superset of those ",
+    "studies cannot span fewer continents, so five is too few under any reading."),
+
+  2, "quantity", "pipeline", "brief",
+  "Table S2.1 overstates the occupation counts for two studies",
+  "",
+  "Gonzalez et al. (89): Spain ... [[18]] occupations\n\nDahl and Krog (84): Denmark ... [[24]] occupations",
+  str_glue("Gonzalez et al. (89): Spain ... [[{occupations('gonzalez_1')}]] occupations\n\nDahl and Krog (84): Denmark ... [[{occupations('dahl_1')}]] occupations"),
+  str_glue(
+    "The article disagrees with itself in these two rows. Figs. S4.37 and S4.32 plot ",
+    "{occupations('gonzalez_1')} and {occupations('dahl_1')} occupations for the same two ",
+    "studies, and {occupations('gonzalez_1')} and {occupations('dahl_1')} is what the ",
+    "deposited data hold. The other 55 rows of the column are right. The table is not ",
+    "reprinted here because its N subjects column cannot be regenerated from the deposit, ",
+    "which carries no subject counts."),
+
+  3, "typography", "pipeline", "brief",
+  "Table 2's Model 2 intercept carries no significance marker",
+  "",
+  str_glue(
+    "Table 2, Model 2, intercept: −{sprintf('%.2f', abs(m2_intercept$estimate))} ",
+    "({sprintf('%.2f', m2_intercept$std.error)}), [[carrying no significance marker]]"),
+  str_glue(
+    "Table 2, Model 2, intercept: −{sprintf('%.2f', abs(m2_intercept$estimate))} ",
+    "({sprintf('%.2f', m2_intercept$std.error)}), [[carrying the two-asterisk marker the ",
+    "table's own note gives for P < 0.01]]"),
+  str_glue(
+    "The Model 2 intercept is printed as −{sprintf('%.2f', abs(m2_intercept$estimate))} with ",
+    "no marker, at a p-value of {sprintf('%.5f', m2_intercept$p.value)}. Five decimals rather ",
+    "than the three the table's own note uses: at three the p-value reads 0.001, which is the ",
+    "threshold for the third star rather than the second, and the correction would be ",
+    "ambiguous inside the rule it is being compared against. The numerically identical Model 3 ",
+    "intercept, −{sprintf('%.2f', abs(m3_intercept$estimate))}, does carry its two stars. The ",
+    "estimate and its standard error are right and only the marker is missing, so what is ",
+    "corrected here is the table rather than any sentence."),
+
+  4, "cross_reference", "extraction", "full",
+  "The article cites a supplementary figure that does not exist",
+  "",
+  str_glue(
+    "The PRISMA search process yielded over 70 papers that met our inclusion criteria. Figure ",
+    "S6.[[{paper('design_prisma_figure')}]] is a \"PRISMA flow diagram\" that illustrates the ",
+    "search strategy and reports the number of records retained at each stage of the process."),
+  str_glue(
+    "The PRISMA search process yielded over 70 papers that met our inclusion criteria. Figure ",
+    "S6.[[{last_supplementary_figure}]] is a \"PRISMA flow diagram\" that illustrates the ",
+    "search strategy and reports the number of records retained at each stage of the process."),
+  str_glue(
+    "The supplementary materials list Figs. S1.1 to S6.{last_supplementary_figure} in their ",
+    "front matter, and the PRISMA flow diagram is the last of them. There is no fig. ",
+    "S6.{paper('design_prisma_figure')}. The same paragraph cites the evidence map as fig. ",
+    "S.2.2, where the figure itself is numbered S2.2."),
+
+  5, "quantity", "pipeline", "full",
+  "The difference in the magnitude of the two predicted biases",
+  "",
+  "The magnitude of these biases is higher in women-dominated occupations than in men-dominated occupations, by a statistically significant [[2.10]] points (bootstrapped SE: 0.58), perhaps suggesting that pro--status quo forces operate differently across contexts.",
+  str_glue(
+    "The magnitude of these biases is higher in women-dominated occupations than in ",
+    "men-dominated occupations, by a statistically significant ",
+    "[[{sprintf('%.2f', mag('Difference in magnitude'))}]] points (bootstrapped SE: ",
+    "{sprintf('%.2f', mag('Bootstrapped SE of the difference in magnitude'))}), perhaps ",
+    "suggesting that pro--status quo forces operate differently across contexts."),
+  str_glue(
+    "The deposited code and the maintained rewrite both give ",
+    "{sprintf('%.5f', mag('Difference in magnitude'))}, which rounds to ",
+    "{sprintf('%.2f', mag('Difference in magnitude'))} at the two decimal places the sentence ",
+    "prints. The published figure is the truncation rather than a different number, and the ",
+    "bootstrapped standard error, ",
+    "{sprintf('%.4f', mag('Bootstrapped SE of the difference in magnitude'))}, is 0.58 as ",
+    "published.")
+) |>
+  mutate(across(c(title, published, corrected, note), as.character))
+
+stopifnot(nrow(entries) == max(entries$entry), !anyDuplicated(entries$entry))
+
+# The spine's markup, resolved for this document.
+bold <- function(x) str_replace_all(x, "\\[\\[(.*?)\\]\\]", "**\\1**")
+
+# A field holding two quoted passages keeps them one paragraph apart, and the blockquote has to
+# carry the break through as a quoted blank line.
+quote_block <- function(x) str_c("> ", str_replace_all(bold(x), "\n\n", "\n>\n> "))
+
+# A heading is only a heading when a blank line precedes it, hence the leading "\n\n".
+emit_entry <- function(n) {
+  e <- entries |> filter(entry == n)
+  cat("\n\n## ", e$entry, ". ", e$title, "\n\n", quote_block(e$published),
+      "\n\nCorrected:\n\n", quote_block(e$corrected), "\n\n", e$note, "\n", sep = "")
+}
+```
+
+This note lists `r number_word(nrow(entries))` corrections to "Gender composition predicts gender bias: A meta-reanalysis of hiring discrimination audit experiments," published in *Science Advances* 9, eade7979, doi [10.1126/sciadv.ade7979](https://doi.org/10.1126/sciadv.ade7979): three misstated numbers, one dropped significance marker, and one cross-reference to a figure that does not exist. **None of them changes a conclusion of the paper.** The gender gradient, the estimates in Tables 1 and 2, and every study-level effect in the supplementary materials are unaffected.
 
 Every number in a corrected sentence below is computed from the deposited replication archive ([10.7910/DVN/5MCRNY](https://doi.org/10.7910/DVN/5MCRNY)) at the time this document is rendered, including the numbers that were not wrong. The code and output supporting each correction are at [github.com/active-maintenance-aec/galos_coppock_2023](https://github.com/active-maintenance-aec/galos_coppock_2023).
 
 **Bold marks the corrected token in each corrected sentence.** Entry 3 corrects a table rather than a sentence, so its change is named in the entry and shown in a reprint of the table, which is otherwise identical to the published one. Percentage-point quantities are given at the precision the article itself uses for them, which in the Results sentence corrected below is two decimal places. Rounding that sentence to one decimal would erase the correction it needs, since the published and corrected figures differ by a hundredth of a point.
 
-## 1. The record spans six continents, not five
+```{r entries-1-2, results="asis"}
+walk(c(1, 2), emit_entry)
+```
 
-> Since 1983, more than 70 employment audit experiments, carried out in more than 26 countries across **five** continents, have randomized the gender of fictitious applicants to measure the extent of hiring discrimination on the basis of gender.
-
-Corrected:
-
-> Since 1983, more than 70 employment audit experiments, carried out in more than 26 countries across **`r number_word(continents)`** continents, have randomized the gender of fictitious applicants to measure the extent of hiring discrimination on the basis of gender.
-
-The paper's own evidence map, fig. S2.2, is drawn as `r number_word(continents)` continent facets: `r str_c(sort(unique(evidence_map$continent)), collapse = ", ")`. Section S2 names Oceania among the regions where the boom in audit experimentation occurred, and the earliest study in the whole record, the Australian one the introduction discusses, is on that continent. The sentence describes the wider literature rather than the `r n_distinct(panels$study_name_citation)` studies reanalysed here, but a superset of those studies cannot span fewer continents, so five is too few under any reading.
-
-## 2. Table S2.1 overstates the occupation counts for two studies
-
-> Gonzalez et al. (89): Spain ... **18** occupations
->
-> Dahl and Krog (84): Denmark ... **24** occupations
-
-Corrected:
-
-> Gonzalez et al. (89): Spain ... **`r occupations("gonzalez_1")`** occupations
->
-> Dahl and Krog (84): Denmark ... **`r occupations("dahl_1")`** occupations
-
-The article disagrees with itself in these two rows. Figs. S4.37 and S4.32 plot `r occupations("gonzalez_1")` and `r occupations("dahl_1")` occupations for the same two studies, and `r occupations("gonzalez_1")` and `r occupations("dahl_1")` is what the deposited data hold. The other 55 rows of the column are right. The table is not reprinted here because its N subjects column cannot be regenerated from the deposit, which carries no subject counts.
-
-## 3. Table 2's Model 2 intercept carries no significance marker
-
-The Model 2 intercept is printed as −`r sprintf("%.2f", abs(table_2$estimate[table_2$model == "Model 2" & table_2$term == "intercept"]))` with no marker, at a p-value of `r sprintf("%.5f", table_2$p.value[table_2$model == "Model 2" & table_2$term == "intercept"])`. Five decimals rather than the three the table's own note uses: at three the p-value reads 0.001, which is the threshold for the third star rather than the second, and the correction would be ambiguous inside the rule it is being compared against. The numerically identical Model 3 intercept, −`r sprintf("%.2f", abs(table_2$estimate[table_2$model == "Model 3" & table_2$term == "intercept"]))`, does carry its two stars. The estimate and its standard error are right and only the marker is missing, so what is corrected here is the table rather than any sentence.
+```{r entry-3, results="asis"}
+e <- entries |> filter(entry == 3)
+cat("\n\n## ", e$entry, ". ", e$title, "\n\n", e$note, "\n", sep = "")
+```
 
 **Table 2, corrected.** Meta-regression estimates of the gender gradient by majority/minority status. $^{*}$P < 0.05, $^{**}$P < 0.01, and $^{***}$P < 0.001.
 
@@ -107,7 +218,7 @@ stars <- function(p) {
 
 # The article sets its negative numbers with a proper minus sign, so a reprinted table has to
 # as well, or it reads as a different typesetting of the same cells.
-minus <- function(x) str_replace(x, "^-", "\u2212")
+minus <- function(x) str_replace(x, "^-", "−")
 
 term_labels <- c(intercept = "Intercept", fraction_female = "Gender gradient",
                  ethnicity_fctMajority = "Majority status",
@@ -141,22 +252,12 @@ kable(gg_table, format = "latex", booktabs = TRUE, escape = FALSE, linesep = "",
 
 \parbox{\linewidth}{\footnotesize\raggedright \textit{Note:} The only change from the published table is the marker on the Model 2 intercept. Standard errors in parentheses.}
 
-## 4. The article cites a supplementary figure that does not exist
+```{r entries-4-5, results="asis"}
+walk(c(4, 5), emit_entry)
+```
 
-> The PRISMA search process yielded over 70 papers that met our inclusion criteria. Figure S6.**66** is a "PRISMA flow diagram" that illustrates the search strategy and reports the number of records retained at each stage of the process.
-
-Corrected:
-
-> The PRISMA search process yielded over 70 papers that met our inclusion criteria. Figure S6.**`r last_supplementary_figure`** is a "PRISMA flow diagram" that illustrates the search strategy and reports the number of records retained at each stage of the process.
-
-The supplementary materials list Figs. S1.1 to S6.`r last_supplementary_figure` in their front matter, and the PRISMA flow diagram is the last of them. There is no fig. S6.`r paper("design_prisma_figure")`. The same paragraph cites the evidence map as fig. S.2.2, where the figure itself is numbered S2.2.
-
-## 5. The difference in the magnitude of the two predicted biases
-
-> The magnitude of these biases is higher in women-dominated occupations than in men-dominated occupations, by a statistically significant **2.10** points (bootstrapped SE: 0.58), perhaps suggesting that pro--status quo forces operate differently across contexts.
-
-Corrected:
-
-> The magnitude of these biases is higher in women-dominated occupations than in men-dominated occupations, by a statistically significant **`r sprintf("%.2f", mag("Difference in magnitude"))`** points (bootstrapped SE: `r sprintf("%.2f", mag("Bootstrapped SE of the difference in magnitude"))`), perhaps suggesting that pro--status quo forces operate differently across contexts.
-
-The deposited code and the maintained rewrite both give `r sprintf("%.5f", mag("Difference in magnitude"))`, which rounds to `r sprintf("%.2f", mag("Difference in magnitude"))` at the two decimal places the sentence prints. The published figure is the truncation rather than a different number, and the bootstrapped standard error, `r sprintf("%.4f", mag("Bootstrapped SE of the difference in magnitude"))`, is 0.58 as published.
+```{r emit-spine}
+# The machine-readable spine, written wherever this document is rendered. Every other statement
+# of these corrections reads it rather than keeping its own copy, so the two cannot drift.
+write_csv(entries, here("errata_entries.csv"))
+```

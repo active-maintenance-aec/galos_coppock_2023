@@ -158,10 +158,10 @@ and the numerically identical −3.73 intercept in Model 3 does carry its
 two stars; the estimate and its standard error are right and only the
 marker is missing. Table S2.1 gives 18 occupations for Gonzalez et
 al. and 24 for Dahl and Krog, where the corresponding study panels,
-figs. S4.37 and S4.32, plot 17 and 21. And the abstract says the
-experiments were carried out across five continents, where the paper’s
-own evidence map is drawn as six continent facets and its earliest study
-is Australian.
+figs. S4.37 and S4.32, plot 17 and 21. The abstract says the experiments
+were carried out across five continents, where the paper’s own evidence
+map is drawn as six continent facets and its earliest study is
+Australian.
 
 **The deposit against the figures.** Every study panel labels each
 occupation with three lines: its name, the share of women in it, and a
@@ -297,18 +297,21 @@ corrected number from `maintained/output/` at the time it is rendered.
 
 | Correction | Evidence |
 |:---|:---|
-| The abstract says the experiments were carried out across five continents | The paper’s own evidence map is drawn as six continent facets, and the earliest study in the record is Australian |
-| Table S2.1 gives 18 occupations for Gonzalez et al. and 24 for Dahl and Krog | Figs. S4.37 and S4.32 plot 17 and 21 occupations for the same two studies, which is what the deposited data hold |
-| Table 2 prints the Model 2 intercept with no significance marker | The p-value is 0.00104 and the numerically identical Model 3 intercept carries two stars |
-| The article cites fig. S6.66 for the PRISMA flow diagram | The supplementary materials list Figs. S1.1 to S6.63 and there is no fig. S6.66 |
-| The Results section states the difference in magnitude as 2.10 points | The archive and the rewrite both give 2.10547, which rounds to 2.11 at the printed precision |
+| The record spans six continents, not five | The paper’s own evidence map, fig. S2.2, is drawn as six continent facets: Africa, Asia, Europe, N. America, Oceania, S. America. Section S2 names Oceania among the regions where the boom in audit experimentation occurred, and the earliest study in the whole record, the Australian one the introduction discusses, is on that continent. The sentence describes the wider literature rather than the 57 studies reanalysed here, but a superset of those studies cannot span fewer continents, so five is too few under any reading. |
+| Table S2.1 overstates the occupation counts for two studies | The article disagrees with itself in these two rows. Figs. S4.37 and S4.32 plot 17 and 21 occupations for the same two studies, and 17 and 21 is what the deposited data hold. The other 55 rows of the column are right. The table is not reprinted here because its N subjects column cannot be regenerated from the deposit, which carries no subject counts. |
+| Table 2’s Model 2 intercept carries no significance marker | The Model 2 intercept is printed as −3.72 with no marker, at a p-value of 0.00104. Five decimals rather than the three the table’s own note uses: at three the p-value reads 0.001, which is the threshold for the third star rather than the second, and the correction would be ambiguous inside the rule it is being compared against. The numerically identical Model 3 intercept, −3.73, does carry its two stars. The estimate and its standard error are right and only the marker is missing, so what is corrected here is the table rather than any sentence. |
+| The article cites a supplementary figure that does not exist | The supplementary materials list Figs. S1.1 to S6.63 in their front matter, and the PRISMA flow diagram is the last of them. There is no fig. S6.66. The same paragraph cites the evidence map as fig. S.2.2, where the figure itself is numbered S2.2. |
+| The difference in the magnitude of the two predicted biases | The deposited code and the maintained rewrite both give 2.10547, which rounds to 2.11 at the two decimal places the sentence prints. The published figure is the truncation rather than a different number, and the bootstrapped standard error, 0.5781, is 0.58 as published. |
 
-The five corrections, in the order the errata note gives them.
+The five corrections, in the order the errata note gives them. Both
+columns are read from the errata spine.
 
-Three of the five are contradictions between two parts of the article,
-and the ground truth marks them `paper_internal`. The other two are a
-dropped typesetting marker and a truncation, both of which the deposited
-code itself gets right.
+Three of the five are contradictions between two parts of the article:
+the abstract against the paper’s own evidence map, table S2.1 against
+the study panels, and the PRISMA cross-reference against the
+supplement’s own figure numbering. The other two are a dropped
+typesetting marker and a truncation, both of which the deposited code
+itself gets right.
 
 This is separate from the question of whether the maintained rewrite
 corrected anything in the deposited code. It did not: the rewrite makes
