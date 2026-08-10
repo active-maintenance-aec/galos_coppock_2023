@@ -86,6 +86,10 @@ m3_intercept <- table_2 |> filter(model == "Model 3", term == "intercept")
 # token replacement. It is an editorial judgment about the entry rather than a fact about the
 # typesetting, which is why it lives here rather than in a second list.
 #
+# `location` names where in the published article the corrected passage sits, taken from the
+# location column of ground_truth/published_claims.csv for the claim the entry corrects rather
+# than read off a page. This document does not print it; a later edition does.
+#
 # Every corrected number is built with str_glue() from maintained/output/, so it is computed at
 # render time rather than typed. The published numbers the article's own pages print are typed,
 # except where the extraction already carries them.
@@ -94,7 +98,7 @@ entries <- tribble(
 
   1, "quantity", "extraction", "full",
   "The record spans six continents, not five",
-  "",
+  "published abstract",
   "Since 1983, more than 70 employment audit experiments, carried out in more than 26 countries across [[five]] continents, have randomized the gender of fictitious applicants to measure the extent of hiring discrimination on the basis of gender.",
   str_glue("Since 1983, more than 70 employment audit experiments, carried out in more than 26 countries across [[{number_word(continents)}]] continents, have randomized the gender of fictitious applicants to measure the extent of hiring discrimination on the basis of gender."),
   str_glue(
@@ -108,7 +112,7 @@ entries <- tribble(
 
   2, "quantity", "pipeline", "brief",
   "Table S2.1 overstates the occupation counts for two studies",
-  "",
+  "published app. table S2.1",
   "Gonzalez et al. (89): Spain ... [[18]] occupations\n\nDahl and Krog (84): Denmark ... [[24]] occupations",
   str_glue("Gonzalez et al. (89): Spain ... [[{occupations('gonzalez_1')}]] occupations\n\nDahl and Krog (84): Denmark ... [[{occupations('dahl_1')}]] occupations"),
   str_glue(
@@ -121,7 +125,7 @@ entries <- tribble(
 
   3, "typography", "pipeline", "brief",
   "Table 2's Model 2 intercept carries no significance marker",
-  "",
+  "published table 2",
   str_glue(
     "Table 2, Model 2, intercept: −{sprintf('%.2f', abs(m2_intercept$estimate))} ",
     "({sprintf('%.2f', m2_intercept$std.error)}), [[carrying no significance marker]]"),
@@ -141,7 +145,7 @@ entries <- tribble(
 
   4, "cross_reference", "extraction", "full",
   "The article cites a supplementary figure that does not exist",
-  "",
+  "published Design, p. 5",
   str_glue(
     "The PRISMA search process yielded over 70 papers that met our inclusion criteria. Figure ",
     "S6.[[{paper('design_prisma_figure')}]] is a \"PRISMA flow diagram\" that illustrates the ",
@@ -158,7 +162,7 @@ entries <- tribble(
 
   5, "quantity", "pipeline", "full",
   "The difference in the magnitude of the two predicted biases",
-  "",
+  "published Results, p. 6",
   "The magnitude of these biases is higher in women-dominated occupations than in men-dominated occupations, by a statistically significant [[2.10]] points (bootstrapped SE: 0.58), perhaps suggesting that pro--status quo forces operate differently across contexts.",
   str_glue(
     "The magnitude of these biases is higher in women-dominated occupations than in ",
