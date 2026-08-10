@@ -289,11 +289,13 @@ prints 0.54.
 
 # Errata
 
-Five statements in the published article do not survive the comparison,
-and they are collected in `galos_coppock_2023_errata.pdf` at the root of
-this repository, which renders from `errata.qmd` and computes every
-corrected number from `maintained/output/` at the time it is rendered.
-**None of them changes a conclusion of the paper.**
+Seven things in the published article do not survive the comparison:
+five statements checked against the deposit, and two reference-list
+entries checked against Crossref. They are collected in
+`galos_coppock_2023_errata.pdf` at the root of this repository, which
+renders from `errata.qmd` and computes every corrected number from
+`maintained/output/` at the time it is rendered. **None of them changes
+a conclusion of the paper.**
 
 | Correction | Evidence |
 |:---|:---|
@@ -302,16 +304,21 @@ corrected number from `maintained/output/` at the time it is rendered.
 | Table 2’s Model 2 intercept carries no significance marker | The Model 2 intercept is printed as −3.72 with no marker, at a p-value of 0.00104. Five decimals rather than the three the table’s own note uses: at three the p-value reads 0.001, which is the threshold for the third star rather than the second, and the correction would be ambiguous inside the rule it is being compared against. The numerically identical Model 3 intercept, −3.73, does carry its two stars. The estimate and its standard error are right and only the marker is missing, so what is corrected here is the table rather than any sentence. |
 | The article cites a supplementary figure that does not exist | The supplementary materials list Figs. S1.1 to S6.63 in their front matter, and the PRISMA flow diagram is the last of them. There is no fig. S6.66. The same paragraph cites the evidence map as fig. S.2.2, where the figure itself is numbered S2.2. |
 | The difference in the magnitude of the two predicted biases | The deposited code and the maintained rewrite both give 2.10547, which rounds to 2.11 at the two decimal places the sentence prints. The published figure is the truncation rather than a different number, and the bootstrapped standard error, 0.5781, is 0.58 as published. |
+| Reference 22 demotes half of an author’s surname to an initial | The third author’s surname is the compound Baier Manwell, and the entry reads its first element as a middle initial. Crossref, doi 10.1097/acm.0000000000000552: Carnes, Molly; Devine, Patricia G.; Baier Manwell, Linda; Byars-Winston, Angela. PubMed indexes her the same way, as Baier Manwell L. |
+| Reference 65 breaks two surnames beginning “Mc” | Joanne E. McKenzie’s surname is set with a space, and Steve McDonald’s is split so that its “Mc” reads as a middle initial. Crossref, doi 10.1136/bmj.n71: McKenzie, Joanne E is the second author and McDonald, Steve the nineteenth. The defect is specific to these two names rather than general to the typesetting: the same entry sets L. A. McGuinness correctly three names later, and reference 60 sets M. McPherson correctly. |
 
-The five corrections, in the order the errata note gives them. Both
+The seven corrections, in the order the errata note gives them. Both
 columns are read from the errata spine.
 
-Three of the five are contradictions between two parts of the article:
+Three of the seven are contradictions between two parts of the article:
 the abstract against the paper’s own evidence map, table S2.1 against
 the study panels, and the PRISMA cross-reference against the
-supplement’s own figure numbering. The other two are a dropped
-typesetting marker and a truncation, both of which the deposited code
-itself gets right.
+supplement’s own figure numbering. Two more are a dropped typesetting
+marker and a truncation, both of which the deposited code itself gets
+right. The last two are reference-list entries, which the deposit cannot
+speak to at all: a sweep of all 130 printed references against Crossref
+drew two flags and both are real, one author’s compound surname reduced
+to an initial and two surnames beginning “Mc” broken in a single entry.
 
 This is separate from the question of whether the maintained rewrite
 corrected anything in the deposited code. It did not: the rewrite makes

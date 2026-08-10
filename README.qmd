@@ -257,7 +257,7 @@ The published standard error is 0.58. At five resamples the archive prints 0.54.
 
 # Errata
 
-`r str_to_sentence(number_word(n_errata))` statements in the published article do not survive the comparison, and they are collected in `galos_coppock_2023_errata.pdf` at the root of this repository, which renders from `errata.qmd` and computes every corrected number from `maintained/output/` at the time it is rendered. **None of them changes a conclusion of the paper.**
+`r str_to_sentence(number_word(n_errata))` things in the published article do not survive the comparison: `r number_word(sum(spine$class != "bibliographic"))` statements checked against the deposit, and `r number_word(sum(spine$class == "bibliographic"))` reference-list entries checked against Crossref. They are collected in `galos_coppock_2023_errata.pdf` at the root of this repository, which renders from `errata.qmd` and computes every corrected number from `maintained/output/` at the time it is rendered. **None of them changes a conclusion of the paper.**
 
 ```{r errata_table}
 spine |>
@@ -273,7 +273,7 @@ spine |>
     column_spec(2, width = "8cm"))
 ```
 
-Three of the `r number_word(n_errata)` are contradictions between two parts of the article: the abstract against the paper's own evidence map, table S2.1 against the study panels, and the PRISMA cross-reference against the supplement's own figure numbering. The other two are a dropped typesetting marker and a truncation, both of which the deposited code itself gets right.
+Three of the `r number_word(n_errata)` are contradictions between two parts of the article: the abstract against the paper's own evidence map, table S2.1 against the study panels, and the PRISMA cross-reference against the supplement's own figure numbering. Two more are a dropped typesetting marker and a truncation, both of which the deposited code itself gets right. The last two are reference-list entries, which the deposit cannot speak to at all: a sweep of all 130 printed references against Crossref drew two flags and both are real, one author's compound surname reduced to an initial and two surnames beginning "Mc" broken in a single entry.
 
 This is separate from the question of whether the maintained rewrite corrected anything in the deposited code. It did not: the rewrite makes no analytical change and fixes no bug, and the two changes it does make to how the archive runs, raising the bootstrap from five resamples to the published five hundred and replacing an `NA` sort key, are described above.
 
