@@ -93,8 +93,16 @@ m3_intercept <- table_2 |> filter(model == "Model 3", term == "intercept")
 # Every corrected number is built with str_glue() from maintained/output/, so it is computed at
 # render time rather than typed. The published numbers the article's own pages print are typed,
 # except where the extraction already carries them.
+#
+# `claim_ids` names the ground truth rows the entry corrects, semicolon separated, and it is
+# what makes "has this finding been published?" a query over the corpus rather than a reading
+# of every note. It is empty where the entry has no ground truth row, which is the case for a
+# reference list, since that is not an extraction claim, and for entry 4, whose claim is
+# classed structural in the extraction and so is not required to carry a row. Every id listed
+# here is checked against the ground truth by ground_truth/build_ground_truth.R, which refuses
+# to finish on a dangling one.
 entries <- tribble(
-  ~entry, ~class, ~source, ~form, ~title, ~location, ~published, ~corrected, ~note,
+  ~entry, ~class, ~source, ~form, ~title, ~location, ~published, ~corrected, ~note, ~claim_ids,
 
   1, "quantity", "extraction", "full",
   "The record spans six continents, not five",
@@ -109,6 +117,7 @@ entries <- tribble(
     "that continent. The sentence describes the wider literature rather than the ",
     "{n_distinct(panels$study_name_citation)} studies reanalysed here, but a superset of those ",
     "studies cannot span fewer continents, so five is too few under any reading."),
+  "abstract_continents",
 
   2, "quantity", "pipeline", "brief",
   "Table S2.1 overstates the occupation counts for two studies",
@@ -122,6 +131,7 @@ entries <- tribble(
     "deposited data hold. The other 55 rows of the column are right. The table is not ",
     "reprinted here because its N subjects column cannot be regenerated from the deposit, ",
     "which carries no subject counts."),
+  "table_s2_1_occupations",
 
   3, "typography", "pipeline", "brief",
   "Table 2's Model 2 intercept carries no significance marker",
@@ -142,6 +152,7 @@ entries <- tribble(
     "intercept, −{sprintf('%.2f', abs(m3_intercept$estimate))}, does carry its two stars. The ",
     "estimate and its standard error are right and only the marker is missing, so what is ",
     "corrected here is the table rather than any sentence."),
+  "table_2_model2_intercept_stars",
 
   4, "cross_reference", "extraction", "full",
   "The article cites a supplementary figure that does not exist",
@@ -159,6 +170,7 @@ entries <- tribble(
     "front matter, and the PRISMA flow diagram is the last of them. There is no fig. ",
     "S6.{paper('design_prisma_figure')}. The same paragraph cites the evidence map as fig. ",
     "S.2.2, where the figure itself is numbered S2.2."),
+  "",
 
   5, "quantity", "pipeline", "full",
   "The difference in the magnitude of the two predicted biases",
@@ -178,6 +190,7 @@ entries <- tribble(
     "bootstrapped standard error, ",
     "{sprintf('%.4f', mag('Bootstrapped SE of the difference in magnitude'))}, is 0.58 as ",
     "published."),
+  "results_magnitude_difference",
 
   6, "bibliographic", "reference_audit", "brief",
   "Reference 22 demotes half of an author's surname to an initial",
@@ -188,6 +201,7 @@ entries <- tribble(
         "first element as a middle initial. Crossref, doi 10.1097/acm.0000000000000552:",
         "Carnes, Molly; Devine, Patricia G.; Baier Manwell, Linda; Byars-Winston, Angela.",
         "PubMed indexes her the same way, as Baier Manwell L."),
+  "",
 
   7, "bibliographic", "reference_audit", "brief",
   "Reference 65 breaks two surnames beginning \"Mc\"",
@@ -201,9 +215,10 @@ entries <- tribble(
         "Joanne E is the second author and McDonald, Steve the nineteenth. The defect is",
         "specific to these two names rather than general to the typesetting: the same entry",
         "sets L. A. McGuinness correctly three names later, and reference 60 sets",
-        "M. McPherson correctly.")
+        "M. McPherson correctly."),
+  ""
 ) |>
-  mutate(across(c(title, published, corrected, note), as.character))
+  mutate(across(c(title, published, corrected, note, claim_ids), as.character))
 
 stopifnot(nrow(entries) == max(entries$entry), !anyDuplicated(entries$entry))
 
