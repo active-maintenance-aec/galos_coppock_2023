@@ -1,0 +1,299 @@
+study_id,occupation_observed,author_classification
+ahmed_1,accounting clerk,yes
+ahmed_1,b2b sales,yes
+ahmed_1,chef,yes
+ahmed_1,childcare,yes
+ahmed_1,cleaner,yes
+ahmed_1,customer service,yes
+ahmed_1,enrolled nurse,yes
+ahmed_1,it developer,yes
+ahmed_1,preschool teacher,yes
+ahmed_1,store clerk,yes
+ahmed_1,telemarketing,yes
+ahmed_1,truck driver,yes
+ahmed_1,vehicle mechanic,yes
+ahmed_1,waitstaff,yes
+ahmed_1,warehouse worker,yes
+ahmed_2,cleaner,yes
+ahmed_2,construction workers,yes
+ahmed_2,high school teacher,yes
+ahmed_2,mechanic worker,yes
+ahmed_2,motor-vehicle drivers,yes
+ahmed_2,nurses,yes
+ahmed_2,preschool teacher,yes
+ahmed_2,restaurant worker,yes
+ahmed_2,sales person,yes
+ahmed_2,shop sale assistant,no
+albert_1,accountant,yes
+albert_1,administrative assistant,yes
+albert_1,marketing technicians,yes
+alden_1,accountant,no
+alden_1,software developer,no
+arai_1,accountant,no
+arai_1,assistant nurse,yes
+arai_1,computer specialist,no
+arai_1,driver,yes
+arai_1,high school teacher,no
+arai_2,accountant,no
+arai_2,assistant nurse,yes
+arai_2,computer specialist,no
+arai_2,driver,yes
+arai_2,high school teacher,no
+asali_1,administration,no
+asali_1,"education, health",no
+asali_1,"entertainment, tourism",no
+asali_1,extra territorial,no
+asali_1,finance,no
+asali_1,ict,no
+asali_1,marketing,no
+asali_1,production,no
+asali_1,trade,no
+asanov_1,accounting associate professional,no
+asanov_1,advertising and public relations manager,no
+asanov_1,conference and event planner,no
+asanov_1,finance manager,no
+asanov_1,information and communications technology operations technicians,no
+asanov_1,information and communications technology service manager,no
+baert_2,business administration,no
+baert_3,various professions,no
+banerjee_1,customer service agent,no
+banerjee_1,software engineer,no
+becker_1,accountant,yes
+becker_1,secretary,yes
+berson_1,cashier,yes
+birkelund_1,cook,yes
+birkelund_1,payroll clerk,yes
+birkelund_1,receptionist,yes
+birkelund_1,sales representative,yes
+birkelund_1,software developer,yes
+birkelund_1,store assistant,yes
+birkelund_2,cook,yes
+birkelund_2,payroll clerk,yes
+birkelund_2,receptionist,yes
+birkelund_2,sales representative,yes
+birkelund_2,software developer,yes
+birkelund_2,store assistant,yes
+birkelund_3,cook,yes
+birkelund_3,payroll clerk,yes
+birkelund_3,receptionist,yes
+birkelund_3,sales representative,yes
+birkelund_3,software developer,yes
+birkelund_3,store assistant,yes
+birkelund_4,cook,yes
+birkelund_4,payroll clerk,yes
+birkelund_4,receptionist,yes
+birkelund_4,sales representative,yes
+birkelund_4,software developer,yes
+birkelund_4,store assistant,yes
+birkelund_5,cook,yes
+birkelund_5,payroll clerk,yes
+birkelund_5,receptionist,yes
+birkelund_5,sales representative,yes
+birkelund_5,software developer,yes
+birkelund_5,store assistant,yes
+birkelund_6,cook,yes
+birkelund_6,payroll clerk,yes
+birkelund_6,receptionist,yes
+birkelund_6,sales representative,yes
+birkelund_6,software developer,yes
+birkelund_6,store assistant,yes
+booth_1,customer service,yes
+booth_1,data-entry,yes
+booth_1,sales,yes
+booth_1,waitstaff,yes
+bursell_1,various professions,yes
+busetta_1,various professions,no
+bygren_1,accountant,no
+bygren_1,assistant nurse,no
+bygren_1,chef,no
+bygren_1,cleaner,no
+bygren_1,computer specialist,no
+bygren_1,engineer,no
+bygren_1,financial assistant,no
+bygren_1,nurse,no
+bygren_1,preschool teacher,no
+bygren_1,receptionist,no
+bygren_1,salesperson,no
+bygren_1,school teacher,no
+bygren_1,store personnel,no
+capeau_1,various professions,no
+carlsson_1,accountants,yes
+carlsson_1,cleaners,yes
+carlsson_1,computer professionals,yes
+carlsson_1,construction workers,yes
+carlsson_1,lower secondary school teachers (math and science),yes
+carlsson_1,lower secondary teachers (language),yes
+carlsson_1,motor-vehicle drivers,yes
+carlsson_1,nurses,yes
+carlsson_1,preschool teachers,yes
+carlsson_1,restaurant workers,yes
+carlsson_1,sales assistants,yes
+carlsson_1,shop sales assistants,yes
+carlsson_1,upper secondary school teachers,yes
+carlsson_2,administrative assistant,yes
+carlsson_2,chef,yes
+carlsson_2,cleaners,yes
+carlsson_2,food serving and waitresses,yes
+carlsson_2,retail sales persons and cashiers,yes
+carlsson_2,sales representatives,yes
+carlsson_2,truck drivers,yes
+carlssonr_1,various men dominated professions,yes
+carlssonr_1,various mixed professions,yes
+carlssonr_1,various women dominated professions,yes
+correll_1,marketing,no
+dahl_1,accountancy,yes
+dahl_1,administrative assistant,yes
+dahl_1,carpenter,yes
+dahl_1,cleaning,yes
+dahl_1,communication and marketing,yes
+dahl_1,industriel production,yes
+dahl_1,it-support,yes
+dahl_1,mechanics,yes
+dahl_1,nurse,yes
+dahl_1,pedagogue,yes
+dahl_1,receptionist and secretary,yes
+dahl_1,rehabilitation assistant,yes
+dahl_1,restaurant and hotel,yes
+dahl_1,retail and service,yes
+dahl_1,salesman,yes
+dahl_1,social and health care helper or assistant,yes
+dahl_1,social worker,yes
+dahl_1,teacher,yes
+dahl_1,telemarketing,yes
+dahl_1,transportation,yes
+dahl_1,warehouse,yes
+edo_1,accountant,no
+edo_1,accounting assistant,no
+edo_1,accounting secretary,no
+erlandsson_1,various men dominated professions,yes
+erlandsson_1,various mixed professions,yes
+erlandsson_1,various women dominated professions,yes
+galarza_1,professional occupations,no
+galarza_1,technical occupations,no
+galarza_1,unskilled occupations,no
+galarza_2,professional occupations,no
+galarza_2,technical occupations,no
+galarza_2,unskilled occupations,no
+gonzalez_1,computer technicians,yes
+gonzalez_1,delivery men and women,yes
+gonzalez_1,foremen and women,yes
+gonzalez_1,head chefs,yes
+gonzalez_1,heads of logistics,yes
+gonzalez_1,indistrial engineers,yes
+gonzalez_1,marketing directors,yes
+gonzalez_1,office clerks,yes
+gonzalez_1,physiotherapists,yes
+gonzalez_1,real-estate agents,yes
+gonzalez_1,sales clerks,yes
+gonzalez_1,senior lawyers,yes
+gonzalez_1,store managers,yes
+gonzalez_1,supervising clerks,yes
+gonzalez_1,tax advisors,yes
+gonzalez_1,waiting person,yes
+gonzalez_1,warehouse managers,yes
+hipp_1,event manager,yes
+horvath_1,accounting,no
+horvath_1,finance,no
+jackson_1,professional positions,no
+maurer_1,accountant,yes
+maurer_1,administrative assistant,yes
+maurer_1,sales representative,yes
+maurer_1,software engineer,yes
+neumark_1,waiter,no
+nunley_1,banking,no
+nunley_1,finance,no
+nunley_1,insurance,no
+nunley_1,management,no
+nunley_1,marketing,no
+nunley_1,sales,no
+oreopolus_1,accounting,no
+oreopolus_1,administrative,no
+oreopolus_1,biotech and pharmacy,no
+oreopolus_1,civil engineer,no
+oreopolus_1,clerical,no
+oreopolus_1,ecommerce,no
+oreopolus_1,education,no
+oreopolus_1,electrical engineer,no
+oreopolus_1,executive assistant,no
+oreopolus_1,finance,no
+oreopolus_1,food services managers,no
+oreopolus_1,human resources payroll,no
+oreopolus_1,insurance,no
+oreopolus_1,maintenance technician,no
+oreopolus_1,marketing and sales,no
+oreopolus_1,media and arts,no
+oreopolus_1,production,no
+oreopolus_1,programmer,no
+oreopolus_1,retail,no
+oreopolus_1,social worker,no
+oreopolus_1,technology,no
+patacchini_1,administrative clerk,no
+patacchini_1,bookkeeper,no
+patacchini_1,call center operator,no
+patacchini_1,receptionist,no
+patacchini_1,sales clerk,no
+patacchini_1,secretary,no
+patacchini_1,shop assistant,no
+pedulla_2,accounting,yes
+pedulla_2,administrative,yes
+pedulla_2,project management,no
+pedulla_2,sales,no
+petit_1,financial sector,yes
+quadlin_1,various professions,no
+ramos_1,cook,no
+ramos_1,hairdresser,no
+ramos_1,payroll clerk,no
+ramos_1,receptionist,no
+ramos_1,sales representative,no
+ramos_1,software developer,no
+ramos_1,store assistant,no
+riach_1,computer analyst programmer,yes
+riach_1,computer operator,yes
+riach_1,computer programmer,yes
+riach_1,gardener,yes
+riach_1,industrial relations officials,yes
+riach_1,management accountant,yes
+riach_1,payroll clerk,yes
+riach_2,charted accountant,yes
+riach_2,computer analyst-programmer,yes
+riach_2,engineers,yes
+riach_2,secretary,yes
+rivera_1,law firms,yes
+rooth_1,accountants,no
+rooth_1,business sales assistants,no
+rooth_1,computer professionals,no
+rooth_1,nurses,no
+rooth_1,preschool teachers,no
+rooth_1,restaurant workers,no
+rooth_1,shop sales assistants,no
+ruffle_1,accounts management,no
+ruffle_1,banking,no
+ruffle_1,budgeting,no
+ruffle_1,chartered accountancy,no
+ruffle_1,computer programming,no
+ruffle_1,customer service,no
+ruffle_1,finance,no
+ruffle_1,industrial engineering,no
+ruffle_1,junior sales,no
+ruffle_1,senior sales,no
+saeed_1,various professions,no
+stasio_1,carpenter,yes
+stasio_1,cook,yes
+stasio_1,electrician,yes
+stasio_1,hairdresser,yes
+stasio_1,payroll clerk,yes
+stasio_1,plumber,yes
+stasio_1,receptionist,yes
+stasio_1,sales representatives,yes
+stasio_1,software developer,yes
+stasio_1,store assistant,yes
+thomas_1,administrative assistant,no
+thomas_1,clerk,no
+thomas_1,customer service,no
+thomas_1,sales,no
+wu_1,various professions,no
+yavorsky_1,various professions,yes
+zhou_1,accountant,yes
+zhou_1,marketing professional,yes
+zhou_1,secretary,yes
+zhou_1,software engineer,yes

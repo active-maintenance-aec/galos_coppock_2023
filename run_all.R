@@ -21,6 +21,9 @@ source(here::here("maintained", "table_2_ethnicity_meta_regression.R"))
 source(here::here("maintained", "table_s2_1_study_manifest.R"))
 
 # Figures ----
+# figure_4 reads maintained/author_classification.csv, which is COMMITTED rather than
+# generated here: maintained/derive_author_classification.R builds it from the successor
+# project's own hand coding, which lives outside this repository and which nobody else has.
 source(here::here("maintained", "figure_4_cates_gender_gradient.R"))
 source(here::here("maintained", "figure_5_cates_ethnicity.R"))
 source(here::here("maintained", "figure_s1_1_field_ates_forest.R"))
