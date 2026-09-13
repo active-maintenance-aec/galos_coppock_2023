@@ -289,9 +289,9 @@ prints 0.54.
 
 # Errata
 
-Seven things in the published article do not survive the comparison:
-five statements checked against the deposit, and two reference-list
-entries checked against Crossref. They are collected in
+Eight things in the published article do not survive the comparison: six
+statements checked against the deposit, and two reference-list entries
+checked against Crossref. They are collected in
 `galos_coppock_2023_errata.pdf` at the root of this repository, which
 renders from `errata.qmd` and computes every corrected number from
 `maintained/output/` at the time it is rendered. **None of them changes
@@ -306,11 +306,12 @@ a conclusion of the paper.**
 | The difference in the magnitude of the two predicted biases | The deposited code and the maintained rewrite both give 2.10547, which rounds to 2.11 at the two decimal places the sentence prints. The published figure is the truncation rather than a different number, and the bootstrapped standard error, 0.5781, is 0.58 as published. |
 | Reference 22 demotes half of an author’s surname to an initial | The third author’s surname is the compound Baier Manwell, and the entry reads its first element as a middle initial. Crossref, doi 10.1097/acm.0000000000000552: Carnes, Molly; Devine, Patricia G.; Baier Manwell, Linda; Byars-Winston, Angela. PubMed indexes her the same way, as Baier Manwell L. |
 | Reference 65 breaks two surnames beginning “Mc” | Joanne E. McKenzie’s surname is set with a space, and Steve McDonald’s is split so that its “Mc” reads as a middle initial. Crossref, doi 10.1136/bmj.n71: McKenzie, Joanne E is the second author and McDonald, Steve the nineteenth. The defect is specific to these two names rather than general to the typesetting: the same entry sets L. A. McGuinness correctly three names later, and reference 60 sets M. McPherson correctly. |
+| Figure 4 colors imputed gender composition categories as though the study authors had given them | Of the 298 study-occupation cells the figure draws, only 174 carry a gender composition category the original study’s own authors assigned; the remaining 124 were filled in by us from where the occupation falls in the ILO gender distribution. The caption discloses that in words, so the article is accurate about what it did, but the figure gives all 298 points the same three colors, and a color is a claim about the occupation that a reader cannot tell apart from the 174 that were coded. The corrected figure draws the 124 imputed cells in grey, keeping their position, their interval and their weight. NO ESTIMATE MOVES: the meta-regression is fitted on the continuous share of women in the occupation and never on the category, so Tables 1 and 2, the gender gradient and every study-level effect in the supplementary materials are exactly as published. What changes is which of 298 points is which color. The coding is the same authors’ own, carried back from the successor project, where the distinction is kept as a column and the imputed categories are dropped rather than plotted. |
 
-The seven corrections, in the order the errata note gives them. Both
+The eight corrections, in the order the errata note gives them. Both
 columns are read from the errata spine.
 
-Three of the seven are contradictions between two parts of the article:
+Three of the eight are contradictions between two parts of the article:
 the abstract against the paper’s own evidence map, table S2.1 against
 the study panels, and the PRISMA cross-reference against the
 supplement’s own figure numbering. Two more are a dropped typesetting

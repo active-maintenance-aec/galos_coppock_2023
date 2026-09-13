@@ -23,6 +23,15 @@ manifest <- out("table_s2_1_study_manifest.csv")
 table_2 <- out("table_2_ethnicity_meta_regression.csv")
 magnitude <- out("text_difference_in_magnitude.csv")
 
+# Fig. 4's own plotted values, for entry 8. The figure prints no numbers, so the counts the
+# entry states are taken from the points the figure actually draws rather than from the data
+# behind it: author_classification is the coding, and it is what decides a point's colour.
+figure_4 <- out("figure_4_cates_gender_gradient.csv") |> filter(layer == "point")
+cells_total <- nrow(figure_4)
+cells_imputed <- sum(figure_4$author_classification == "no")
+cells_authors <- sum(figure_4$author_classification == "yes")
+stopifnot(cells_imputed + cells_authors == cells_total)
+
 # The extraction of the published pages, read for the strings the article itself prints. Every
 # other number below is computed from maintained/output/ at the time this document is rendered,
 # including the numbers that were not wrong: a token carried over from the published sentence is
@@ -216,6 +225,32 @@ entries <- tribble(
         "specific to these two names rather than general to the typesetting: the same entry",
         "sets L. A. McGuinness correctly three names later, and reference 60 sets",
         "M. McPherson correctly."),
+  "",
+
+  8, "provenance", "successor_project", "full",
+  "Figure 4 colors imputed gender composition categories as though the study authors had given them",
+  "published Fig. 4 caption, p. 6",
+  paste("The gender composition categories ([[as given by study authors where available and by",
+        "us otherwise]]) are distinguished by color and shape (green circles, men-dominated;",
+        "orange triangles, gender-balanced; blue squares, [[women-dominated]])."),
+  paste("The gender composition categories ([[as given by study authors]]) are distinguished by",
+        "color and shape (green circles, men-dominated; orange triangles, gender-balanced; blue",
+        "squares, [[women-dominated; grey circles, category not given by the study authors]])."),
+  str_glue(
+    "Of the {cells_total} study-occupation cells the figure draws, only {cells_authors} carry a ",
+    "gender composition category the original study's own authors assigned; the remaining ",
+    "{cells_imputed} were filled in by us from where the occupation falls in the ILO gender ",
+    "distribution. The caption discloses that in words, so the article is accurate about what it ",
+    "did, but the figure gives all {cells_total} points the same three colors, and a color is a ",
+    "claim about the occupation that a reader cannot tell apart from the {cells_authors} that ",
+    "were coded. The corrected figure draws the {cells_imputed} imputed cells in grey, keeping ",
+    "their position, their interval and their weight. NO ESTIMATE MOVES: the meta-regression is ",
+    "fitted on the continuous share of women in the occupation and never on the category, so ",
+    "Tables 1 and 2, the gender gradient and every study-level effect in the supplementary ",
+    "materials are exactly as published. What changes is which of {cells_total} points is which ",
+    "color. The coding is the same authors' own, carried back from the successor project, where ",
+    "the distinction is kept as a column and the imputed categories are dropped rather than ",
+    "plotted."),
   ""
 ) |>
   mutate(across(c(title, published, corrected, note, claim_ids), as.character))
@@ -237,11 +272,11 @@ emit_entry <- function(n) {
 }
 ```
 
-This note lists `r number_word(nrow(entries))` corrections to "Gender composition predicts gender bias: A meta-reanalysis of hiring discrimination audit experiments," published in *Science Advances* 9, eade7979, doi [10.1126/sciadv.ade7979](https://doi.org/10.1126/sciadv.ade7979): three misstated numbers, one dropped significance marker, one cross-reference to a figure that does not exist, and two reference-list entries with an author's name broken. **None of them changes a conclusion of the paper.** The gender gradient, the estimates in Tables 1 and 2, and every study-level effect in the supplementary materials are unaffected.
+This note lists `r number_word(nrow(entries))` corrections to "Gender composition predicts gender bias: A meta-reanalysis of hiring discrimination audit experiments," published in *Science Advances* 9, eade7979, doi [10.1126/sciadv.ade7979](https://doi.org/10.1126/sciadv.ade7979): three misstated numbers, one dropped significance marker, one cross-reference to a figure that does not exist, two reference-list entries with an author's name broken, and one figure that shows imputed categories as though they had been coded. **None of them changes a conclusion of the paper.** The gender gradient, the estimates in Tables 1 and 2, and every study-level effect in the supplementary materials are unaffected.
 
 Every number in a corrected sentence below is computed from the deposited replication archive ([10.7910/DVN/5MCRNY](https://doi.org/10.7910/DVN/5MCRNY)) at the time this document is rendered, including the numbers that were not wrong. The two reference-list entries are verified instead against the authoritative record at Crossref, named in each entry. The code and output supporting each correction are at [github.com/active-maintenance-aec/galos_coppock_2023](https://github.com/active-maintenance-aec/galos_coppock_2023).
 
-**Bold marks the corrected token in each corrected sentence.** Entry 3 corrects a table rather than a sentence, so its change is named in the entry and shown in a reprint of the table, which is otherwise identical to the published one. Percentage-point quantities are given at the precision the article itself uses for them, which in the Results sentence corrected below is two decimal places. Rounding that sentence to one decimal would erase the correction it needs, since the published and corrected figures differ by a hundredth of a point.
+**Bold marks the corrected token in each corrected sentence.** Entries 3 and 8 correct a table and a figure rather than a sentence, so each is named in the entry and shown in a reprint of the float, which is otherwise identical to the published one. Entry 8's corrected sentence is the figure's own caption, which has to change with it: the caption is the figure's only key, and the published one describes three colors where the corrected figure draws four. Percentage-point quantities are given at the precision the article itself uses for them, which in the Results sentence corrected below is two decimal places. Rounding that sentence to one decimal would erase the correction it needs, since the published and corrected figures differ by a hundredth of a point.
 
 ```{r entries-1-2, results="asis"}
 walk(c(1, 2), emit_entry)
@@ -306,6 +341,26 @@ The two entries below correct the article's reference list. Each was found by an
 ```{r entries-6-7, results="asis"}
 walk(c(6, 7), emit_entry)
 ```
+
+# The figure
+
+```{r entry-8, results="asis"}
+emit_entry(8)
+```
+
+\clearpage
+
+**Figure 4, corrected.** Study-occupation level CATE estimates of signaling applicant is a woman versus a man on callbacks. Point size is proportional to meta-analytic weight. The regression line is derived from the model reported in column 1 of Table 1. The gender composition categories (as given by study authors) are distinguished by color and shape (green circles, men-dominated; orange triangles, gender-balanced; blue squares, women-dominated; grey circles, category not given by the study authors).
+
+```{r figure4, out.width="100%"}
+# The corrected figure itself, as the maintained pipeline draws it. It is included rather than
+# redrawn here: a second drawing of the same figure is a second thing to keep in step. No
+# fig.cap, because the caption is set above as entry 3's reprinted table is: a quarto caption
+# would number this "Figure 1" inside a note whose subject is Figure 4.
+include_graphics(here("maintained", "output", "figure_4_cates_gender_gradient.pdf"))
+```
+
+\parbox{\linewidth}{\footnotesize\raggedright \textit{Note:} The only changes from the published figure are the color of the `r cells_imputed` study-occupation cells whose category the original study authors did not assign, now grey, and the clause naming them in the caption. Every point keeps the position, interval and weight it has in the published figure, and no estimate in the paper moves.}
 
 ```{r emit-spine}
 # The machine-readable spine, written wherever this document is rendered. Every other statement
