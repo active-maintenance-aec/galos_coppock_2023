@@ -215,10 +215,18 @@ entries <- tribble(
   7, "bibliographic", "reference_audit", "brief",
   "Reference 65 breaks two surnames beginning \"Mc\"",
   "published references, p. 10",
-  paste("65. M. J. Page, [[J. E. Mc Kenzie]], P. M. Bossuyt, I. Boutron, ... E. Mayo-Wilson,",
-        "[[S. M. Donald]], L. A. McGuinness, L. A. Stewart, ..."),
-  paste("65. M. J. Page, J. E. McKenzie, P. M. Bossuyt, I. Boutron, ... E. Mayo-Wilson,",
-        "S. McDonald, L. A. McGuinness, L. A. Stewart, ..."),
+  # TWO BLOCKS, because the elision between them is markup rather than text. A
+  # later edition's patcher reads "..." as "the quotation opens or closes here"
+  # and strips it; an elision left in the MIDDLE of one block is not stripped,
+  # and the block then asks the page for a literal "..." that it does not print,
+  # so the entry matches nothing and is skipped. Quoting the reference as the
+  # two fragments it really is asks for what reference 65 actually sets, and it
+  # is also what a reader of this note should see: two names, far apart in a
+  # list of twenty-six, with the rest of it elided between them.
+  paste0("65. M. J. Page, [[J. E. Mc Kenzie]], P. M. Bossuyt, I. Boutron, ...\n\n",
+         "... E. Mayo-Wilson, [[S. M. Donald]], L. A. McGuinness, L. A. Stewart, ..."),
+  paste0("65. M. J. Page, J. E. McKenzie, P. M. Bossuyt, I. Boutron, ...\n\n",
+         "... E. Mayo-Wilson, S. McDonald, L. A. McGuinness, L. A. Stewart, ..."),
   paste("Joanne E. McKenzie's surname is set with a space, and Steve McDonald's is split so",
         "that its \"Mc\" reads as a middle initial. Crossref, doi 10.1136/bmj.n71: McKenzie,",
         "Joanne E is the second author and McDonald, Steve the nineteenth. The defect is",
