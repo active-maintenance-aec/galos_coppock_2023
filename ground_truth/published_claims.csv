@@ -131,7 +131,7 @@ disc_other_continents,"Discussion, p. 8",descriptive,,TRUE,"Only a handful of st
 s3_gradients_similar,Section S3,descriptive,,TRUE,Survey and field gender gradients are very similar,"No number is printed, so the distance between the two fits is recorded with no verdict"
 s5_similar_to_table_1,Section S5,descriptive,,TRUE,Gradient meta-analysis is quite similar to the Table 1 estimates,"No number is printed, so the distance from the Table 1 model 1 gradient is recorded with no verdict"
 s4_panels_published,Figs. S4.5 to S4.61,structural,57,TRUE,Study panels the published appendix draws,
-s4_panel_entries_published,Figs. S4.5 to S4.61,structural,335,TRUE,Estimate and standard error labels printed across the 57 published panels,
+s4_panel_entries_published,Figs. S4.5 to S4.61,structural,334,TRUE,Estimate and standard error labels printed across the 57 published panels,
 table_1_model1_intercept_estimate,table_1_model1,pipeline,-3.02,TRUE,"Table 1 model1, Intercept",
 table_1_model1_intercept_std_error,table_1_model1,pipeline,0.81,TRUE,"Table 1 model1, Intercept standard error",
 table_1_model1_intercept_stars,table_1_model1,pipeline,3,TRUE,"Table 1 model1, Intercept significance stars",
@@ -318,7 +318,7 @@ fig_s1_1_est_rivera_and_tilcsik_101_united_states_field_experiment,fig_S1.1,pipe
 fig_s1_1_se_rivera_and_tilcsik_101_united_states_field_experiment,fig_S1.1,pipeline,3.3,TRUE,"Standard error printed beside Rivera and Tilcsik (101): United States, field experiment in fig. S1.1",
 fig_s1_1_est_arai_et_al_69_sweden_equivalent_cvs,fig_S1.1,pipeline,-6.3,TRUE,Estimate printed beside Arai et al. (69): Sweden (equivalent CVs) in fig. S1.1,
 fig_s1_1_se_arai_et_al_69_sweden_equivalent_cvs,fig_S1.1,pipeline,4.0,TRUE,Standard error printed beside Arai et al. (69): Sweden (equivalent CVs) in fig. S1.1,
-fig_s1_1_est_neumark_et_al_9_united_states,fig_S1.1,pipeline,-12.3,TRUE,Estimate printed beside Neumark et al. (9): United States in fig. S1.1,
+fig_s1_1_est_neumark_et_al_9_united_states,fig_S1.1,pipeline,2.3,TRUE,Estimate printed beside Neumark et al. (9): United States in fig. S1.1,
 fig_s1_1_se_neumark_et_al_9_united_states,fig_S1.1,pipeline,8.4,TRUE,Standard error printed beside Neumark et al. (9): United States in fig. S1.1,
 fig_s1_1_est_meta_analysis,fig_S1.1,pipeline,1.2,TRUE,Estimate printed beside Meta−analysis in fig. S1.1,
 fig_s1_1_se_meta_analysis,fig_S1.1,pipeline,0.4,TRUE,Standard error printed beside Meta−analysis in fig. S1.1,
@@ -430,7 +430,7 @@ s4_5_sample_sizes,fig_S4.5,pipeline,15,TRUE,"Occupation sample size labels, Ahme
 s4_6_entries,fig_S4.6,pipeline,11,TRUE,"Plotted estimate and standard error labels, Ahmed at al. (66): Sweden",Count of the labels the published panel prints
 s4_6_compositions,fig_S4.6,pipeline,10,TRUE,"Occupation gender composition labels, Ahmed at al. (66): Sweden",Count of the labels the published panel prints
 s4_6_sample_sizes,fig_S4.6,pipeline,10,TRUE,"Occupation sample size labels, Ahmed at al. (66): Sweden",Count of the labels the published panel prints
-s4_7_entries,fig_S4.7,pipeline,4,TRUE,"Plotted estimate and standard error labels, Albert et al. (67): Spain",Count of the labels the published panel prints
+s4_7_entries,fig_S4.7,pipeline,3,TRUE,"Plotted estimate and standard error labels, Albert et al. (67): Spain",Count of the labels the published panel prints
 s4_7_compositions,fig_S4.7,pipeline,3,TRUE,"Occupation gender composition labels, Albert et al. (67): Spain",Count of the labels the published panel prints
 s4_7_sample_sizes,fig_S4.7,pipeline,3,TRUE,"Occupation sample size labels, Albert et al. (67): Spain",Count of the labels the published panel prints
 s4_8_entries,fig_S4.8,pipeline,2,TRUE,"Plotted estimate and standard error labels, Alden et al. (68): Sweden",Count of the labels the published panel prints

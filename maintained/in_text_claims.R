@@ -633,8 +633,16 @@ for (i in seq_len(nrow(panel_counts))) {
 
 claim("s4_panels_published", n_distinct(panels$study_name_citation),
       "study panels the rewrite draws, against the 57 the published appendix draws", 0)
-claim("s4_panel_entries_published", sum(!is.na(panels$entry)),
-      "estimate and standard error labels the rewrite writes across all 57 panels", 0)
+# Counted off the figure rather than off its data. The gender gradient estimate for Albert
+# et al. (67) is 139.82, outside the panel's x range, so ggplot clips its label away and the
+# facet prints a truncated interval with no point and no label, exactly as the published page
+# does. panels carries 335 entries; 334 of them reach the page.
+claim("s4_panel_entries_published",
+      length(unlist(str_extract_all(
+        pdftools::pdf_text(here::here("maintained", "output", "figure_s4_study_panels.pdf")),
+        "-?\\d+\\.\\d+\\s*\\(\\d+\\.\\d+\\)"
+      ))),
+      "estimate and standard error labels the rewrite prints across all 57 panels", 0)
 
 # Section S5 ----
 

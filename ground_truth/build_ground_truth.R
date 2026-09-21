@@ -1,7 +1,8 @@
 # galos_coppock_2023/ground_truth/build_ground_truth.R
 # Output: ground_truth/galos_coppock_2023_ground_truth.csv
 # Depends on: ground_truth/archive_values.csv, ground_truth/published_claims.csv,
-#             maintained/in_text_claims.R, maintained/output/ (run run_all.R first)
+#             maintained/in_text_claims.R, maintained/output/ (run run_all.R first), and
+#             pdftools, to count the labels the S4 panel figure inks rather than the rows behind them
 # Description: Assemble the number-by-number comparison table, and gate it.
 #
 #   Three columns, three sources, and they are kept apart on purpose. value_paper is typed from
@@ -653,7 +654,9 @@ published_s1_1 <- tribble(
   "Erlandsson (86): Sweden", -3.7, 2.5,
   "Rivera and Tilcsik (101): United States, field experiment", -3.8, 3.3,
   "Arai et al. (69): Sweden (equivalent CVs)", -6.3, 4.0,
-  "Neumark et al. (9): United States", -12.3, 8.4,
+  # The page prints 2.3: the label's leading -1 is clipped out of the panel in the
+  # authors' own figure, and entry 9 of the errata records it. The estimate is -12.31.
+  "Neumark et al. (9): United States", 2.3, 8.4,
   "Meta-analysis", 1.2, 0.4
 )
 
@@ -764,7 +767,9 @@ published_panels <- tribble(
     "77; 73; 73; 68; 60; 60; 50; 29; 8; 6",
     "186; 667; 289; 480; 500; 488; 542; 362; 209; 267",
   "S4.7", "Albert et al. (67): Spain",
-    "28.77 (3.16); -1.36 (3.07); 7.80 (2.89); 139.82 (43.88)",
+    # The gradient estimate of 139.82 is outside the panel's x range, so ggplot clips its
+    # label away: the facet prints a truncated interval, no point and no label.
+    "28.77 (3.16); -1.36 (3.07); 7.80 (2.89)",
     "72; 53; 53",
     "730; 1030; 1000",
   "S4.8", "Alden et al. (68): Sweden",
@@ -1018,6 +1023,21 @@ panel_gt <- published_panels |>
 # The per-panel rows above have no archive counterpart, because the deposited loop errors on its
 # first study and draws nothing. Recording that as two rows keyed to what archive_values.R
 # harvests keeps the gap visible instead of leaving 171 silently unverifiable rows.
+#
+# The label count has to be read off the FIGURE and not off its data. The gender gradient
+# estimate for Albert et al. (67) is 139.82, outside coord_cartesian()'s x range, so the label
+# is clipped away: the facet prints a truncated interval with no point and no label, on the
+# published page and in the rewrite alike. value_paper counts the labels the published page
+# inks, so nrow(panels) would credit the rewrite with a 335th label no reader can see and the
+# two sides would stop measuring the same thing. Both readers agree the figure carries 334; a
+# label that were merely clipped rather than absent would still reach pdf_text(), which is what
+# ground_truth/find_clipped_runs.py exists to catch.
+panel_labels_inked <- here::here("maintained", "output", "figure_s4_study_panels.pdf") |>
+  pdftools::pdf_text() |>
+  str_extract_all("-?\\d+\\.\\d+\\s*\\(\\d+\\.\\d+\\)") |>
+  unlist() |>
+  length()
+
 panel_coverage <- tibble(
   claim_id = c("s4_panels_published", "s4_panel_entries_published"),
   table_figure = "figs_S4.5_to_S4.61",
@@ -1025,7 +1045,7 @@ panel_coverage <- tibble(
             "Plotted estimate and standard error labels produced by the deposited archive"),
   value_paper = c(nrow(published_panels), sum(lengths(split_labels(published_panels$entries)))),
   digits = 0,
-  value_rewrite = c(n_distinct(panels$study_name_citation), nrow(panels)),
+  value_rewrite = c(n_distinct(panels$study_name_citation), panel_labels_inked),
   notes = "The published appendix draws one panel per study; the deposited loop draws none"
 )
 
@@ -1096,6 +1116,10 @@ gt <- gt |>
       table_figure == "table_2_model2" &
         str_starts(claim, "Intercept significance stars") ~ "paper_internal",
       claim == "Occupation counts reproduced" ~ "paper_internal",
+      # The page prints 2.3 where the figure's own text, the introduction and the deposit
+      # all say -12.31: the label's leading -1 is clipped out of the panel (errata entry 9).
+      claim == "ATE: Neumark et al. (9): United States" &
+        table_figure == "fig_S1.1" ~ "paper_internal",
       claim == "Subject counts reproduced" ~ "archive",
       str_starts(claim, "Occupation sample size labels") ~ "archive",
       # The archive alone fails on these three, and in both cases the deposit is the reason: it

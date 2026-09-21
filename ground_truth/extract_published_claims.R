@@ -49,6 +49,28 @@ appendix_txt <- tempfile(fileext = ".txt")
 system2("pdftotext", c("-layout", shQuote(appendix_pdf), shQuote(appendix_txt)))
 pages <- str_split(read_file(appendix_txt), "\f")[[1]]
 
+# Runs the text layer keeps and the page does not print ----
+# pdftotext reads the content stream and knows nothing about clipping, so a label ggplot drew
+# outside its panel comes back as text that no reader can see. Both cases here are labels that
+# overflow a panel: fig. S1.1's Neumark row is right-aligned and its leading "-1" falls off the
+# left edge, so the page prints 2.3 (8.4) for an estimate of -12.31 (errata entry 9), and fig.
+# S4.7's gender gradient estimate of 139.82 is outside the panel's x range, so its whole label
+# goes and the facet prints a truncated interval with no point and no label.
+#
+# These cannot be found with pdftotext, which is the tool that cannot see them. They are found
+# by diffing it against a clip-aware reader, which is what ground_truth/find_clipped_runs.py
+# does; re-run that after any change to the published PDFs and this table should match it.
+clipped_runs <- tribble(
+  ~wrong, ~right,
+  "Neumark et al. (9): United States−12.3 (8.4)", "Neumark et al. (9): United States 2.3 (8.4)",
+  "139.82 (43.88)", ""
+)
+for (i in seq_len(nrow(clipped_runs))) {
+  hits <- sum(str_count(pages, fixed(clipped_runs$wrong[i])))
+  stopifnot(hits == 1)
+  pages <- str_replace_all(pages, fixed(clipped_runs$wrong[i]), clipped_runs$right[i])
+}
+
 # A stable id for a study label, so the extraction and build_ground_truth.R land on the same
 # claim_id from two different spellings of the same name. The supplement sets the minus sign as
 # U+2212 and the build script types a hyphen, and both have to reduce to one key.
@@ -531,7 +553,9 @@ prose_claims <- tribble(
   # Coverage of the section S4 panels, which is what the ground truth records for the deposit
   "s4_panels_published", "Figs. S4.5 to S4.61", "structural", "57", TRUE,
     "Study panels the published appendix draws", "",
-  "s4_panel_entries_published", "Figs. S4.5 to S4.61", "structural", "335", TRUE,
+  # 334 rather than 335: fig. S4.7's gradient label is clipped out of its panel, so the
+  # page does not print it. See clipped_runs at the top of this file.
+  "s4_panel_entries_published", "Figs. S4.5 to S4.61", "structural", "334", TRUE,
     "Estimate and standard error labels printed across the 57 published panels", ""
 )
 
