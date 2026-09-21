@@ -19,9 +19,11 @@ meta_ests <- tidy(meta_fit, conf.int = TRUE) |>
     weight = mean(gender_gradients$weight)
   )
 
+# The published figure breaks each row label at its colon, "Albert et al. (67)" over
+# "Spain", so the plotted label is the citation with the colon replaced by a line break.
 gg_df <- bind_rows(mutate(gender_gradients, facet = "Study gender gradient estimates"), meta_ests) |>
   mutate(
-    study_name_fct = fct_reorder(study_name_citation, estimate),
+    study_name_fct = fct_reorder(str_replace(study_name_citation, ":", "\n"), estimate),
     entry = make_se_entry(estimate, std.error, 1),
     facet = factor(facet, levels = c("Study gender gradient estimates", "Meta"))
   )
