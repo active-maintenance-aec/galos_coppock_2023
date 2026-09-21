@@ -67,7 +67,9 @@ occupations <- function(id) {
 # A corrected sentence has to read like the published one, so a count the article spells out is
 # spelled out here too.
 number_word <- function(x) {
-  words <- c("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten")
+  words <- c("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+             "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen",
+             "eighteen", "nineteen", "twenty")
   stopifnot(x %in% seq_along(words))
   words[x]
 }
@@ -301,7 +303,43 @@ entries <- tribble(
     "which draws the full value: of the 420 words and numbers it carries, 419 are on the ",
     "published page and the one exception is the restored ",
     "−{sprintf('%.1f', abs(neumark_s1_1$estimate))}."),
-  "fig_s1_1_est_neumark_et_al_9_united_states"
+  "fig_s1_1_est_neumark_et_al_9_united_states",
+
+  # ENTRIES 10 AND 11 ARE ONE FINDING AND NEITHER IS REACHABLE FROM ONE
+  # DOCUMENT. The supplementary materials reprint the article's reference list
+  # verbatim, all 128 entries, so this paper sets the same list twice. Diffed
+  # entry by entry, the two printings differ in exactly two places, and they
+  # fall on opposite sides: each document is right where the other is wrong.
+  # A gate compares an edition against its own published source, so a press
+  # that sets one list twice can print it two ways and both comparisons pass at
+  # zero unexplained. The second printing is the only instrument that reaches
+  # either of these.
+  10, "bibliographic", "second_printing", "brief",
+  "Reference 9 separates two coauthors with a semicolon",
+  "published references, p. 9",
+  "9. D. [[Neumark;]] R. J. Bank, K. D. Van Nort, Sex discrimination in restaurant hiring: An audit study. Q. J. Econ. 111, 915–941 (1996).",
+  "9. D. Neumark, R. J. Bank, K. D. Van Nort, Sex discrimination in restaurant hiring: An audit study. Q. J. Econ. 111, 915–941 (1996).",
+  paste("The entry names three coauthors and separates the first two with a semicolon and the",
+        "second two with a comma, so it is inconsistent with itself before it is compared with",
+        "anything. Crossref, doi 10.2307/2946676: David Neumark, Roy J. Bank and Kyle D. Van",
+        "Nort are three authors of one article, Q. J. Econ. 111, 915-941 (1996). Every one of",
+        "the other 127 entries in this list separates its authors with commas, and the",
+        "supplementary materials set this same reference with a comma. The defect is specific",
+        "to the article's printing of it."),
+  "",
+
+  11, "bibliographic", "second_printing", "brief",
+  "Reference 71 in the supplementary materials drops the period after its number",
+  "published app. references, p. 53",
+  "[[71]] S. Baert, A.-S. De Pauw, N. Deschacht, Do employer preferences contribute to sticky floors? ILR Rev. 69, 714–736 (2016).",
+  "71. S. Baert, A.-S. De Pauw, N. Deschacht, Do employer preferences contribute to sticky floors? ILR Rev. 69, 714–736 (2016).",
+  paste("Every other entry in both printings of this list numbers itself with a digit and a",
+        "period, and the article's own printing of this same reference has one. Read off the",
+        "line boxes of supplementary p. 53, reference 71 begins at the item edge x0 = 0.088",
+        "like its neighbours and its number is followed by a space rather than a period. It is",
+        "the only one of the 128 that is, which is what makes it a slip rather than a",
+        "convention."),
+  ""
 ) |>
   mutate(across(c(title, published, corrected, note, claim_ids), as.character))
 
@@ -322,9 +360,9 @@ emit_entry <- function(n) {
 }
 ```
 
-This note lists `r number_word(nrow(entries))` corrections to "Gender composition predicts gender bias: A meta-reanalysis of hiring discrimination audit experiments," published in *Science Advances* 9, eade7979, doi [10.1126/sciadv.ade7979](https://doi.org/10.1126/sciadv.ade7979): three misstated numbers, one dropped significance marker, one cross-reference to a figure that does not exist, two reference-list entries with an author's name broken, one figure that shows imputed categories as though they had been coded, and one supplementary figure that prints an estimate clipped short of its own value. **None of them changes a conclusion of the paper.** The gender gradient, the estimates in Tables 1 and 2, and every study-level effect in the supplementary materials are unaffected.
+This note lists `r number_word(nrow(entries))` corrections to "Gender composition predicts gender bias: A meta-reanalysis of hiring discrimination audit experiments," published in *Science Advances* 9, eade7979, doi [10.1126/sciadv.ade7979](https://doi.org/10.1126/sciadv.ade7979): three misstated numbers, one dropped significance marker, one cross-reference to a figure that does not exist, two reference-list entries with an author's name broken, one figure that shows imputed categories as though they had been coded, one supplementary figure that prints an estimate clipped short of its own value, and two more reference-list entries, one in each of the two places this paper sets its reference list. **None of them changes a conclusion of the paper.** The gender gradient, the estimates in Tables 1 and 2, and every study-level effect in the supplementary materials are unaffected.
 
-Every number in a corrected sentence below is computed from the deposited replication archive ([10.7910/DVN/5MCRNY](https://doi.org/10.7910/DVN/5MCRNY)) at the time this document is rendered, including the numbers that were not wrong. The two reference-list entries are verified instead against the authoritative record at Crossref, named in each entry. The code and output supporting each correction are at [github.com/active-maintenance-aec/galos_coppock_2023](https://github.com/active-maintenance-aec/galos_coppock_2023).
+Every number in a corrected sentence below is computed from the deposited replication archive ([10.7910/DVN/5MCRNY](https://doi.org/10.7910/DVN/5MCRNY)) at the time this document is rendered, including the numbers that were not wrong. Three of the four reference-list entries are verified instead against the authoritative record at Crossref, named in each entry. The fourth, entry 11, is a number that has lost its period, which no external record speaks to: it is verified against the other 127 entries of the list it sits in and against the article's own printing of the same reference. The code and output supporting each correction are at [github.com/active-maintenance-aec/galos_coppock_2023](https://github.com/active-maintenance-aec/galos_coppock_2023).
 
 **Bold marks the corrected token in each corrected sentence.** Entries 3 and 8 correct a table and a figure rather than a sentence, so each is named in the entry and shown in a reprint of the float, which is otherwise identical to the published one. Entry 8's corrected sentence is the figure's own caption, which has to change with it: the caption is the figure's only key, and the published one describes three colors where the corrected figure draws four. Percentage-point quantities are given at the precision the article itself uses for them, which in the Results sentence corrected below is two decimal places. Rounding that sentence to one decimal would erase the correction it needs, since the published and corrected figures differ by a hundredth of a point.
 
@@ -418,6 +456,14 @@ The entry below is the only one in this note that no comparison of text layers c
 
 ```{r entry-9, results="asis"}
 emit_entry(9)
+```
+
+# The reference list, set twice
+
+The supplementary materials reprint the article's reference list verbatim, all 128 entries, so this paper sets the same list twice. Diffed entry by entry, the two printings differ in exactly two places, and they fall on opposite sides: each document is right where the other is wrong. Neither defect is reachable from one document alone. A comparison of an edition against its own published source cannot see them, because a press that sets one list twice can print it two ways and both comparisons agree with their own page. The second printing is the instrument here, as a clip-aware reader was for entry 9.
+
+```{r entries-10-11, results="asis"}
+walk(c(10, 11), emit_entry)
 ```
 
 ```{r emit-spine}
