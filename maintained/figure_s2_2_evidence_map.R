@@ -35,8 +35,12 @@ g <- ggplot(evidence_map) +
     strip.text = element_text(size = 7)
   )
 
-ggsave(file.path(out_dir, "figure_s2_2_evidence_map.pdf"), plot = g, width = 7, height = 14)
-ggsave(file.path(out_dir, "figure_s2_2_evidence_map.png"), plot = g, width = 7, height = 14, dpi = 300)
+# The authors drew this one 6.5 by 9 (appendix_evidence_map.R:85), and a ggplot canvas is
+# not a scale: the type keeps its point size while the panel stretches, so the same plot at
+# a different aspect reflows and stops being the published drawing at another size. Measured
+# against published p. 7, 6.5 by 9 puts every word where the page puts it.
+ggsave(file.path(out_dir, "figure_s2_2_evidence_map.pdf"), plot = g, width = 6.5, height = 9)
+ggsave(file.path(out_dir, "figure_s2_2_evidence_map.png"), plot = g, width = 6.5, height = 9, dpi = 300)
 
 # The map's content is which country-years are covered, so the filled cells are the
 # plotted values.
