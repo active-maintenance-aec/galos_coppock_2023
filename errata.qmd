@@ -23,6 +23,12 @@ manifest <- out("table_s2_1_study_manifest.csv")
 table_2 <- out("table_2_ethnicity_meta_regression.csv")
 magnitude <- out("text_difference_in_magnitude.csv")
 
+# Fig. S1.1's own plotted values, for entry 9. The published page prints a clipped fragment of
+# this estimate, so the corrected side is the maintained figure's own value.
+neumark_s1_1 <- out("figure_s1_1_field_ates_forest.csv") |>
+  filter(study_name_citation == "Neumark et al. (9): United States")
+stopifnot(nrow(neumark_s1_1) == 1)
+
 # Fig. 4's own plotted values, for entry 8. The figure prints no numbers, so the counts the
 # entry states are taken from the points the figure actually draws rather than from the data
 # behind it: author_classification is the coding, and it is what decides a point's colour.
@@ -259,7 +265,43 @@ entries <- tribble(
     "color. The coding is the same authors' own, carried back from the successor project, where ",
     "the distinction is kept as a column and the imputed categories are dropped rather than ",
     "plotted."),
-  ""
+  "",
+
+  9, "typography", "extraction", "brief",
+  "Figure S1.1 prints a clipped estimate for Neumark et al.",
+  "published app. fig. S1.1",
+  # The published side comes from the extraction rather than from the pipeline, because the
+  # pipeline does not produce it: what the page prints is a fragment of a number no calculation
+  # yields. The standard error beside it is the pipeline's, like every other number here.
+  str_glue(
+    "Fig. S1.1, Neumark et al. (9): United States: ",
+    "[[{paper('fig_s1_1_est_neumark_et_al_9_united_states')}]] ",
+    "({sprintf('%.1f', neumark_s1_1$std.error)})"),
+  str_glue(
+    "Fig. S1.1, Neumark et al. (9): United States: ",
+    "[[−{sprintf('%.1f', abs(neumark_s1_1$estimate))}]] ",
+    "({sprintf('%.1f', neumark_s1_1$std.error)})"),
+  str_glue(
+    "The figure's own text carries the right number and the page does not print it. Read off ",
+    "the glyphs, the row holds exactly 2 . 3 space ( 8 . 4 ) beginning at x0 = 268.50, which ",
+    "is where every other three-character value in the column begins, and no minus and no 1 is ",
+    "inked anywhere to its left: the short dash that sits there is the row's axis tick, which ",
+    "the positive rows carry too. The authors' own field_ates_plot.pdf is the same in both ",
+    "respects, so the leading −1 was lost when the figure was drawn rather than when it was ",
+    "composed: the label overflows the plot panel and its −1 is clipped out of the ink, while ",
+    "the text layer keeps it, which is why pdftotext reports ",
+    "−{sprintf('%.1f', abs(neumark_s1_1$estimate))} for a page that shows ",
+    "{paper('fig_s1_1_est_neumark_et_al_9_united_states')} and why a token gate cannot see this ",
+    "defect at all. Nothing about the estimate is in doubt. The article's own introduction ",
+    "prints it as (−{sprintf('%.1f', abs(neumark_s1_1$estimate))} points, SE: ",
+    "{sprintf('%.1f', neumark_s1_1$std.error)} points) and the deposit gives ",
+    "−{sprintf('%.6f', abs(neumark_s1_1$estimate))} ",
+    "({sprintf('%.6f', neumark_s1_1$std.error)}), so the paper disagrees with itself the way ",
+    "entry 2 records for table S2.1. The corrected figure is the maintained pipeline's own, ",
+    "which draws the full value: of the 420 words and numbers it carries, 419 are on the ",
+    "published page and the one exception is the restored ",
+    "−{sprintf('%.1f', abs(neumark_s1_1$estimate))}."),
+  "fig_s1_1_est_neumark_et_al_9_united_states"
 ) |>
   mutate(across(c(title, published, corrected, note, claim_ids), as.character))
 
@@ -280,7 +322,7 @@ emit_entry <- function(n) {
 }
 ```
 
-This note lists `r number_word(nrow(entries))` corrections to "Gender composition predicts gender bias: A meta-reanalysis of hiring discrimination audit experiments," published in *Science Advances* 9, eade7979, doi [10.1126/sciadv.ade7979](https://doi.org/10.1126/sciadv.ade7979): three misstated numbers, one dropped significance marker, one cross-reference to a figure that does not exist, two reference-list entries with an author's name broken, and one figure that shows imputed categories as though they had been coded. **None of them changes a conclusion of the paper.** The gender gradient, the estimates in Tables 1 and 2, and every study-level effect in the supplementary materials are unaffected.
+This note lists `r number_word(nrow(entries))` corrections to "Gender composition predicts gender bias: A meta-reanalysis of hiring discrimination audit experiments," published in *Science Advances* 9, eade7979, doi [10.1126/sciadv.ade7979](https://doi.org/10.1126/sciadv.ade7979): three misstated numbers, one dropped significance marker, one cross-reference to a figure that does not exist, two reference-list entries with an author's name broken, one figure that shows imputed categories as though they had been coded, and one supplementary figure that prints an estimate clipped short of its own value. **None of them changes a conclusion of the paper.** The gender gradient, the estimates in Tables 1 and 2, and every study-level effect in the supplementary materials are unaffected.
 
 Every number in a corrected sentence below is computed from the deposited replication archive ([10.7910/DVN/5MCRNY](https://doi.org/10.7910/DVN/5MCRNY)) at the time this document is rendered, including the numbers that were not wrong. The two reference-list entries are verified instead against the authoritative record at Crossref, named in each entry. The code and output supporting each correction are at [github.com/active-maintenance-aec/galos_coppock_2023](https://github.com/active-maintenance-aec/galos_coppock_2023).
 
@@ -369,6 +411,14 @@ include_graphics(here("maintained", "output", "figure_4_cates_gender_gradient.pd
 ```
 
 \parbox{\linewidth}{\footnotesize\raggedright \textit{Note:} The only changes from the published figure are the color of the `r cells_imputed` study-occupation cells whose category the original study authors did not assign, now grey, and the clause naming them in the caption. Every point keeps the position, interval and weight it has in the published figure, and no estimate in the paper moves.}
+
+# The supplementary figure
+
+The entry below is the only one in this note that no comparison of text layers could have found. A figure's label can overflow its plot panel, and what is then clipped away is ink and not text: the page shows one number and its own text layer carries another, so the published figure and any faithful re-extraction of it agree about a value the reader never sees. It was found by reading the two against each other, with an extractor that applies the clipping path and one that does not.
+
+```{r entry-9, results="asis"}
+emit_entry(9)
+```
 
 ```{r emit-spine}
 # The machine-readable spine, written wherever this document is rendered. Every other statement
