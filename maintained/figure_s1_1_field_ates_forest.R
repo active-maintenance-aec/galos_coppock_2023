@@ -28,7 +28,17 @@ gg_df <- bind_rows(ates, field_meta_ests) |>
 
 g <- ggplot(gg_df, aes(estimate, study_name_fct)) +
   geom_point(aes(size = weight)) +
-  geom_text(x = -22, aes(label = entry), hjust = 1, size = 2.5) +
+  # The authors' x = -22 right-anchors each label 2.83pt past the panel's left
+  # border, and the panel clips whatever overflows. Every label but one is short
+  # enough to survive that; "-12.3 (8.4)" is 34.05pt wide and loses its leading
+  # -1 to the clip, which is entry 9. Anchoring at -19 puts the widest label
+  # wholly inside the panel, clear of the border by 8.18pt and of the longest
+  # study name by 13.11pt. coord_cartesian is untouched, so this moves the
+  # labels and nothing else: against the as-built drawing all 201 drawing items
+  # and all 304 non-label words are identical, 115 label words shift by exactly
+  # 14.9pt, and the single word that does not is the restored -12.3 itself. No
+  # estimate is below -19, so no label comes to rest over a point.
+  geom_text(x = -19, aes(label = entry), hjust = 1, size = 2.5) +
   geom_linerange(aes(xmin = conf.low, xmax = conf.high), alpha = 0.3) +
   geom_vline(xintercept = 0, alpha = 0.25, linetype = "dashed") +
   geom_vline(data = select(field_meta_ests, -facet), aes(xintercept = estimate)) +
