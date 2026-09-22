@@ -82,6 +82,17 @@ last_supplementary_figure <- 4 + n_distinct(panels$study_name_citation) + 2
 
 m2_intercept <- table_2 |> filter(model == "Model 2", term == "intercept")
 m3_intercept <- table_2 |> filter(model == "Model 3", term == "intercept")
+
+# Entries 12 and 15, both carried rather than corrected. The misspelled study label and the
+# signed zero are values in the deposited data rather than anything a rewriting of it
+# introduces: the label is a value of study_name_citation, and the two Carlsson rows below are
+# zeros whose printed sign is floating-point residue.
+ahmed_labels <- panels$study_name_citation |> unique() |> str_subset(fixed("at al.")) |> sort()
+carlsson_zero <- panels |>
+  filter(study_id == "carlsson_1", occupation_observed == "shop sales assistants")
+carlsson_plus <- panels |>
+  filter(study_id == "carlsson_1", occupation_observed == "lower secondary teachers (language)")
+stopifnot(length(ahmed_labels) == 2, nrow(carlsson_zero) == 1, nrow(carlsson_plus) == 1)
 ```
 
 ```{r entries}
@@ -211,7 +222,7 @@ entries <- tribble(
 
   6, "bibliographic", "reference_audit", "brief",
   "Reference 22 demotes half of an author's surname to an initial",
-  "published references, p. 9",
+  "published references, p. 9, and app. references, p. 48",
   "22. M. Carnes, P. G. Devine, [[L. B. Manwell]], A. Byars-Winston, E. Fine, ...",
   "22. M. Carnes, P. G. Devine, L. Baier Manwell, A. Byars-Winston, E. Fine, ...",
   paste("The third author's surname is the compound Baier Manwell, and the entry reads its",
@@ -222,7 +233,7 @@ entries <- tribble(
 
   7, "bibliographic", "reference_audit", "brief",
   "Reference 65 breaks two surnames beginning \"Mc\"",
-  "published references, p. 10",
+  "published references, p. 10, and app. references, p. 52",
   # TWO BLOCKS, because the elision between them is markup rather than text. A
   # later edition's patcher reads "..." as "the quotation opens or closes here"
   # and strips it; an elision left in the MIDDLE of one block is not stripped,
@@ -339,11 +350,105 @@ entries <- tribble(
         "like its neighbours and its number is followed by a space rather than a period. It is",
         "the only one of the 128 that is, which is what makes it a slip rather than a",
         "convention."),
+  "",
+
+  # THE FIVE ENTRIES BELOW ARE CARRIED, NOT CORRECTED, and that is a call about
+  # what an edition of a published paper is for rather than about what is wrong
+  # with the passages. Four of them are strings the authors' deposited data
+  # supply to the supplement's floats, so correcting them on the page would put
+  # this edition's floats out of step with the data behind them, and the fifth
+  # is a journal abbreviation the paper sets the same way in both printings of
+  # its reference list, where the second printing therefore finds the document
+  # agreeing with itself. `form` is "note": the entry quotes the passage and
+  # proposes no change, and its `corrected` column is NA.
+
+  12, "orthography", "authors_archive", "note",
+  "The two Ahmed studies are named \"Ahmed at al.\" in all eight places the supplement names them",
+  "published app. pp. 3, 5, 12, 13 and 44",
+  "Figure S4.5: [[Ahmed at al.]] (14): Sweden",
+  NA_character_,
+  str_glue(
+    "The supplementary materials set \"et al.\" 111 times and \"at al.\" eight, and all eight ",
+    "name one of these two studies: fig. S1.1's two rows, table S2.1's two rows, the captions ",
+    "of figs. S4.5 and S4.6, and fig. S5.62's two rows. It is one string printed eight times ",
+    "rather than eight slips. The deposited data carry the study label in a column of their ",
+    "own, {str_c(ahmed_labels, collapse = ' and ')}, and no line of the maintained rewrite ",
+    "spells either of them, so every printing of the misspelling in the supplement is a ",
+    "printing of that one value. The authors' own working figures carry it as well: ",
+    "field_ates_plot.pdf, gender_gradients_plot.pdf and study_manifest.tex in the archived ",
+    "project set it exactly as the published pages do. References 14 and 66, the two studies ",
+    "these labels cite, are set correctly in both printings of the reference list, so nothing ",
+    "here leaves a reader in doubt about which studies are meant."),
+  "",
+
+  13, "orthography", "authors_archive", "note",
+  "Figure S4.32 misspells an occupation label",
+  "published app. fig. S4.32, p. 27",
+  "[[industriel production]] 20.83 (27.88)",
+  NA_character_,
+  paste("The row belongs to Dahl and Krog (84): Denmark, and the label is the occupation as the",
+        "deposited data spell it: dahl_1_occupation_cates.pdf in the authors' archived project",
+        "prints the same string. The supplement spells \"industrial\" correctly where it sets it",
+        "itself, in \"industrial relations officials\" and \"industrial engineering\". This is the",
+        "same study whose occupation count entry 2 corrects, and the two findings are",
+        "independent: the count is a number the article contradicts elsewhere in its own pages,",
+        "and the label is a spelling the data carry."),
+  "",
+
+  14, "orthography", "authors_archive", "note",
+  "Figure S4.37 misspells an occupation label",
+  "published app. fig. S4.37, p. 30",
+  "[[indistrial engineers]] −3.57 (1.55)",
+  NA_character_,
+  paste("The row belongs to Gonzalez et al. (89): Spain, and as with entry 13 the label is the",
+        "occupation as the deposited data spell it: gonzalez_1_occupation_cates.pdf in the",
+        "authors' archived project prints the same string. It is the fifteenth occupation row of",
+        "the panel. Gonzalez et al. is the other of the two studies whose occupation count entry",
+        "2 corrects."),
+  "",
+
+  15, "typography", "authors_archive", "note",
+  "Figure S4.28 prints a negative zero",
+  "published app. fig. S4.28, p. 24",
+  "shop sales assistants [[−0.00]] (2.75)",
+  NA_character_,
+  str_glue(
+    "The estimate is zero and the minus sign is arithmetic residue. The maintained rewrite ",
+    "returns {str_replace(sprintf('%.2e', carlsson_zero$estimate), '^-', '−')} for this ",
+    "row, and {sprintf('%.2e', carlsson_plus$estimate)} for the lower secondary teachers ",
+    "(language) row ",
+    "three rows above it, which the same panel prints as 0.00 with no sign. Both differences in ",
+    "means are exactly zero, and what separates the two printings is which side of zero the ",
+    "floating-point remainder fell on. The sign therefore carries no information about the ",
+    "estimate, and it is the only one of the supplement's five rounded zeros that prints a sign. ",
+    "The authors' own carlsson_1_occupation_cates.pdf sets it the same way, so this is the ",
+    "deposit's arithmetic reaching the page rather than the press's typesetting."),
+  "",
+
+  16, "bibliographic", "reference_audit", "note",
+  "Reference 123 misabbreviates Social Indicators Research",
+  "published references, p. 11, and app. references, p. 58",
+  "... a student sample. [[Soc. Indic.s Res.]] 116, 731–754 (2014).",
+  NA_character_,
+  paste("The journal is Social Indicators Research, which Science abbreviates Soc. Indic. Res.,",
+        "and the entry attaches a stray s to the abbreviation of Indicators. Crossref, doi",
+        "10.1007/s11205-013-0316-9: Blommaert, Coenders and van Tubergen in Social Indicators",
+        "Research 116, 731-754 (2014). Unlike entries 10 and 11, this one is set IDENTICALLY in",
+        "both printings of the list, so the second printing reaches it and finds the document",
+        "agreeing with itself: what it is wrong against is the journal's name rather than the",
+        "volume's other printing. That is what makes it a note here rather than a twelfth",
+        "correction, since correcting it would put this edition's two reference lists at odds",
+        "with the two the paper published."),
   ""
 ) |>
   mutate(across(c(title, published, corrected, note, claim_ids), as.character))
 
 stopifnot(nrow(entries) == max(entries$entry), !anyDuplicated(entries$entry))
+# form == "note" declares that the entry quotes a passage and proposes no change to it, so it
+# has no corrected side. The two have to agree: a note carrying corrected text would print a
+# correction this edition does not make, and a correction carrying NA would print "NA" where
+# its corrected sentence belongs.
+stopifnot(is.na(entries$corrected) == (entries$form == "note"))
 
 # The spine's markup, resolved for this document.
 bold <- function(x) str_replace_all(x, "\\[\\[(.*?)\\]\\]", "**\\1**")
@@ -355,14 +460,17 @@ quote_block <- function(x) str_c("> ", str_replace_all(bold(x), "\n\n", "\n>\n> 
 # A heading is only a heading when a blank line precedes it, hence the leading "\n\n".
 emit_entry <- function(n) {
   e <- entries |> filter(entry == n)
-  cat("\n\n## ", e$entry, ". ", e$title, "\n\n", quote_block(e$published),
-      "\n\nCorrected:\n\n", quote_block(e$corrected), "\n\n", e$note, "\n", sep = "")
+  cat("\n\n## ", e$entry, ". ", e$title, "\n\n", quote_block(e$published), sep = "")
+  # A note entry has no corrected side, and that absence is the whole of the form: an empty
+  # "Corrected:" block would read as a correction to nothing.
+  if (e$form != "note") cat("\n\nCorrected:\n\n", quote_block(e$corrected), sep = "")
+  cat("\n\n", e$note, "\n", sep = "")
 }
 ```
 
-This note lists `r number_word(nrow(entries))` corrections to "Gender composition predicts gender bias: A meta-reanalysis of hiring discrimination audit experiments," published in *Science Advances* 9, eade7979, doi [10.1126/sciadv.ade7979](https://doi.org/10.1126/sciadv.ade7979): three misstated numbers, one dropped significance marker, one cross-reference to a figure that does not exist, two reference-list entries with an author's name broken, one figure that shows imputed categories as though they had been coded, one supplementary figure that prints an estimate clipped short of its own value, and two more reference-list entries, one in each of the two places this paper sets its reference list. **None of them changes a conclusion of the paper.** The gender gradient, the estimates in Tables 1 and 2, and every study-level effect in the supplementary materials are unaffected.
+This note lists `r number_word(sum(entries$form != "note"))` corrections to "Gender composition predicts gender bias: A meta-reanalysis of hiring discrimination audit experiments," published in *Science Advances* 9, eade7979, doi [10.1126/sciadv.ade7979](https://doi.org/10.1126/sciadv.ade7979): three misstated numbers, one dropped significance marker, one cross-reference to a figure that does not exist, two reference-list entries with an author's name broken, one figure that shows imputed categories as though they had been coded, one supplementary figure that prints an estimate clipped short of its own value, and two more reference-list entries, one in each of the two places this paper sets its reference list. It also carries `r number_word(sum(entries$form == "note"))` entries of a second kind, which quote a passage and propose no change to it: four strings the deposited data supply to the supplement's figures and tables, and one misabbreviated journal name this paper sets identically in both printings of its reference list. **No correction and no note here changes a conclusion of the paper.** The gender gradient, the estimates in Tables 1 and 2, and every study-level effect in the supplementary materials are unaffected.
 
-Every number in a corrected sentence below is computed from the deposited replication archive ([10.7910/DVN/5MCRNY](https://doi.org/10.7910/DVN/5MCRNY)) at the time this document is rendered, including the numbers that were not wrong. Three of the four reference-list entries are verified instead against the authoritative record at Crossref, named in each entry. The fourth, entry 11, is a number that has lost its period, which no external record speaks to: it is verified against the other 127 entries of the list it sits in and against the article's own printing of the same reference. The code and output supporting each correction are at [github.com/active-maintenance-aec/galos_coppock_2023](https://github.com/active-maintenance-aec/galos_coppock_2023).
+Every number in a corrected sentence below is computed from the deposited replication archive ([10.7910/DVN/5MCRNY](https://doi.org/10.7910/DVN/5MCRNY)) at the time this document is rendered, including the numbers that were not wrong. All but one of the `r number_word(sum(entries$class == "bibliographic"))` reference-list entries are verified instead against the authoritative record at Crossref, named in each entry. The exception, entry 11, is a number that has lost its period, which no external record speaks to: it is verified against the other 127 entries of the list it sits in and against the article's own printing of the same reference. The code and output supporting each correction are at [github.com/active-maintenance-aec/galos_coppock_2023](https://github.com/active-maintenance-aec/galos_coppock_2023).
 
 **Bold marks the corrected token in each corrected sentence.** Entries 3 and 8 correct a table and a figure rather than a sentence, so each is named in the entry and shown in a reprint of the float, which is otherwise identical to the published one. Entry 8's corrected sentence is the figure's own caption, which has to change with it: the caption is the figure's only key, and the published one describes three colors where the corrected figure draws four. Percentage-point quantities are given at the precision the article itself uses for them, which in the Results sentence corrected below is two decimal places. Rounding that sentence to one decimal would erase the correction it needs, since the published and corrected figures differ by a hundredth of a point.
 
@@ -464,6 +572,18 @@ The supplementary materials reprint the article's reference list verbatim, all 1
 
 ```{r entries-10-11, results="asis"}
 walk(c(10, 11), emit_entry)
+```
+
+# Carried, and not corrected
+
+The `r number_word(sum(entries$form == "note"))` entries below are different in kind from the `r number_word(sum(entries$form != "note"))` above. Each quotes a passage this edition reprints exactly as the paper published it, and proposes no change to it.
+
+Four of them are strings the deposited replication archive supplies to the supplement's figures and tables, which print whatever the data hold: a study label misspelled in all eight places the supplement names those two studies, two occupation labels, and a zero whose printed minus sign is floating-point residue rather than a negative estimate. Correcting any of the four on the page would put this edition's floats out of step with the data behind them, and would correct the supplement for a defect that is not the supplement's. The fifth is a journal abbreviation carrying a stray letter, set the same way in both of the two places this paper prints its reference list, so the comparison that found entries 10 and 11 finds this one agreeing with itself.
+
+Each is recorded here because an edition that silently reproduced them would leave a reader unable to tell a faithful reprint from an uncorrected error.
+
+```{r entries-carried, results="asis"}
+walk(entries$entry[entries$form == "note"], emit_entry)
 ```
 
 ```{r emit-spine}
