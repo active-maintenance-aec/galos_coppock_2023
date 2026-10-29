@@ -440,6 +440,20 @@ entries <- tribble(
         "volume's other printing. That is what makes it a note here rather than a twelfth",
         "correction, since correcting it would put this edition's two reference lists at odds",
         "with the two the paper published."),
+  "",
+
+  # Entry 17 comes from the reference audit's re-run of 2026-10-29. Like entry 16 it is set
+  # identically in both printings, but what it is wrong against is a page number the record
+  # gives, not a style, so it is corrected in both.
+  17, "bibliographic", "reference_audit", "brief",
+  "Reference 83's page range ends one page early, in both printings of the list",
+  "published references, p. 10, and app. references, p. 54",
+  "Am. J. Sociol. 112, [[1297–1338]] (2007).",
+  "Am. J. Sociol. 112, [[1297–1339]] (2007).",
+  paste("Crossref, doi 10.1086/511799: Shelley J. Correll, Stephen Benard and In Paik,",
+        "\"Getting a Job: Is There a Motherhood Penalty?\", American Journal of Sociology 112,",
+        "1297-1339 (2007). The supplementary materials reprint the entry with the same range,",
+        "so it is corrected in both places."),
   ""
 ) |>
   mutate(across(c(title, published, corrected, note, claim_ids), as.character))
@@ -469,7 +483,7 @@ emit_entry <- function(n) {
 }
 ```
 
-This note lists `r number_word(sum(entries$form != "note"))` corrections to "Gender composition predicts gender bias: A meta-reanalysis of hiring discrimination audit experiments," published in *Science Advances* 9, eade7979, doi [10.1126/sciadv.ade7979](https://doi.org/10.1126/sciadv.ade7979): three misstated numbers, one dropped significance marker, one cross-reference to a figure that does not exist, two reference-list entries with an author's name broken, one figure that shows imputed categories as though they had been coded, one supplementary figure that prints an estimate clipped short of its own value, and two more reference-list entries, one in each of the two places this paper sets its reference list. It also carries `r number_word(sum(entries$form == "note"))` entries of a second kind, which quote a passage and propose no change to it: four strings the deposited data supply to the supplement's figures and tables, and one misabbreviated journal name this paper sets identically in both printings of its reference list. **No correction and no note here changes a conclusion of the paper.** The gender gradient, the estimates in Tables 1 and 2, and every study-level effect in the supplementary materials are unaffected.
+This note lists `r number_word(sum(entries$form != "note"))` corrections to "Gender composition predicts gender bias: A meta-reanalysis of hiring discrimination audit experiments," published in *Science Advances* 9, eade7979, doi [10.1126/sciadv.ade7979](https://doi.org/10.1126/sciadv.ade7979): three misstated numbers, one dropped significance marker, one cross-reference to a figure that does not exist, two reference-list entries with an author's name broken, one figure that shows imputed categories as though they had been coded, one supplementary figure that prints an estimate clipped short of its own value, two more reference-list entries, one in each of the two places this paper sets its reference list, and one page range that ends a page early in both. It also carries `r number_word(sum(entries$form == "note"))` entries of a second kind, which quote a passage and propose no change to it: four strings the deposited data supply to the supplement's figures and tables, and one misabbreviated journal name this paper sets identically in both printings of its reference list. **No correction and no note here changes a conclusion of the paper.** The gender gradient, the estimates in Tables 1 and 2, and every study-level effect in the supplementary materials are unaffected.
 
 Every number in a corrected sentence below is computed from the deposited replication archive ([10.7910/DVN/5MCRNY](https://doi.org/10.7910/DVN/5MCRNY)) at the time this document is rendered, including the numbers that were not wrong. All but one of the `r number_word(sum(entries$class == "bibliographic"))` reference-list entries are verified instead against the authoritative record at Crossref, named in each entry. The exception, entry 11, is a number that has lost its period, which no external record speaks to: it is verified against the other 127 entries of the list it sits in and against the article's own printing of the same reference. The code and output supporting each correction are at [github.com/active-maintenance-aec/galos_coppock_2023](https://github.com/active-maintenance-aec/galos_coppock_2023).
 
@@ -573,6 +587,12 @@ The supplementary materials reprint the article's reference list verbatim, all 1
 
 ```{r entries-10-11, results="asis"}
 walk(c(10, 11), emit_entry)
+```
+
+Entry 17 is of a third kind. Both printings set it the same way, so the second printing finds nothing, and what it disagrees with is the page range Crossref records for the article.
+
+```{r entry-17, results="asis"}
+emit_entry(17)
 ```
 
 # Carried, and not corrected

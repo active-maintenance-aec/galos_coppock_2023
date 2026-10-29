@@ -136,7 +136,7 @@ one published table with no deposited source.
 
 ## Does the maintained rewrite reproduce the paper?
 
-The ground truth records 533 values. 492 of the 519 that can be checked
+The ground truth records 533 values. 491 of the 519 that can be checked
 against the article reproduce, including all 57 study-level average
 treatment effects and their standard errors from fig. S1.1, all 12
 survey experiment effects from fig. S3.4, all 37 study-level gender
@@ -144,7 +144,7 @@ gradients from fig. S5.62, every coefficient, standard error,
 tau-squared and sample size in Tables 1 and 2, and all 335
 estimate-and-standard-error labels printed on the 57 study panels.
 
-The 27 that do not divide into two groups: 4 where the article disagrees
+The 28 that do not divide into two groups: 5 where the article disagrees
 with itself, and 23 where the deposit does not carry the quantity the
 published figure prints.
 
@@ -176,7 +176,7 @@ per job opening gives, and the deposit provides no way to recover the
 multiplier. The same gap shows up in table S2.1, whose subject counts
 reconstruct for the same 35 studies.
 
-Not one of the 27 is a defect of the rewrite.
+Not one of the 28 is a defect of the rewrite.
 
 # Paper overview
 
@@ -289,13 +289,16 @@ prints 0.54.
 
 # Errata
 
-Eight things in the published article do not survive the comparison: six
-statements checked against the deposit, and two reference-list entries
-checked against Crossref. They are collected in
+Twelve things in the published article do not survive the comparison:
+seven statements and figures checked against the deposit, and five
+reference-list entries checked against Crossref or against the list’s
+second printing in the supplementary materials. They are collected in
 `galos_coppock_2023_errata.pdf` at the root of this repository, which
 renders from `errata.qmd` and computes every corrected number from
-`maintained/output/` at the time it is rendered. **None of them changes
-a conclusion of the paper.**
+`maintained/output/` at the time it is rendered. The note also carries
+five passages this edition reprints unchanged, each quoted with the
+reason it is not corrected. **None of them changes a conclusion of the
+paper.**
 
 | Correction | Evidence |
 |:---|:---|
@@ -307,19 +310,26 @@ a conclusion of the paper.**
 | Reference 22 demotes half of an author’s surname to an initial | The third author’s surname is the compound Baier Manwell, and the entry reads its first element as a middle initial. Crossref, doi 10.1097/acm.0000000000000552: Carnes, Molly; Devine, Patricia G.; Baier Manwell, Linda; Byars-Winston, Angela. PubMed indexes her the same way, as Baier Manwell L. |
 | Reference 65 breaks two surnames beginning “Mc” | Joanne E. McKenzie’s surname is set with a space, and Steve McDonald’s is split so that its “Mc” reads as a middle initial. Crossref, doi 10.1136/bmj.n71: McKenzie, Joanne E is the second author and McDonald, Steve the nineteenth. The defect is specific to these two names rather than general to the typesetting: the same entry sets L. A. McGuinness correctly three names later, and reference 60 sets M. McPherson correctly. |
 | Figure 4 colors imputed gender composition categories as though the study authors had given them | Of the 298 study-occupation cells the figure draws, only 174 carry a gender composition category the original study’s own authors assigned; the remaining 124 were filled in by us from where the occupation falls in the ILO gender distribution. The caption discloses that in words, so the article is accurate about what it did, but the figure gives all 298 points the same three colors, and a color is a claim about the occupation that a reader cannot tell apart from the 174 that were coded. The corrected figure draws the 124 imputed cells in grey, keeping their position, their interval and their weight. NO ESTIMATE MOVES: the meta-regression is fitted on the continuous share of women in the occupation and never on the category, so Tables 1 and 2, the gender gradient and every study-level effect in the supplementary materials are exactly as published. What changes is which of 298 points is which color. The coding is the same authors’ own, carried back from the successor project, where the distinction is kept as a column and the imputed categories are dropped rather than plotted. |
+| Figure S1.1 prints a clipped estimate for Neumark et al. | The figure’s own text carries the right number and the page does not print it. Read off the glyphs, the row holds exactly 2 . 3 space ( 8 . 4 ) beginning at x0 = 268.50, which is where every other three-character value in the column begins, and no minus and no 1 is inked anywhere to its left: the short dash that sits there is the row’s axis tick, which the positive rows carry too. The authors’ own field_ates_plot.pdf is the same in both respects, so the leading −1 was lost when the figure was drawn rather than when it was composed: the label overflows the plot panel and its −1 is clipped out of the ink, while the text layer keeps it, which is why pdftotext reports −12.3 for a page that shows 2.3 and why a token gate cannot see this defect at all. Nothing about the estimate is in doubt. The article’s own introduction prints it as (−12.3 points, SE: 8.4 points) and the deposit gives −12.307692 (8.384118), so the paper disagrees with itself the way entry 2 records for table S2.1. The corrected figure is the maintained pipeline’s own, which draws the full value: of the 420 words and numbers it carries, 419 are on the published page and the one exception is the restored −12.3. |
+| Reference 9 separates two coauthors with a semicolon | The entry names three coauthors and separates the first two with a semicolon and the second two with a comma, so it is inconsistent with itself before it is compared with anything. Crossref, doi 10.2307/2946676: David Neumark, Roy J. Bank and Kyle D. Van Nort are three authors of one article, Q. J. Econ. 111, 915-941 (1996). Every one of the other 127 entries in this list separates its authors with commas, and the supplementary materials set this same reference with a comma. The defect is specific to the article’s printing of it. |
+| Reference 71 in the supplementary materials drops the period after its number | Every other entry in both printings of this list numbers itself with a digit and a period, and the article’s own printing of this same reference has one. Read off the line boxes of supplementary p. 53, reference 71 begins at the item edge x0 = 0.088 like its neighbours and its number is followed by a space rather than a period. It is the only one of the 128 that is, which is what makes it a slip rather than a convention. |
+| Reference 83’s page range ends one page early, in both printings of the list | Crossref, doi 10.1086/511799: Shelley J. Correll, Stephen Benard and In Paik, “Getting a Job: Is There a Motherhood Penalty?”, American Journal of Sociology 112, 1297-1339 (2007). The supplementary materials reprint the entry with the same range, so it is corrected in both places. |
 
-The eight corrections, in the order the errata note gives them. Both
+The twelve corrections, in the order the errata note gives them. Both
 columns are read from the errata spine.
 
-Three of the eight are contradictions between two parts of the article:
+Three of the twelve are contradictions between two parts of the article:
 the abstract against the paper’s own evidence map, table S2.1 against
 the study panels, and the PRISMA cross-reference against the
 supplement’s own figure numbering. Two more are a dropped typesetting
 marker and a truncation, both of which the deposited code itself gets
-right. The last two are reference-list entries, which the deposit cannot
-speak to at all: a sweep of all 130 printed references against Crossref
-drew two flags and both are real, one author’s compound surname reduced
-to an initial and two surnames beginning “Mc” broken in a single entry.
+right. Two are figures: Figure 4 colors imputed categories as though
+they had been coded, and Figure S1.1 prints an estimate clipped short of
+its own value. The rest are reference-list entries, which the deposit
+cannot speak to at all: one author’s compound surname reduced to an
+initial, two surnames beginning “Mc” broken in a single entry, two
+defects found by diffing the article’s printing of the list against the
+supplement’s, and a page range that ends a page early in both.
 
 This is separate from the question of whether the maintained rewrite
 corrected anything in the deposited code. It did not: the rewrite makes
@@ -340,7 +350,7 @@ from the published article and its supplementary materials;
 at the precision the article prints rather than asserted.
 
 It records 533 values. 299 of them have both a published counterpart and
-a deposited-code counterpart, and of those 294 match and 5 do not.
+a deposited-code counterpart, and of those 293 match and 6 do not.
 
 Most of the published values are inside figures rather than in prose.
 Figures S1.1, S3.4 and S5.62 print the estimate and standard error
@@ -352,7 +362,7 @@ one by one.
 | Location | Published values checked | Rewrite matches | Rewrite mismatches |
 |:---|---:|---:|---:|
 | figs_S4.5_to_S4.61 | 173 | 151 | 22 |
-| fig_S1.1 | 116 | 116 | 0 |
+| fig_S1.1 | 116 | 115 | 1 |
 | fig_S5.62 | 76 | 76 | 0 |
 | text | 40 | 35 | 2 |
 | fig_S3.4 | 26 | 26 | 0 |
@@ -381,6 +391,7 @@ against them.
 | table_2_model2 | Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three) | 0 | 2.000 | paper_internal |
 | table_S2.1 | Subject counts reproduced | 57 | 35.000 | archive |
 | table_S2.1 | Occupation counts reproduced | 57 | 55.000 | paper_internal |
+| fig_S1.1 | ATE: Neumark et al. (9): United States | 2.3 | -12.308 | paper_internal |
 | fig_S4.8 | Occupation sample size labels, Alden et al. (68): Sweden | 2 | 0.000 | archive |
 | fig_S4.11 | Occupation sample size labels, Asali et al. (70): Georgia | 9 | 0.000 | archive |
 | fig_S4.13 | Occupation sample size labels, Baert et al. (71): Belgium | 1 | 0.000 | archive |
@@ -428,7 +439,7 @@ published float prints on its face and requires the ground truth to
 account for all of them. `ground_truth/float_coverage.csv` holds that
 count float by float. Of the 71 floats the article and its supplementary
 front matter list, 64 carry rows here. The 63 that print numbers on
-their faces carry 1,390 published values between them, and the ground
+their faces carry 1,389 published values between them, and the ground
 truth reaches every one, so each of those floats is covered in full. The
 build stops if any float falls below that.
 
@@ -681,7 +692,7 @@ nowhere as files and cannot be diffed between runs.
 
 | Item      | Value                  |
 |:----------|:-----------------------|
-| R version | 4.6.0                  |
+| R version | 4.6.1                  |
 | Platform  | aarch64-apple-darwin23 |
 
 | Package      | Version |
