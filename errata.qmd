@@ -129,8 +129,15 @@ stopifnot(length(ahmed_labels) == 2, nrow(carlsson_zero) == 1, nrow(carlsson_plu
 # classed structural in the extraction and so is not required to carry a row. Every id listed
 # here is checked against the ground truth by ground_truth/build_ground_truth.R, which refuses
 # to finish on a dangling one.
+# corrected_values runs parallel to claim_ids, one value per id in the same order, carrying
+# the corrected quantity as a number rather than as a sentence. The sentence already holds
+# it, but only inside prose a reader has to parse. Each value comes from the same expression
+# that glues the sentence, so the two cannot be written apart, and the gate below re-checks
+# that each one is still inside the span it belongs to. An entry that corrects nothing (a
+# note, or any class other than quantity) carries NA, and so does a quantity entry whose
+# claim is not a number printed in the corrected sentence.
 entries <- tribble(
-  ~entry, ~class, ~source, ~form, ~title, ~location, ~published, ~corrected, ~note, ~claim_ids,
+  ~entry, ~class, ~source, ~form, ~title, ~location, ~published, ~corrected, ~note, ~claim_ids, ~corrected_values,
 
   1, "quantity", "extraction", "full",
   "The record spans six continents, not five",
@@ -145,7 +152,7 @@ entries <- tribble(
     "that continent. The sentence describes the wider literature rather than the ",
     "{n_distinct(panels$study_name_citation)} studies reanalysed here, but a superset of those ",
     "studies cannot span fewer continents, so five is too few under any reading."),
-  "abstract_continents",
+  "abstract_continents", as.character(continents),
 
   2, "quantity", "pipeline", "brief",
   "Table S2.1 overstates the occupation counts for two studies",
@@ -159,7 +166,7 @@ entries <- tribble(
     "deposited data hold. The other 55 rows of the column are right. The table is not ",
     "reprinted here because its N subjects column cannot be regenerated from the deposit, ",
     "which carries no subject counts."),
-  "table_s2_1_occupations",
+  "table_s2_1_occupations", NA_character_,
 
   3, "typography", "pipeline", "brief",
   "Table 2's Model 2 intercept carries no significance marker",
@@ -180,7 +187,7 @@ entries <- tribble(
     "intercept, −{sprintf('%.2f', abs(m3_intercept$estimate))}, does carry its two stars. The ",
     "estimate and its standard error are right and only the marker is missing, so what is ",
     "corrected here is the table rather than any sentence."),
-  "table_2_model2_intercept_stars",
+  "table_2_model2_intercept_stars", NA_character_,
 
   4, "cross_reference", "extraction", "full",
   "The article cites a supplementary figure that does not exist",
@@ -198,7 +205,7 @@ entries <- tribble(
     "front matter, and the PRISMA flow diagram is the last of them. There is no fig. ",
     "S6.{paper('design_prisma_figure')}. The same paragraph cites the evidence map as fig. ",
     "S.2.2, where the figure itself is numbered S2.2."),
-  "",
+  "", NA_character_,
 
   5, "quantity", "pipeline", "full",
   "The difference in the magnitude of the two predicted biases",
@@ -218,7 +225,7 @@ entries <- tribble(
     "bootstrapped standard error, ",
     "{sprintf('%.4f', mag('Bootstrapped SE of the difference in magnitude'))}, is 0.58 as ",
     "published."),
-  "results_magnitude_difference",
+  "results_magnitude_difference", sprintf('%.2f', mag('Difference in magnitude')),
 
   6, "bibliographic", "reference_audit", "brief",
   "Reference 22 demotes half of an author's surname to an initial",
@@ -229,7 +236,7 @@ entries <- tribble(
         "first element as a middle initial. Crossref, doi 10.1097/acm.0000000000000552:",
         "Carnes, Molly; Devine, Patricia G.; Baier Manwell, Linda; Byars-Winston, Angela.",
         "PubMed indexes her the same way, as Baier Manwell L."),
-  "",
+  "", NA_character_,
 
   7, "bibliographic", "reference_audit", "brief",
   "Reference 65 breaks two surnames beginning \"Mc\"",
@@ -252,7 +259,7 @@ entries <- tribble(
         "specific to these two names rather than general to the typesetting: the same entry",
         "sets L. A. McGuinness correctly three names later, and reference 60 sets",
         "M. McPherson correctly."),
-  "",
+  "", NA_character_,
 
   8, "provenance", "successor_project", "full",
   "Figure 4 colors imputed gender composition categories as though the study authors had given them",
@@ -278,7 +285,7 @@ entries <- tribble(
     "color. The coding is the same authors' own, carried back from the successor project, where ",
     "the distinction is kept as a column and the imputed categories are dropped rather than ",
     "plotted."),
-  "",
+  "", NA_character_,
 
   9, "typography", "extraction", "brief",
   "Figure S1.1 prints a clipped estimate for Neumark et al.",
@@ -314,7 +321,7 @@ entries <- tribble(
     "which draws the full value: of the 420 words and numbers it carries, 419 are on the ",
     "published page and the one exception is the restored ",
     "−{sprintf('%.1f', abs(neumark_s1_1$estimate))}."),
-  "fig_s1_1_est_neumark_et_al_9_united_states",
+  "fig_s1_1_est_neumark_et_al_9_united_states", NA_character_,
 
   # ENTRIES 10 AND 11 ARE ONE FINDING AND NEITHER IS REACHABLE FROM ONE
   # DOCUMENT. The supplementary materials reprint the article's reference list
@@ -337,7 +344,7 @@ entries <- tribble(
         "the other 127 entries in this list separates its authors with commas, and the",
         "supplementary materials set this same reference with a comma. The defect is specific",
         "to the article's printing of it."),
-  "",
+  "", NA_character_,
 
   11, "bibliographic", "second_printing", "brief",
   "Reference 71 in the supplementary materials drops the period after its number",
@@ -350,7 +357,7 @@ entries <- tribble(
         "like its neighbours and its number is followed by a space rather than a period. It is",
         "the only one of the 128 that is, which is what makes it a slip rather than a",
         "convention."),
-  "",
+  "", NA_character_,
 
   # THE FIVE ENTRIES BELOW ARE CARRIED, NOT CORRECTED, and that is a call about
   # what an edition of a published paper is for rather than about what is wrong
@@ -379,7 +386,7 @@ entries <- tribble(
     "project set it exactly as the published pages do. References 14 and 66, the two studies ",
     "these labels cite, are set correctly in both printings of the reference list, so nothing ",
     "here leaves a reader in doubt about which studies are meant."),
-  "",
+  "", NA_character_,
 
   13, "orthography", "authors_archive", "note",
   "Figure S4.32 misspells an occupation label",
@@ -393,7 +400,7 @@ entries <- tribble(
         "same study whose occupation count entry 2 corrects, and the two findings are",
         "independent: the count is a number the article contradicts elsewhere in its own pages,",
         "and the label is a spelling the data carry."),
-  "",
+  "", NA_character_,
 
   14, "orthography", "authors_archive", "note",
   "Figure S4.37 misspells an occupation label",
@@ -405,7 +412,7 @@ entries <- tribble(
         "authors' archived project prints the same string. It is the fifteenth occupation row of",
         "the panel. Gonzalez et al. is the other of the two studies whose occupation count entry",
         "2 corrects."),
-  "",
+  "", NA_character_,
 
   15, "typography", "authors_archive", "note",
   "Figure S4.28 prints a negative zero",
@@ -423,7 +430,7 @@ entries <- tribble(
     "estimate, and it is the only one of the supplement's five rounded zeros that prints a sign. ",
     "The authors' own carlsson_1_occupation_cates.pdf sets it the same way, so this is the ",
     "deposit's arithmetic reaching the page rather than the press's typesetting."),
-  "",
+  "", NA_character_,
 
   16, "bibliographic", "reference_audit", "note",
   "Reference 123 misabbreviates Social Indicators Research",
@@ -440,7 +447,7 @@ entries <- tribble(
         "volume's other printing. That is what makes it a note here rather than a twelfth",
         "correction, since correcting it would put this edition's two reference lists at odds",
         "with the two the paper published."),
-  "",
+  "", NA_character_,
 
   # Entry 17 comes from the reference audit's re-run of 2026-10-29. Like entry 16 it is set
   # identically in both printings, but what it is wrong against is a page number the record
@@ -454,11 +461,71 @@ entries <- tribble(
         "\"Getting a Job: Is There a Motherhood Penalty?\", American Journal of Sociology 112,",
         "1297-1339 (2007). The supplementary materials reprint the entry with the same range,",
         "so it is corrected in both places."),
-  ""
+  "",
+  NA_character_
 ) |>
-  mutate(across(c(title, published, corrected, note, claim_ids), as.character))
+  mutate(across(c(title, published, corrected, note, claim_ids, corrected_values), as.character))
 
 stopifnot(nrow(entries) == max(entries$entry), !anyDuplicated(entries$entry))
+
+# Gate: corrected_values agrees with the sentence it was glued into ----
+# The column and the sentence are written from one expression, so they begin in agreement
+# and this gate exists for the edit that separates them: a value moved from one marked span
+# to another, a span reworded to carry a second number, a claim id appended without its
+# value. Each value has to be inside the span it belongs to, matched by position where the
+# counts line up, and inside SOME span where they do not. The spelled form counts as the
+# numeral, since a minimal edit sets "six" and not "6".
+marked_spans <- function(x) str_match_all(x, "\\[\\[(.*?)\\]\\]")[[1]][, 2]
+
+spelled_numbers <- c("one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+                     "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+                     "seventeen", "eighteen", "nineteen", "twenty")
+
+inside_span <- function(value, span) {
+  numeral <- str_detect(span, fixed(value))
+  spelled <- !is.na(suppressWarnings(as.numeric(value))) &&
+    as.numeric(value) %in% seq_along(spelled_numbers) &&
+    str_detect(span, fixed(spelled_numbers[as.numeric(value)]))
+  numeral || spelled
+}
+
+quantified <- entries |>
+  filter(!is.na(corrected_values)) |>
+  mutate(ids = str_split(claim_ids, ";"), values = str_split(corrected_values, ";"),
+         spans = map(corrected, marked_spans))
+
+stopifnot(all(lengths(quantified$ids) == lengths(quantified$values)))
+
+value_placed <- pmap_lgl(quantified, function(...) {
+  e <- list(...)
+  if (length(e$values) == length(e$spans)) {
+    all(map2_lgl(e$values, e$spans, inside_span))
+  } else {
+    all(map_lgl(e$values, \(v) any(map_lgl(e$spans, \(s) inside_span(v, s)))))
+  }
+})
+
+if (!all(value_placed)) {
+  print(quantified |> filter(!value_placed) |> select(entry, title, corrected_values, corrected))
+  stop("An entry's corrected_values are not in the spans of its corrected sentence.")
+}
+
+# An entry that changes a quantity has to say which one, and an entry that changes none may
+# not carry a value. The class is the declaration and this is where it binds. A note
+# corrects nothing, so it carries NA even where its class is quantity, and an entry with no
+# claim id has no claim to carry a value for. `unvalued` lists the quantity entries whose
+# claim is not a number printed in the corrected sentence; they carry NA by decision.
+# Entry 2: the claim is how many table cells the rewrite reproduces (55), a count that is not
+# printed anywhere in the corrected rows, which carry 17 and 21.
+unvalued <- c(2)
+stopifnot(
+  all(!is.na(entries$corrected_values[entries$class == "quantity" & entries$form != "note" &
+                                        !is.na(entries$claim_ids) & entries$claim_ids != "" &
+                                        !entries$entry %in% unvalued])),
+  all(is.na(entries$corrected_values[entries$class != "quantity"])),
+  all(is.na(entries$corrected_values[entries$form == "note"])),
+  all(is.na(entries$corrected_values) | (!is.na(entries$claim_ids) & entries$claim_ids != ""))
+)
 # form == "note" declares that the entry quotes a passage and proposes no change to it, so it
 # has no corrected side. The two have to agree: a note carrying corrected text would print a
 # correction this edition does not make, and a correction carrying NA would print "NA" where
