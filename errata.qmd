@@ -209,7 +209,7 @@ entries <- tribble(
 
   5, "quantity", "pipeline", "full",
   "The difference in the magnitude of the two predicted biases",
-  "published Results, p. 6",
+  "published Results, p. 7",
   "The magnitude of these biases is higher in women-dominated occupations than in men-dominated occupations, by a statistically significant [[2.10]] points (bootstrapped SE: 0.58), perhaps suggesting that pro--status quo forces operate differently across contexts.",
   str_glue(
     "The magnitude of these biases is higher in women-dominated occupations than in ",
