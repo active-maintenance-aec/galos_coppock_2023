@@ -465,7 +465,55 @@ entries <- tribble(
         "1297-1339 (2007). The supplementary materials reprint the entry with the same range,",
         "so it is corrected in both places."),
   "",
-  NA_character_
+  NA_character_,
+
+  # Entry 18 is a note because the sentence is wrong against the paper's own appendix, and no
+  # token can be computed to put in its place without deciding which of the PRISMA diagram's
+  # counts the authors meant. The README keeps the working (nothing in the deposit records the
+  # search); the counts below are read off the published appendix, fig. S6.63, p. 46, and typed
+  # (README.qmd 360, notes.md 200). Entry 5 quotes this sentence to correct its cross-reference
+  # and leaves the number as published. No claim id: design_prisma_papers is not a row of the
+  # ground truth, which carries only the claims the pipeline can check.
+  18, "quantity", "reading", "note",
+  "The number of papers the PRISMA search is said to have yielded does not match the PRISMA diagram",
+  "p. 5, Design",
+  "The PRISMA search process yielded [[over 70 papers]] that met our inclusion criteria.",
+  NA_character_,
+  paste("The PRISMA flow diagram, fig. S6.63 (published appendix p. 46), reports 51 reports",
+        "included and 89 assessed for eligibility. No reading of the diagram gives over 70:",
+        "neither count reaches it, and the diagram does not say which of its counts the sentence",
+        "means. The diagram records the screening process, and nothing in the deposited",
+        "replication archive records that search, so the pipeline has no number to set against",
+        "the sentence. Entry 5 quotes the same sentence to correct the figure it cites, and",
+        "reprints \"over 70 papers\" unchanged on both sides, because a number that cannot be",
+        "computed is not one that entry can change. No correction is set here either: the",
+        "replacement would be a choice between 51 and 89, or a third count of the authors' own,",
+        "made on their behalf. The paper's estimates rest on the studies it reanalyses, which the",
+        "sentence does not describe, so no conclusion changes."),
+  "", NA_character_,
+
+  # Entry 19 is a note because which year is right is a fact about the cited 1987 paper, not
+  # about this deposit, and this edition does not hold that paper. The README says the same
+  # (README.qmd 358, notes.md 200); the 1983 below is computed from the evidence map. No claim id, for the same reason
+  # as entry 18 (intro_riach_year is not a ground truth row).
+  19, "quantity", "reading", "note",
+  "The introduction dates the earliest study to 1986, where the abstract dates the record from 1983",
+  "p. 1",
+  paste("... who sent 1982 resumes of fictitious men and women applicants to 991 job openings in",
+        "Victoria, Australia in [[1986]] and found a -2.4 percentage point effect of being a woman",
+        "on receiving an invitation to interview (cluster-robust SE: 1.2 points)."),
+  NA_character_,
+  str_glue(
+    "The sentence describes Riach and Rich (8), the earliest study in the record. The abstract ",
+    "begins \"Since 1983\", and the deposit dates that study to {min(evidence_map$year)} as ",
+    "well: the earliest year on the paper's own evidence map, fig. S2.2, is ",
+    "{min(evidence_map$year)}. The article therefore disagrees with itself by three years ",
+    "about when the first audit was sent. Which date is right is a fact about the cited 1987 ",
+    "paper, not about this deposit or anything the maintained rewrite computes, and this ",
+    "edition does not hold that paper, so there is no token it can set in place of either. The ",
+    "other quantities in the sentence, 1982 resumes and 991 openings, agree with the deposit. ",
+    "The year dates one study's fieldwork and enters no estimate, so no conclusion changes."),
+  "", NA_character_
 ) |>
   mutate(across(c(title, published, corrected, note, claim_ids, corrected_values), as.character))
 
@@ -553,7 +601,7 @@ emit_entry <- function(n) {
 }
 ```
 
-This note lists `r number_word(sum(entries$form != "note"))` corrections to "Gender composition predicts gender bias: A meta-reanalysis of hiring discrimination audit experiments," published in *Science Advances* 9, eade7979, doi [10.1126/sciadv.ade7979](https://doi.org/10.1126/sciadv.ade7979): three misstated numbers, one dropped significance marker, one cross-reference to a figure that does not exist, two reference-list entries with an author's name broken, one figure that shows imputed categories as though they had been coded, one supplementary figure that prints an estimate clipped short of its own value, two more reference-list entries, one in each of the two places this paper sets its reference list, and one page range that ends a page early in both. It also carries `r number_word(sum(entries$form == "note"))` entries of a second kind, which quote a passage and propose no change to it: four strings the deposited data supply to the supplement's figures and tables, and one misabbreviated journal name this paper sets identically in both printings of its reference list. **No correction and no note here changes a conclusion of the paper.** The gender gradient, the estimates in Tables 1 and 2, and every study-level effect in the supplementary materials are unaffected.
+This note lists `r number_word(sum(entries$form != "note"))` corrections to "Gender composition predicts gender bias: A meta-reanalysis of hiring discrimination audit experiments," published in *Science Advances* 9, eade7979, doi [10.1126/sciadv.ade7979](https://doi.org/10.1126/sciadv.ade7979): three misstated numbers, one dropped significance marker, one cross-reference to a figure that does not exist, two reference-list entries with an author's name broken, one figure that shows imputed categories as though they had been coded, one supplementary figure that prints an estimate clipped short of its own value, two more reference-list entries, one in each of the two places this paper sets its reference list, and one page range that ends a page early in both. It also carries `r number_word(sum(entries$form == "note"))` entries of a second kind, which quote a passage and propose no change to it: four strings the deposited data supply to the supplement's figures and tables, one misabbreviated journal name this paper sets identically in both printings of its reference list, one sentence whose count of papers the paper's own PRISMA diagram does not bear out, and one year the introduction and the abstract give differently. **No correction and no note here changes a conclusion of the paper.** The gender gradient, the estimates in Tables 1 and 2, and every study-level effect in the supplementary materials are unaffected.
 
 Every number in a corrected sentence below is computed from the deposited replication archive ([10.7910/DVN/5MCRNY](https://doi.org/10.7910/DVN/5MCRNY)) at the time this document is rendered, including the numbers that were not wrong. All but one of the `r number_word(sum(entries$class == "bibliographic"))` reference-list entries are verified instead against the authoritative record at Crossref, named in each entry. The exception, entry 15, is a number that has lost its period, which no external record speaks to: it is verified against the other 127 entries of the list it sits in and against the article's own printing of the same reference. The code and output supporting each correction are at [github.com/active-maintenance-aec/galos_coppock_2023](https://github.com/active-maintenance-aec/galos_coppock_2023).
 
@@ -647,7 +695,7 @@ emit_entry(7)
 
 The `r number_word(sum(entries$form == "note" & entries$class != "bibliographic"))` entries below, and entry 16 among the reference-list entries, are different in kind from the `r number_word(sum(entries$form != "note"))` corrections in this note. Each quotes a passage this edition reprints exactly as the paper published it, and proposes no change to it.
 
-Four of them are strings the deposited replication archive supplies to the supplement's figures and tables, which print whatever the data hold: a study label misspelled in all eight places the supplement names those two studies, two occupation labels, and a zero whose printed minus sign is floating-point residue rather than a negative estimate. Correcting any of the four on the page would put this edition's floats out of step with the data behind them, and would correct the supplement for a defect that is not the supplement's. The fifth, entry 16, is a journal abbreviation carrying a stray letter, set the same way in both of the two places this paper prints its reference list, and it sits with the reference-list entries below.
+Four of the six are strings the deposited replication archive supplies to the supplement's figures and tables, which print whatever the data hold: a study label misspelled in all eight places the supplement names those two studies, two occupation labels, and a zero whose printed minus sign is floating-point residue rather than a negative estimate. Correcting any of the four on the page would put this edition's floats out of step with the data behind them, and would correct the supplement for a defect that is not the supplement's. Two of the others, entries 18 and 19, are statements in the article's own prose that the paper contradicts elsewhere in its pages: "over 70 papers" against the 51 reports and 89 assessments of the PRISMA diagram, and an earliest study dated 1986 in the introduction and 1983 in the abstract. Neither can be corrected from the deposit, which records neither the search nor the cited 1987 paper, and a replacement number would be the authors' choice and not this edition's. The last, entry 16, is a journal abbreviation carrying a stray letter, set the same way in both of the two places this paper prints its reference list, and it sits with the reference-list entries below.
 
 Each is recorded here because an edition that silently reproduced them would leave a reader unable to tell a faithful reprint from an uncorrected error.
 
