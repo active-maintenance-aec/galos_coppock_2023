@@ -53,7 +53,7 @@ pages <- str_split(read_file(appendix_txt), "\f")[[1]]
 # pdftotext reads the content stream and knows nothing about clipping, so a label ggplot drew
 # outside its panel comes back as text that no reader can see. Both cases here are labels that
 # overflow a panel: fig. S1.1's Neumark row is right-aligned and its leading "-1" falls off the
-# left edge, so the page prints 2.3 (8.4) for an estimate of -12.31 (errata entry 9), and fig.
+# left edge, so the page prints 2.3 (8.4) for an estimate of -12.31 (errata entry 7), and fig.
 # S4.7's gender gradient estimate of 139.82 is outside the panel's x range, so its whole label
 # goes and the facet prints a truncated interval with no point and no label.
 #

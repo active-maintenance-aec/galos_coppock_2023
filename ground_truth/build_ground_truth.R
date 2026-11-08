@@ -655,7 +655,7 @@ published_s1_1 <- tribble(
   "Rivera and Tilcsik (101): United States, field experiment", -3.8, 3.3,
   "Arai et al. (69): Sweden (equivalent CVs)", -6.3, 4.0,
   # The page prints 2.3: the label's leading -1 is clipped out of the panel in the
-  # authors' own figure, and entry 9 of the errata records it. The estimate is -12.31.
+  # authors' own figure, and entry 7 of the errata records it. The estimate is -12.31.
   "Neumark et al. (9): United States", 2.3, 8.4,
   "Meta-analysis", 1.2, 0.4
 )
@@ -1117,7 +1117,7 @@ gt <- gt |>
         str_starts(claim, "Intercept significance stars") ~ "paper_internal",
       claim == "Occupation counts reproduced" ~ "paper_internal",
       # The page prints 2.3 where the figure's own text, the introduction and the deposit
-      # all say -12.31: the label's leading -1 is clipped out of the panel (errata entry 9).
+      # all say -12.31: the label's leading -1 is clipped out of the panel (errata entry 7).
       claim == "ATE: Neumark et al. (9): United States" &
         table_figure == "fig_S1.1" ~ "paper_internal",
       claim == "Subject counts reproduced" ~ "archive",
