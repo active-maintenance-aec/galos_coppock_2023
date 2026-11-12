@@ -25,6 +25,8 @@
   - [Patterns replaced](#patterns-replaced)
 - [R environment](#r-environment)
 
+**Archived at Zenodo:** [doi:10.5281/zenodo.24168385](https://doi.org/10.5281/zenodo.24168385). This DOI always resolves to the latest release of the maintained version.
+
 This repository holds the actively maintained replication code for Galos
 and Coppock (2023), together with the reproducibility report that
 documents what the original archive did and did not do. It is part of a
