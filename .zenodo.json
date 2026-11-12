@@ -17,6 +17,12 @@
   ],
   "related_identifiers": [
     {
+      "identifier": "https://github.com/active-maintenance-aec/galos_coppock_2023",
+      "relation": "isSupplementTo",
+      "scheme": "url",
+      "resource_type": "software"
+    },
+    {
       "identifier": "10.1126/sciadv.ade7979",
       "relation": "isSupplementTo",
       "scheme": "doi"
