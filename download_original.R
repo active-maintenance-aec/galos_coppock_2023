@@ -14,9 +14,9 @@
 #
 #   None of the 19 files was ingested into a tabular representation, so served_as repeats the
 #   deposited file name in every row. The deposit is organised into folders, which Dataverse
-#   records as a directory label per file rather than in the file name; the manifest's file
-#   column carries the full path so the archive's own relative paths ("data/...",
-#   "code/helpers.R") resolve after download.
+#   records as a directory label per file rather than in the file name. The manifest keeps that
+#   label in directory_label, and its file column carries the full path so the archive's own
+#   relative paths ("data/...", "code/helpers.R") resolve after download.
 
 library(tidyverse)
 library(here)

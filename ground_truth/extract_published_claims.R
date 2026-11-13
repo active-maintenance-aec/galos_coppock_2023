@@ -644,6 +644,75 @@ stopifnot(!anyDuplicated(published_claims$claim_id),
           all(published_claims$claim_type %in%
                 c("pipeline", "descriptive", "definitional", "structural", "transcribed")))
 
+# The canonical columns ----
+# A float is named as the page prints it. A cell of Tables 1 and 2 also names its model, since
+# each model is a column the reader finds by its heading.
+printed_location <- function(location) {
+  case_when(
+    str_detect(location, "^table_[12]_model[0-9]$") ~
+      str_replace(location, "^table_([12])_model([0-9])$", "Table \\1, Model \\2"),
+    location == "table_S2.1" ~ "Table S2.1",
+    str_starts(location, "fig_S") ~ str_replace(location, "^fig_S", "Figure S"),
+    location == "Fig. S6.63" ~ "Figure S6.63",
+    location == "Figs. S4.5 to S4.61" ~ "Figures S4.5 to S4.61",
+    .default = location
+  )
+}
+
+# Every row with a value is compared with ==, except where the sentence states a bound ("more
+# than 70", "over 70") or a hedge ("two-thirds", "around 2005", "four decades").
+stated_bounds <- tribble(
+  ~claim_id, ~comparison,
+  "abstract_experiments", ">",
+  "abstract_countries", ">",
+  "intro_literature_studies", ">",
+  "design_prisma_papers", ">",
+  "disc_literature_studies", ">",
+  "intro_two_thirds", "approx",
+  "design_boom_year", "approx",
+  "disc_decades", "approx",
+  "s2_boom_year", "approx"
+)
+
+# What maintained/in_text_claims.R declares at the call site, recorded here and never read by
+# claim_start(). absent: the deposit has no counterpart and the block prints NA. derived: the
+# block prints something other than the article's own token in order to test it.
+declared_expectations <- tribble(
+  ~claim_id, ~expect,
+  "intro_papers", "absent",
+  "mech_papers", "absent",
+  "mech_categories", "absent",
+  "mech_sixth", "absent",
+  "mech_theory_groups", "absent",
+  "mech_economics", "absent",
+  "mech_sociology", "absent",
+  "mech_other_journals", "absent",
+  "design_microdata_papers", "absent",
+  "s6_included_papers", "absent",
+  "intro_riach_year", "derived",
+  "design_prisma_papers", "derived",
+  "design_prisma_figure", "derived",
+  "design_zero_callback", "derived",
+  "s4_7_entries", "derived"
+)
+
+stopifnot(all(stated_bounds$claim_id %in% published_claims$claim_id),
+          all(declared_expectations$claim_id %in% published_claims$claim_id))
+
+published_claims <- published_claims |>
+  left_join(stated_bounds, by = "claim_id") |>
+  left_join(declared_expectations, by = "claim_id") |>
+  mutate(
+    location = printed_location(location),
+    has_value = value_paper != "",
+    digits = if_else(has_value, excheckr::claim_digits(value_paper), NA_integer_),
+    comparison = case_when(!has_value ~ NA_character_,
+                           !is.na(comparison) ~ comparison,
+                           .default = "==")
+  ) |>
+  select(claim_id, location, claim_type, claim, value_paper, digits, comparison, expect,
+         needs_block, notes)
+
 write_csv(published_claims, here::here("ground_truth", "published_claims.csv"))
 
 print(count(published_claims, claim_type, needs_block))

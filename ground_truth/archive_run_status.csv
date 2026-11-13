@@ -1,0 +1,19 @@
+pass,script,role,exit_status,outcome,stopped_at
+as_shipped,analyze_ates.R,analysis,0,clean,NA
+as_shipped,analyze_cates_ethnicity.R,analysis,0,clean,NA
+as_shipped,analyze_cates_regression_tables.R,analysis,0,clean,NA
+as_shipped,analyze_cates.R,analysis,0,clean,NA
+as_shipped,appendix_cates_survey_field.R,analysis,0,clean,NA
+as_shipped,appendix_evidence_map.R,analysis,0,clean,NA
+as_shipped,appendix_figures_and_loop.R,analysis,1,error,"Error in `mutate()`: ℹ In argument: `occupation_label = fct_reorder(occupation_label, fraction_female)`. Caused by error in `lvls_reorder()`: ! `idx` must contain one integer for each level of `f`"
+as_shipped,appendix_gender_gradient.R,analysis,0,clean,NA
+as_shipped,appendix_survey_ates.R,analysis,0,clean,NA
+stripped,analyze_ates.R,analysis,0,clean,NA
+stripped,analyze_cates_ethnicity.R,analysis,0,clean,NA
+stripped,analyze_cates_regression_tables.R,analysis,0,clean,NA
+stripped,analyze_cates.R,analysis,0,clean,NA
+stripped,appendix_cates_survey_field.R,analysis,0,clean,NA
+stripped,appendix_evidence_map.R,analysis,0,clean,NA
+stripped,appendix_figures_and_loop.R,analysis,1,error,"Error in `mutate()`: ℹ In argument: `occupation_label = fct_reorder(occupation_label, fraction_female)`. Caused by error in `lvls_reorder()`: ! `idx` must contain one integer for each level of `f`"
+stripped,appendix_gender_gradient.R,analysis,1,error,"Error in readRDS(con, refhook = refhook) : cannot open the connection"
+stripped,appendix_survey_ates.R,analysis,0,clean,NA

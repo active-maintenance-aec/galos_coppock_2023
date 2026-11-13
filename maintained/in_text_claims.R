@@ -1,6 +1,7 @@
 # galos_coppock_2023/maintained/in_text_claims.R
-# Output: printed CLAIM lines only; no files
-# Depends on: maintained/output/, ground_truth/published_claims.csv, helpers.R
+# Output: printed CLAIM lines and a CLAIM SUMMARY line; no files
+# Depends on: maintained/output/, ground_truth/published_claims.csv, errata_entries.csv,
+#   helpers.R, excheckr
 # Description: One block per claim the published article and its supplementary materials make,
 #   each carrying the article's own sentence verbatim and then recomputing the number from the
 #   pipeline's committed output. This is the second instrument: it never reads
@@ -10,11 +11,20 @@
 #
 #   Every block prints a line of the form
 #
-#       CLAIM <claim_id> = <value> || <label>
+#       CLAIM <claim_id> = <value> || [verdict] <label>
 #
 #   which is what build_ground_truth.R parses to check coverage against
 #   ground_truth/published_claims.csv. The value is printed at the precision the article prints,
 #   so it can be read against the page without re-rounding.
+#
+#   The verdict comes from excheckr, which reads what each claim is expected to do out of the
+#   extraction and the errata spine rather than from the call site: [match] where the article's
+#   number and this one agree, [corrected] where a quantity erratum names the claim and this
+#   value is the corrected one, [hedged] for a descriptive claim that does not agree, and [shape]
+#   where the article states no number. A call site declares an expectation only where neither
+#   file can carry it: [derived] where the block prints something other than the article's own
+#   token in order to test it, and [absent] where the deposit has no counterpart at all.
+#   claim_summary() at the bottom fails the run on any MISMATCH, STALE, DRIFT, or MISSING.
 #
 #   It reads the extraction, ground_truth/published_claims.csv, and not the comparison. A block
 #   about the supplement's own figure numbering cannot say anything without the numbers the
@@ -26,6 +36,7 @@
 #   that is recorded in the ground truth and in the errata, never by editing the quote.
 
 source(here::here("maintained", "helpers.R"))
+library(excheckr)
 
 options(width = 200)
 
@@ -53,6 +64,37 @@ published_claims <- read_csv(
   na = character()
 )
 
+# The errata spine, every column as character: corrected_values carries "2.11", and a reader
+# left to guess would return a double and lose the printed precision.
+errata <- read_csv(here::here("errata_entries.csv"), col_types = cols(.default = col_character()))
+
+# Entry 2 is a quantity erratum with no single corrected value: it corrects two cells of table
+# S2.1, and the claim it names counts how many of that column's cells the table prints. Its
+# claim keeps the extraction's expectation and is passed to excheckr without the entry, which
+# would otherwise stop for want of a corrected value. A claim whose sentence prints no number
+# is an empty string in the extraction, which excheckr needs as NA to read it as one.
+claim_start(published = mutate(published_claims, value_paper = na_if(value_paper, "")),
+            errata = filter(errata, !(class == "quantity" & is.na(corrected_values))),
+            format = "id")
+
+# Entries 6 and 7 correct a number the page prints, but as typography: a dropped significance
+# marker and a label clipped short of its own value. excheckr reads corrected values only from
+# quantity entries, so the two values those entries print are passed at the call site, and the
+# gate below holds each to the entry that names its claim.
+typeset_corrections <- tribble(
+  ~entry, ~claim_id, ~corrected,
+  "6", "table_2_model2_intercept_stars", "2",
+  "7", "fig_s1_1_est_neumark_et_al_9_united_states", "-12.3"
+)
+
+stopifnot(all(map2_lgl(typeset_corrections$entry, typeset_corrections$claim_id,
+                       \(e, id) identical(errata$claim_ids[errata$entry == e], id))))
+
+typeset_corrected <- function(id) {
+  value <- typeset_corrections$corrected[typeset_corrections$claim_id == id]
+  if (length(value) == 0) NULL else value
+}
+
 paper <- function(id) {
   value <- published_claims$value_paper[published_claims$claim_id == id]
   stopifnot(length(value) == 1)
@@ -67,18 +109,6 @@ claim_slug <- function(x) {
     str_to_lower() |>
     str_replace_all("[^a-z0-9]+", "_") |>
     str_replace_all("^_|_$", "")
-}
-
-# claim: print one claim line in the form the coverage gate parses. digits is the number of
-# decimal places the article prints, so a value printed here can be laid against the page
-# without being rounded a second time.
-claim <- function(id, value, label, digits = 0) {
-  printed <- if (length(value) != 1 || is.na(value)) {
-    "NA"
-  } else {
-    sprintf(paste0("%.", digits, "f"), value)
-  }
-  cat("CLAIM ", id, " = ", printed, " || ", label, "\n", sep = "")
 }
 
 # one: pull a single value out of an output file by an identifier that has to select exactly one
@@ -122,14 +152,14 @@ supplementary_figures <- 4 + n_distinct(panels$study_name_citation) + 2
 #  across five continents, have randomized the gender of fictitious applicants to measure the
 #  extent of hiring discrimination on the basis of gender."
 claim("abstract_since_year", min(evidence_map$year),
-      "earliest country-year cell in the evidence map of fig. S2.2", 0)
+      "earliest country-year cell in the evidence map of fig. S2.2", digits = 0)
 claim("abstract_countries", n_distinct(evidence_map$country),
       str_glue("countries the evidence map records for the 57 reanalysed studies; the abstract ",
                "describes the wider literature the search identified, which the deposit does ",
-               "not enumerate"), 0)
+               "not enumerate"), digits = 0)
 claim("abstract_continents", n_distinct(evidence_map$continent),
       str_glue("continents the evidence map records: ",
-               "{str_c(sort(unique(evidence_map$continent)), collapse = ', ')}"), 0)
+               "{str_c(sort(unique(evidence_map$continent)), collapse = ', ')}"), digits = 0)
 
 # "The results are mixed: Some studies find discrimination against men, and others find
 #  discrimination against women."
@@ -139,7 +169,7 @@ claim("abstract_mixed_signs",
                "{sprintf('%.1f', min(study_estimates$estimate))} to ",
                "{sprintf('%.1f', max(study_estimates$estimate))} points, with ",
                "{sum(study_estimates$estimate < 0)} negative and ",
-               "{sum(study_estimates$estimate >= 0)} positive"), 0)
+               "{sum(study_estimates$estimate >= 0)} positive"), digits = 0)
 
 # Introduction ----
 
@@ -156,55 +186,55 @@ claim("abstract_mixed_signs",
 claim("intro_riach_year", min(evidence_map$year),
       str_glue("year the deposit and the evidence map give for the earliest study, an ",
                "Australian one, against an introduction that dates it to ",
-               "{paper('intro_riach_year')}"), 0)
+               "{paper('intro_riach_year')}"), digits = 0, expect = "derived")
 claim("intro_riach_ate",
       one(study_estimates$estimate[study_estimates$study_name_citation ==
                                      "Riach and Rich (8): Australia"]),
-      "Riach and Rich (8) effect of being a woman, in percentage points", 1)
+      "Riach and Rich (8) effect of being a woman, in percentage points", digits = 1)
 claim("intro_riach_se",
       one(study_estimates$std.error[study_estimates$study_name_citation ==
                                       "Riach and Rich (8): Australia"]),
-      "Riach and Rich (8) cluster-robust standard error", 1)
+      "Riach and Rich (8) cluster-robust standard error", digits = 1)
 
 # "A second early study in this line (9) randomized the gender of 130 applicants for 65
 #  restaurant jobs in New York City in 1994, finding a large and negative but nonsignificant
 #  effect (-12.3 points, SE: 8.4 points) of being a woman."
 claim("intro_neumark_year", min(evidence_map$year[evidence_map$country == "United States"]),
-      "earliest United States cell in the evidence map, against an introduction that dates the study to 1994", 0)
+      "earliest United States cell in the evidence map, against an introduction that dates the study to 1994", digits = 0)
 claim("intro_neumark_ate",
       one(study_estimates$estimate[study_estimates$study_name_citation ==
                                      "Neumark et al. (9): United States"]),
-      "Neumark et al. (9) effect of being a woman, in percentage points", 1)
+      "Neumark et al. (9) effect of being a woman, in percentage points", digits = 1)
 claim("intro_neumark_se",
       one(study_estimates$std.error[study_estimates$study_name_citation ==
                                       "Neumark et al. (9): United States"]),
-      "Neumark et al. (9) standard error", 1)
+      "Neumark et al. (9) standard error", digits = 1)
 
 # "We have obtained or reconstructed the data for a total of 57 such studies, reported in 51
 #  papers."
 claim("intro_studies", stat("Field studies"),
-      "studies whose data were obtained or reconstructed", 0)
+      "studies whose data were obtained or reconstructed", digits = 0)
 claim("intro_papers", NA_real_,
       str_glue("no counterpart in the deposit: the deposited frames carry a study identifier ",
                "and no paper identifier, so the {stat('Field studies')} studies cannot be ",
-               "grouped into the papers that report them"), 0)
+               "grouped into the papers that report them"), digits = 0, expect = "absent")
 
 # "In contrast to the early results, two-thirds (37 of 57) show a positive effect of being a
 #  woman, and the remainder show a negative effect."
 claim("intro_positive", stat("Field studies with a positive ATE"),
-      "studies with a positive effect of being a woman", 0)
+      "studies with a positive effect of being a woman", digits = 0)
 claim("intro_positive_of", stat("Field studies"),
-      "studies the positive ones are counted out of", 0)
+      "studies the positive ones are counted out of", digits = 0)
 claim("intro_two_thirds",
       stat("Field studies with a positive ATE") / stat("Field studies"),
-      "share of studies with a positive effect, against a sentence that calls it two-thirds", 3)
+      "share of studies with a positive effect, against a sentence that calls it two-thirds", digits = 3)
 
 # "A standard random-effects meta-analysis of the average treatment effect estimates of these
 #  studies yields an estimate of 1.2 percentage points with an SE of 0.4 points."
 claim("intro_meta_ate", one(forest_s1_1$estimate[forest_s1_1$facet == "Meta"]),
-      "random-effects meta-analytic average treatment effect, in percentage points", 1)
+      "random-effects meta-analytic average treatment effect, in percentage points", digits = 1)
 claim("intro_meta_se", one(forest_s1_1$std.error[forest_s1_1$facet == "Meta"]),
-      "standard error of the meta-analytic average treatment effect", 1)
+      "standard error of the meta-analytic average treatment effect", digits = 1)
 
 # Theory ----
 
@@ -212,9 +242,9 @@ claim("intro_meta_se", one(forest_s1_1$std.error[forest_s1_1$facet == "Meta"]),
 #  occupations that are fully women-dominated, gender composition is 1."
 claim("theory_composition_min", min(round(panels$fraction_female, 10), na.rm = TRUE),
       str_glue("smallest gender composition in the data, on a scale whose floor is 0; the ",
-               "largest is {sprintf('%.2f', max(panels$fraction_female, na.rm = TRUE))}"), 0)
+               "largest is {sprintf('%.2f', max(panels$fraction_female, na.rm = TRUE))}"), digits = 0)
 claim("theory_composition_max", ceiling(max(panels$fraction_female, na.rm = TRUE)),
-      "ceiling of the gender composition scale, recovered from the observed range", 0)
+      "ceiling of the gender composition scale, recovered from the observed range", digits = 0)
 
 # Mechanisms of gender discrimination ----
 
@@ -227,27 +257,27 @@ claim("theory_composition_max", ceiling(max(panels$fraction_female, na.rm = TRUE
 # three journal counts below have no pipeline counterpart at all. Printing what was checked
 # instead is the informative thing a block can do here.
 claim("mech_papers", NA_real_,
-      "no counterpart in the deposit: no paper identifier is recorded, only study identifiers", 0)
+      "no counterpart in the deposit: no paper identifier is recorded, only study identifiers", digits = 0, expect = "absent")
 claim("mech_studies", stat("Field studies"),
-      "studies the 51 coded papers are said to encompass, against the 57 the deposit carries", 0)
+      "studies the 51 coded papers are said to encompass, against the 57 the deposit carries", digits = 0)
 claim("mech_categories", NA_real_,
-      "no counterpart in the deposit: no mechanism coding is deposited, and fig. 3 has no code", 0)
+      "no counterpart in the deposit: no mechanism coding is deposited, and fig. 3 has no code", digits = 0, expect = "absent")
 claim("mech_sixth", NA_real_,
-      "no counterpart in the deposit: the residual mechanism category is not recorded", 0)
+      "no counterpart in the deposit: the residual mechanism category is not recorded", digits = 0, expect = "absent")
 claim("mech_theory_groups", NA_real_,
-      "no counterpart in the deposit: the mechanism categories are not recorded", 0)
+      "no counterpart in the deposit: the mechanism categories are not recorded", digits = 0, expect = "absent")
 
 # "Most of our included studies were published in either economics (24) or sociology (14)
 #  journals, with a handful of studies published in interdisciplinary, psychology, or management
 #  science journals (13)."
 claim("mech_economics", NA_real_,
-      "no counterpart in the deposit: no journal or discipline variable is deposited", 0)
+      "no counterpart in the deposit: no journal or discipline variable is deposited", digits = 0, expect = "absent")
 claim("mech_sociology", NA_real_,
-      "no counterpart in the deposit: no journal or discipline variable is deposited", 0)
+      "no counterpart in the deposit: no journal or discipline variable is deposited", digits = 0, expect = "absent")
 claim("mech_other_journals", NA_real_,
       str_glue("no counterpart in the deposit; the three counts sum to ",
                "{as.numeric(paper('mech_economics')) + as.numeric(paper('mech_sociology')) + as.numeric(paper('mech_other_journals'))}, ",
-               "which is the number of papers the article says it coded"), 0)
+               "which is the number of papers the article says it coded"), digits = 0, expect = "absent")
 
 # Design ----
 
@@ -260,38 +290,38 @@ claim("mech_other_journals", NA_real_,
 claim("design_prisma_papers", as.numeric(paper("s6_included_papers")),
       str_glue("papers the PRISMA flow diagram reports as included, against a sentence that ",
                "says the search yielded over {paper('design_prisma_papers')} papers meeting the ",
-               "inclusion criteria"), 0)
+               "inclusion criteria"), digits = 0, expect = "derived")
 claim("design_prisma_figure", supplementary_figures,
       str_glue("running index of the last figure the supplement contains, which is its PRISMA ",
                "flow diagram and is printed S6.{supplementary_figures}, against an article that ",
-               "cites fig. S6.{paper('design_prisma_figure')}"), 0)
+               "cites fig. S6.{paper('design_prisma_figure')}"), digits = 0, expect = "derived")
 claim("design_evidence_map_figure", 2,
-      "running index of the evidence map, printed S2.2 in the supplement and fig. S.2.2 in the article", 0)
+      "running index of the evidence map, printed S2.2 in the supplement and fig. S.2.2 in the article", digits = 0)
 
 # "We have obtained or reconstructed the microdata for 51 such papers, for a total of 57
 #  separate audit studies."
 claim("design_microdata_papers", NA_real_,
-      "no counterpart in the deposit: no paper identifier is recorded", 0)
+      "no counterpart in the deposit: no paper identifier is recorded", digits = 0, expect = "absent")
 claim("design_studies", stat("Field studies"),
-      "separate audit studies the deposit carries", 0)
+      "separate audit studies the deposit carries", digits = 0)
 
 # "The explosion in audit experimentation began around 2005, mainly in Europe and North
 #  America."
 claim("design_boom_year", boom_year,
       str_glue("earliest year from which 95 per cent of the evidence map's country-year cells ",
                "come; {sum(evidence_map$year < 2005)} of {nrow(evidence_map)} cells precede ",
-               "2005"), 0)
+               "2005"), digits = 0)
 
 # "In five occupation settings, no applicant (man or woman) received a callback, so in those
 #  cases, we used the adjustment described in (113) to estimate an SE."
 claim("design_zero_callback", sum(panels$estimate == 0, na.rm = TRUE),
       str_glue("occupation CATEs that are exactly zero; the deposit carries the estimates and ",
                "not the callback rates, and the Agresti-Coull adjustment leaves a zero-callback ",
-               "cell at exactly zero only when the two groups are the same size"), 0)
+               "cell at exactly zero only when the two groups are the same size"), digits = 0, expect = "derived")
 
 # "We present CATE estimates for all 57 studies in section S4."
 claim("design_s4_studies", n_distinct(panels$study_name_citation),
-      "studies with a panel of occupation-level CATE estimates", 0)
+      "studies with a panel of occupation-level CATE estimates", digits = 0)
 
 # Results ----
 
@@ -305,14 +335,14 @@ claim("design_s4_studies", n_distinct(panels$study_name_citation),
 half_widths <- (table_1$conf.high - table_1$estimate) / table_1$std.error
 claim("results_ci_level", 100 * (2 * pnorm(mean(half_widths)) - 1),
       str_glue("confidence level implied by the Table 1 intervals, ",
-               "{sprintf('%.4f', mean(half_widths))} standard errors wide on each side"), 0)
+               "{sprintf('%.4f', mean(half_widths))} standard errors wide on each side"), digits = 0)
 
 # "The meta-regression estimate itself is shown in column 1 of Table 1. We find that gender
 #  gradient is 8.15 with an SE of 1.50."
 claim("results_gradient", coefficient(table_1, "Model 1", "fraction_female", "estimate"),
-      "gender gradient, quoted from column 1 of Table 1 into the text", 2)
+      "gender gradient, quoted from column 1 of Table 1 into the text", digits = 2)
 claim("results_gradient_se", coefficient(table_1, "Model 1", "fraction_female", "std.error"),
-      "standard error of the gender gradient, quoted into the text", 2)
+      "standard error of the gender gradient, quoted into the text", digits = 2)
 
 # "In an occupation with 0% women, we would expect the average CATE to be -3.02 percentage
 #  points and in an occupation with 100% women, we would expect the average CATE to be -3.02 +
@@ -322,21 +352,21 @@ claim("results_gradient_se", coefficient(table_1, "Model 1", "fraction_female", 
 # inside the arithmetic, so both statements are printed rather than one: a restated quantity is
 # exactly the shape in which two halves of a sentence drift apart.
 claim("results_cate_0", mag("Predicted CATE at 0 percent women"),
-      "predicted CATE at 0 per cent women, in percentage points", 2)
+      "predicted CATE at 0 per cent women, in percentage points", digits = 2)
 claim("results_cate_0_restated", mag("Predicted CATE at 0 percent women"),
-      "the same intercept, restated inside the arithmetic of the sentence", 2)
+      "the same intercept, restated inside the arithmetic of the sentence", digits = 2)
 claim("results_gradient_restated", coefficient(table_1, "Model 1", "fraction_female", "estimate"),
-      "the same gradient, restated inside the arithmetic of the sentence", 2)
+      "the same gradient, restated inside the arithmetic of the sentence", digits = 2)
 claim("results_cate_100", mag("Predicted CATE at 100 percent women"),
-      "predicted CATE at 100 per cent women, in percentage points", 2)
+      "predicted CATE at 100 per cent women, in percentage points", digits = 2)
 
 # "The magnitude of these biases is higher in women-dominated occupations than in men-dominated
 #  occupations, by a statistically significant 2.10 points (bootstrapped SE: 0.58), perhaps
 #  suggesting that pro-status quo forces operate differently across contexts."
 claim("results_magnitude_difference", mag("Difference in magnitude"),
-      "difference in the magnitude of the two predicted biases, in percentage points", 2)
+      "difference in the magnitude of the two predicted biases, in percentage points", digits = 2)
 claim("results_magnitude_se", mag("Bootstrapped SE of the difference in magnitude"),
-      "bootstrapped standard error of that difference", 2)
+      "bootstrapped standard error of that difference", digits = 2)
 
 # "In columns 2 through 5 of Table 1, we present a series of fixed-effect models that variously
 #  include indicators for country, year, country and year, and study. Across these
@@ -344,13 +374,13 @@ claim("results_magnitude_se", mag("Bootstrapped SE of the difference in magnitud
 #  overall pattern that we observe in Fig. 4 also holds within subsets of the data."
 gradient_by_model <- table_1 |> filter(term == "fraction_female")
 claim("results_fe_first_column", 2,
-      "first Table 1 column carrying fixed effects, of the five the table prints", 0)
+      "first Table 1 column carrying fixed effects, of the five the table prints", digits = 0)
 claim("results_fe_last_column", nrow(gradient_by_model),
-      "last Table 1 column carrying fixed effects, which is the number of models the table prints", 0)
+      "last Table 1 column carrying fixed effects, which is the number of models the table prints", digits = 0)
 claim("results_gradient_stable",
       max(gradient_by_model$estimate) - min(gradient_by_model$estimate),
       str_glue("spread of the gender gradient across the five models, which run ",
-               "{str_c(sprintf('%.2f', gradient_by_model$estimate), collapse = ', ')}"), 2)
+               "{str_c(sprintf('%.2f', gradient_by_model$estimate), collapse = ', ')}"), digits = 2)
 
 # "The third column of Table 2 shows that while it is true that the gender gradient is estimated
 #  to be steeper for minority applicants than for majority applicants, the uncertainty attending
@@ -362,13 +392,13 @@ claim("results_minority_steeper",
       str_glue("1 if the minority gradient exceeds the majority gradient: ",
                "{sprintf('%.2f', coefficient(table_2, 'Model 2', 'fraction_female', 'estimate'))} ",
                "against ",
-               "{sprintf('%.2f', coefficient(table_2, 'Model 1', 'fraction_female', 'estimate'))}"), 0)
+               "{sprintf('%.2f', coefficient(table_2, 'Model 1', 'fraction_female', 'estimate'))}"), digits = 0)
 claim("results_interaction_not_significant",
       as.numeric(coefficient(table_2, "Model 3", "fraction_female:ethnicity_fctMajority",
                              "p.value") > 0.05),
       str_glue("1 if the majority by gradient interaction is not significant at the 0.05 level; ",
                "its p-value is ",
-               "{sprintf('%.3f', coefficient(table_2, 'Model 3', 'fraction_female:ethnicity_fctMajority', 'p.value'))}"), 0)
+               "{sprintf('%.3f', coefficient(table_2, 'Model 3', 'fraction_female:ethnicity_fctMajority', 'p.value'))}"), digits = 0)
 
 # Discussion ----
 
@@ -377,7 +407,7 @@ claim("results_interaction_not_significant",
 #  measurement problem (the presence of gender-based employment discrimination)."
 claim("disc_decades", (max(evidence_map$year) - min(evidence_map$year)) / 10,
       str_glue("decades the evidence map spans, {min(evidence_map$year)} to ",
-               "{max(evidence_map$year)}"), 1)
+               "{max(evidence_map$year)}"), digits = 1)
 
 # "The gender gradient is positive: Women are discriminated against where there are few women,
 #  and men are discriminated against where there are few men."
@@ -387,56 +417,56 @@ claim("disc_gradient_positive",
       str_glue("1 if the pooled gradient is positive with an interval clear of zero: ",
                "{sprintf('%.2f', coefficient(table_1, 'Model 1', 'fraction_female', 'estimate'))} ",
                "[{sprintf('%.2f', coefficient(table_1, 'Model 1', 'fraction_female', 'conf.low'))}, ",
-               "{sprintf('%.2f', coefficient(table_1, 'Model 1', 'fraction_female', 'conf.high'))}]"), 0)
+               "{sprintf('%.2f', coefficient(table_1, 'Model 1', 'fraction_female', 'conf.high'))}]"), digits = 0)
 
 # "As described in section S5, we can obtain study-specific gender gradient estimates for 37 of
 #  our studies, only 7 of which reach statistical significance. Informally speaking, this
 #  analysis puts the statistical power of the average gender employment audit study to detect
 #  the gender gradient at 7/37 = 19%."
 claim("disc_gradient_studies", nrow(gradients),
-      "studies with a study-specific gender gradient estimate", 0)
+      "studies with a study-specific gender gradient estimate", digits = 0)
 claim("disc_significant", sum(gradients$p.value <= 0.05),
       str_glue("gender gradients significant at the 0.05 level, of which ",
-               "{sum(gradients$p.value <= 0.05 & gradients$estimate > 0)} are positive"), 0)
+               "{sum(gradients$p.value <= 0.05 & gradients$estimate > 0)} are positive"), digits = 0)
 claim("disc_power_numerator", sum(gradients$p.value <= 0.05),
-      "numerator of the power ratio", 0)
+      "numerator of the power ratio", digits = 0)
 claim("disc_power_denominator", nrow(gradients),
-      "denominator of the power ratio", 0)
+      "denominator of the power ratio", digits = 0)
 claim("disc_power", 100 * sum(gradients$p.value <= 0.05) / nrow(gradients),
-      "share of study-level gradients reaching significance, in per cent", 0)
+      "share of study-level gradients reaching significance, in per cent", digits = 0)
 
 # "The audit experimental record on gender bias in hiring currently stands at over 70 studies
 #  and by synthesizing 57 of them, we learn that gender composition predicts gender bias."
-claim("disc_synthesized", stat("Field studies"), "studies synthesized", 0)
+claim("disc_synthesized", stat("Field studies"), "studies synthesized", digits = 0)
 
 # "Figure S2.2 shows where and when the existing studies were conducted. Most were conducted in
 #  North America and Europe since 2005; only a handful of studies have been conducted in South
 #  America, Asia, or Africa."
 claim("disc_since_year", boom_year,
-      "earliest year from which 95 per cent of the country-year cells come", 0)
+      "earliest year from which 95 per cent of the country-year cells come", digits = 0)
 claim("disc_most_europe_north_america",
       as.numeric(sum(evidence_map$continent %in% c("Europe", "N. America")) >
                    nrow(evidence_map) / 2),
       str_glue("1 if most country-year cells are in Europe or North America: ",
                "{sum(evidence_map$continent %in% c('Europe', 'N. America'))} of ",
-               "{nrow(evidence_map)}"), 0)
+               "{nrow(evidence_map)}"), digits = 0)
 claim("disc_other_continents",
       sum(evidence_map$continent %in% c("S. America", "Asia", "Africa")),
       str_glue("country-year cells outside Europe, North America and Oceania: ",
                "{str_c(str_glue('{count(evidence_map, continent)$continent} ",
-               "{count(evidence_map, continent)$n}'), collapse = ', ')}"), 0)
+               "{count(evidence_map, continent)$n}'), collapse = ', ')}"), digits = 0)
 
 # Figure and table notes ----
 
 # Fig. 4 note: "The regression line is derived from the model reported in column 1 of Table 1."
 claim("fig4_note_column", 1,
-      "Table 1 column the fig. 4 regression line is derived from, the first of the five the table prints", 0)
+      "Table 1 column the fig. 4 regression line is derived from, the first of the five the table prints", digits = 0)
 
 # Fig. 5 note: "Regression lines derived from models reported in columns 1 and 2 of Table 2."
-claim("fig5_note_column_1", 1, "first Table 2 column the fig. 5 lines are derived from", 0)
+claim("fig5_note_column_1", 1, "first Table 2 column the fig. 5 lines are derived from", digits = 0)
 claim("fig5_note_column_2", 2,
       str_glue("second Table 2 column the fig. 5 lines are derived from, of the ",
-               "{n_distinct(table_2$model)} the table prints"), 0)
+               "{n_distinct(table_2$model)} the table prints"), digits = 0)
 
 # Table 1 note: "*P < 0.05, **P < 0.01, and ***P < 0.001."
 #
@@ -448,21 +478,21 @@ starred <- bind_rows(table_1, table_2) |>
                            .default = 0))
 claim("table_1_note_p05", 0.05,
       str_glue("one-star threshold; the largest p-value carrying exactly one star is ",
-               "{sprintf('%.3f', max(starred$p.value[starred$stars == 1]))}"), 2)
+               "{sprintf('%.3f', max(starred$p.value[starred$stars == 1]))}"), digits = 2)
 claim("table_1_note_p01", 0.01,
       str_glue("two-star threshold; the largest p-value carrying exactly two stars is ",
-               "{sprintf('%.3f', max(starred$p.value[starred$stars == 2]))}"), 2)
+               "{sprintf('%.3f', max(starred$p.value[starred$stars == 2]))}"), digits = 2)
 claim("table_1_note_p001", 0.001,
       str_glue("three-star threshold; the largest p-value carrying three stars is ",
-               "{sprintf('%.6f', max(starred$p.value[starred$stars == 3]))}"), 3)
+               "{sprintf('%.6f', max(starred$p.value[starred$stars == 3]))}"), digits = 3)
 
 # Table 2 note: "*P < 0.05, **P < 0.01, and ***P < 0.001."
 #
 # The same three thresholds, restated verbatim beneath the second table. A quantity stated twice
 # drifts twice, so both statements are printed rather than one.
-claim("table_2_note_p05", 0.05, "one-star threshold, restated beneath Table 2", 2)
-claim("table_2_note_p01", 0.01, "two-star threshold, restated beneath Table 2", 2)
-claim("table_2_note_p001", 0.001, "three-star threshold, restated beneath Table 2", 3)
+claim("table_2_note_p05", 0.05, "one-star threshold, restated beneath Table 2", digits = 2)
+claim("table_2_note_p01", 0.01, "two-star threshold, restated beneath Table 2", digits = 2)
+claim("table_2_note_p001", 0.001, "three-star threshold, restated beneath Table 2", digits = 3)
 
 # Tables 1 and 2 ----
 #
@@ -483,20 +513,21 @@ table_claims <- function(tbl, stem, table_name) {
     key <- str_glue("{stem}_{str_replace(str_to_lower(row$model), ' ', '')}_",
                     "{table_term_ids[row$term]}")
     claim(str_glue("{key}_estimate"), row$estimate,
-          str_glue("{table_name}, {row$model}, {row$term}"), 2)
+          str_glue("{table_name}, {row$model}, {row$term}"), digits = 2)
     claim(str_glue("{key}_std_error"), row$std.error,
-          str_glue("{table_name}, {row$model}, {row$term}, standard error"), 2)
+          str_glue("{table_name}, {row$model}, {row$term}, standard error"), digits = 2)
     claim(str_glue("{key}_stars"), stars_from_p(row$p.value),
           str_glue("{table_name}, {row$model}, {row$term}, significance stars at p = ",
-                   "{sprintf('%.4f', row$p.value)}"), 0)
+                   "{sprintf('%.4f', row$p.value)}"), digits = 0,
+          corrected = typeset_corrected(str_glue("{key}_stars")))
   }
   gof <- distinct(tbl, model, tau.squared, nobs)
   for (i in seq_len(nrow(gof))) {
     key <- str_glue("{stem}_{str_replace(str_to_lower(gof$model[i]), ' ', '')}")
     claim(str_glue("{key}_tau_squared"), gof$tau.squared[i],
-          str_glue("{table_name}, {gof$model[i]}, tau squared"), 2)
+          str_glue("{table_name}, {gof$model[i]}, tau squared"), digits = 2)
     claim(str_glue("{key}_nobs"), gof$nobs[i],
-          str_glue("{table_name}, {gof$model[i]}, observations"), 0)
+          str_glue("{table_name}, {gof$model[i]}, observations"), digits = 0)
   }
 }
 
@@ -508,11 +539,11 @@ table_claims(table_2, "table_2", "Table 2")
 # "Figure S1.1 shows a standard forest plot of the 57 studies in our database. On average, the
 #  effect of being a woman (versus a man) is a 1.2 percentage point increase in callback (SE:
 #  0.4)."
-claim("s1_studies", nrow(study_estimates), "studies plotted in fig. S1.1", 0)
+claim("s1_studies", nrow(study_estimates), "studies plotted in fig. S1.1", digits = 0)
 claim("s1_meta_ate", one(forest_s1_1$estimate[forest_s1_1$facet == "Meta"]),
-      "meta-analytic average effect printed on fig. S1.1, in percentage points", 1)
+      "meta-analytic average effect printed on fig. S1.1, in percentage points", digits = 1)
 claim("s1_meta_se", one(forest_s1_1$std.error[forest_s1_1$facet == "Meta"]),
-      "standard error printed beside it", 1)
+      "standard error printed beside it", digits = 1)
 
 # The 116 numbers printed beside the 58 points of fig. S1.1, and the 26 and 76 printed on figs.
 # S3.4 and S5.62. None of them appears in any sentence of the paper.
@@ -520,9 +551,10 @@ forest_claims <- function(forest, stem, label) {
   for (i in seq_len(nrow(forest))) {
     key <- claim_slug(forest$study_name_citation[i])
     claim(str_glue("{stem}_est_{key}"), forest$estimate[i],
-          str_glue("{label} plotted for {forest$study_name_citation[i]}"), 1)
+          str_glue("{label} plotted for {forest$study_name_citation[i]}"), digits = 1,
+          corrected = typeset_corrected(str_glue("{stem}_est_{key}")))
     claim(str_glue("{stem}_se_{key}"), forest$std.error[i],
-          str_glue("{label} standard error plotted for {forest$study_name_citation[i]}"), 1)
+          str_glue("{label} standard error plotted for {forest$study_name_citation[i]}"), digits = 1)
   }
 }
 
@@ -536,12 +568,12 @@ forest_claims(forest_s1_1, "fig_s1_1", "Average treatment effect")
 #  boom in audit experiments beginning around 2005 in Europe, North America, and Oceania."
 claim("s2_early_1980s", sum(evidence_map$year %/% 10 == 198),
       str_glue("country-year cells in the 1980s: ",
-               "{str_c(evidence_map$country[evidence_map$year %/% 10 == 198], collapse = ', ')}"), 0)
+               "{str_c(evidence_map$country[evidence_map$year %/% 10 == 198], collapse = ', ')}"), digits = 0)
 claim("s2_early_1990s", sum(evidence_map$year %/% 10 == 199),
       str_glue("country-year cells in the 1990s: ",
-               "{str_c(evidence_map$country[evidence_map$year %/% 10 == 199], collapse = ', ')}"), 0)
+               "{str_c(evidence_map$country[evidence_map$year %/% 10 == 199], collapse = ', ')}"), digits = 0)
 claim("s2_boom_year", boom_year,
-      "earliest year from which 95 per cent of the country-year cells come, restated in section S2", 0)
+      "earliest year from which 95 per cent of the country-year cells come, restated in section S2", digits = 0)
 
 # Table S2.1 ----
 
@@ -553,15 +585,15 @@ claim("s2_boom_year", boom_year,
 # instrument never reads the published page, so what it can say is how many cells the rewrite
 # produces in each column.
 claim("table_s2_1_studies_listed", nrow(study_manifest),
-      "studies the rewrite's manifest lists", 0)
+      "studies the rewrite's manifest lists", digits = 0)
 claim("table_s2_1_subjects", sum(!is.na(study_manifest$n_subjects_from_df)),
       str_glue("subject counts the rewrite reconstructs, as residual degrees of freedom plus ",
-               "one summed over a study's occupations"), 0)
+               "one summed over a study's occupations"), digits = 0)
 claim("table_s2_1_occupations", sum(!is.na(study_manifest$n_occupations)),
-      "occupation counts the rewrite reconstructs", 0)
+      "occupation counts the rewrite reconstructs", digits = 0)
 claim("table_s2_1_inclusion", sum(!is.na(study_manifest$included_majority_minority)),
       str_glue("majority / minority inclusion flags the rewrite reconstructs, of which ",
-               "{sum(study_manifest$included_majority_minority == 'Yes')} are Yes"), 0)
+               "{sum(study_manifest$included_majority_minority == 'Yes')} are Yes"), digits = 0)
 
 # Section S3 ----
 
@@ -569,7 +601,7 @@ claim("table_s2_1_inclusion", sum(!is.na(study_manifest$included_majority_minori
 #  vignette survey experiments that simulated hiring settings and asked survey respondents how
 #  they would evaluate hypothetical job applicants."
 claim("s3_survey_experiments", nrow(forest_s3_4 |> filter(facet == "Study estimates")),
-      "survey experiments plotted in fig. S3.4", 0)
+      "survey experiments plotted in fig. S3.4", digits = 0)
 
 # "Despite the obvious differences across experimental mode and context, we find that the gender
 #  gradient (the slope with respect to gender composition) is very similar across the two
@@ -578,7 +610,7 @@ claim("s3_gradients_similar",
       abs(fitted_gradient("Survey experiments") - fitted_gradient("Field experiments")),
       str_glue("distance between the two fitted gradients of fig. S3.3: survey ",
                "{sprintf('%.2f', fitted_gradient('Survey experiments'))} against field ",
-               "{sprintf('%.2f', fitted_gradient('Field experiments'))}"), 2)
+               "{sprintf('%.2f', fitted_gradient('Field experiments'))}"), digits = 2)
 
 forest_claims(forest_s3_4, "fig_s3_4", "Average treatment effect")
 
@@ -590,9 +622,9 @@ forest_claims(forest_s3_4, "fig_s3_4", "Average treatment effect")
 #  figures. The 37 gender gradients we are able to estimate are meta-analyzed in Figure S5.62."
 claim("s4_minimum_cates", min(gradients$n_occupations),
       str_glue("occupations in the smallest study with a gender gradient; the largest has ",
-               "{max(gradients$n_occupations)}"), 0)
+               "{max(gradients$n_occupations)}"), digits = 0)
 claim("s4_gradients", nrow(gradients),
-      "gender gradients estimated across the 57 studies", 0)
+      "gender gradients estimated across the 57 studies", digits = 0)
 
 # The 57 published panels, figs. S4.5 to S4.61, each printing an "estimate (SE)" label, a gender
 # composition and a sample size beside every occupation. The ground truth compares those labels
@@ -613,7 +645,10 @@ panel_counts <- panels |>
   group_by(study_name_citation) |>
   summarize(entries = sum(!is.na(entry)),
             compositions = sum(!is.na(fraction_female)),
-            sample_sizes = sum(!is.na(n_from_df))) |>
+            sample_sizes = sum(!is.na(n_from_df)),
+            # A label drawn outside the panel's x range of -100 to 100 is clipped off the page,
+            # so a panel carrying one prints fewer labels than the rewrite writes.
+            clipped = sum(!is.na(entry) & abs(estimate) > 100)) |>
   mutate(key = claim_slug(study_name_citation)) |>
   inner_join(panel_ids, by = "key")
 
@@ -623,16 +658,17 @@ for (i in seq_len(nrow(panel_counts))) {
   row <- panel_counts[i, ]
   claim(str_glue("{row$figure}_entries"), row$entries,
         str_glue("estimate and standard error labels the rewrite writes for ",
-                 "{row$study_name_citation}"), 0)
+                 "{row$study_name_citation}"), digits = 0,
+        expect = if (row$clipped > 0) "derived" else "compare")
   claim(str_glue("{row$figure}_compositions"), row$compositions,
-        str_glue("gender composition labels the rewrite writes for {row$study_name_citation}"), 0)
+        str_glue("gender composition labels the rewrite writes for {row$study_name_citation}"), digits = 0)
   claim(str_glue("{row$figure}_sample_sizes"), row$sample_sizes,
         str_glue("sample size labels the rewrite writes for {row$study_name_citation}, as ",
-                 "residual degrees of freedom plus one"), 0)
+                 "residual degrees of freedom plus one"), digits = 0)
 }
 
 claim("s4_panels_published", n_distinct(panels$study_name_citation),
-      "study panels the rewrite draws, against the 57 the published appendix draws", 0)
+      "study panels the rewrite draws, against the 57 the published appendix draws", digits = 0)
 # Counted off the figure rather than off its data. The gender gradient estimate for Albert
 # et al. (67) is 139.82, outside the panel's x range, so ggplot clips its label away and the
 # facet prints a truncated interval with no point and no label, exactly as the published page
@@ -642,7 +678,7 @@ claim("s4_panel_entries_published",
         pdftools::pdf_text(here::here("maintained", "output", "figure_s4_study_panels.pdf")),
         "-?\\d+\\.\\d+\\s*\\(\\d+\\.\\d+\\)"
       ))),
-      "estimate and standard error labels the rewrite prints across all 57 panels", 0)
+      "estimate and standard error labels the rewrite prints across all 57 panels", digits = 0)
 
 # Section S5 ----
 
@@ -653,38 +689,38 @@ claim("s4_panel_entries_published",
 #  or more occupations (37 studies). By contrast, the fixed effects estimation includes the
 #  study if it distinguishes among two or more occupations."
 claim("s5_gradients", nrow(gradient_estimates),
-      "study-level gender gradients plotted in fig. S5.62", 0)
+      "study-level gender gradients plotted in fig. S5.62", digits = 0)
 claim("s5_model_reference", n_distinct(table_1$model),
-      "Table 1 model the gradient meta-analysis is compared to, which is the last of the five", 0)
+      "Table 1 model the gradient meta-analysis is compared to, which is the last of the five", digits = 0)
 claim("s5_minimum_occupations", min(gradients$n_occupations),
-      "occupations in the smallest study entering the gradient meta-analysis", 0)
+      "occupations in the smallest study entering the gradient meta-analysis", digits = 0)
 occupations_per_study <- count(panels |> filter(!is.na(fraction_female)), study_name_citation)
 claim("s5_fixed_effects_minimum", min(occupations_per_study$n[occupations_per_study$n > 1]),
       str_glue("occupations in the smallest multi-occupation study, of which there are ",
-               "{sum(occupations_per_study$n > 1)}"), 0)
+               "{sum(occupations_per_study$n > 1)}"), digits = 0)
 claim("s5_studies", nrow(gradients),
-      "studies with three or more occupations", 0)
+      "studies with three or more occupations", digits = 0)
 
 # "The meta-analytic average gender gradient is 9.0 with a standard error of 2.1, which is quite
 #  similar to the gender gradient estimates presented in Table 1."
 claim("s5_meta_gradient", one(forest_s5_62$estimate[forest_s5_62$facet == "Meta"]),
-      "meta-analytic average gender gradient", 1)
+      "meta-analytic average gender gradient", digits = 1)
 claim("s5_meta_se", one(forest_s5_62$std.error[forest_s5_62$facet == "Meta"]),
-      "its standard error", 1)
+      "its standard error", digits = 1)
 claim("s5_similar_to_table_1",
       abs(one(forest_s5_62$estimate[forest_s5_62$facet == "Meta"]) -
             coefficient(table_1, "Model 1", "fraction_female", "estimate")),
       str_glue("distance from the Table 1 model 1 gradient; the five Table 1 gradients run ",
                "{sprintf('%.2f', min(gradient_by_model$estimate))} to ",
-               "{sprintf('%.2f', max(gradient_by_model$estimate))}"), 2)
+               "{sprintf('%.2f', max(gradient_by_model$estimate))}"), digits = 2)
 
 # "This plot also shows that the statistical power for any particular study to detect a positive
 #  gender gradient is low. Only 7 of these 37 gender gradient estimates are statistically
 #  significant."
 claim("s5_significant", sum(gradients$p.value <= 0.05),
-      "gender gradient estimates significant at the 0.05 level", 0)
+      "gender gradient estimates significant at the 0.05 level", digits = 0)
 claim("s5_significant_of", nrow(gradients),
-      "gradient estimates the significant ones are counted out of", 0)
+      "gradient estimates the significant ones are counted out of", digits = 0)
 
 forest_claims(forest_s5_62, "fig_s5_62", "Gender gradient")
 
@@ -692,20 +728,28 @@ forest_claims(forest_s5_62, "fig_s5_62", "Gender gradient")
 
 # "This PDF file includes: Sections S1 to S6, Figs. S1.1 to S6.63, Table S2.1, References"
 claim("supp_first_figure", 1,
-      "running index of the first figure the supplement lists, the fig. S1.1 forest plot", 0)
+      "running index of the first figure the supplement lists, the fig. S1.1 forest plot", digits = 0)
 claim("supp_last_figure", supplementary_figures,
       str_glue("running index of the last figure the supplement lists, counted through its own ",
                "numbering: four figures before section S4, then one panel per each of the ",
                "{n_distinct(panels$study_name_citation)} studies, then the gender gradient ",
-               "forest plot and the PRISMA diagram"), 0)
+               "forest plot and the PRISMA diagram"), digits = 0)
 claim("supp_tables", 1,
-      "tables the supplement lists, which is the study manifest of table S2.1", 0)
+      "tables the supplement lists, which is the study manifest of table S2.1", digits = 0)
 
 # Section S6, the PRISMA flow diagram ----
 
 # "Reports/publication included in review (n = 51), from which separate audit studies included
 #  in review (n = 57)"
 claim("s6_included_papers", NA_real_,
-      "no counterpart in the deposit: no paper identifier is recorded, only study identifiers", 0)
+      "no counterpart in the deposit: no paper identifier is recorded, only study identifiers", digits = 0, expect = "absent")
 claim("s6_included_studies", stat("Field studies"),
-      "separate audit studies the deposit carries, against the 57 the flow diagram reports", 0)
+      "separate audit studies the deposit carries, against the 57 the flow diagram reports", digits = 0)
+
+# Summary ----
+# assert_claims() stops on any failing verdict, on a quantity erratum whose claim did not score
+# corrected, and on any difference between the claims printed here and those the extraction
+# declares need a block. claim_summary() prints the verdict counts, so the claims this file
+# declines to assert are counted rather than merely allowed.
+assert_claims()
+invisible(claim_summary())

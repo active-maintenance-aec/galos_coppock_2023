@@ -38,8 +38,10 @@ gt <- read_csv(here::here("ground_truth", "galos_coppock_2023_ground_truth.csv")
                                 value_paper = col_character(),
                                 value_script = col_double(),
                                 value_rewrite = col_double(),
-                                match = col_double(),
-                                match_rewrite = col_double()))
+                                digits = col_integer(),
+                                match = col_logical(),
+                                match_rewrite = col_logical(),
+                                holds = col_logical()))
 
 published_claims <- read_csv(here::here("ground_truth", "published_claims.csv"),
                              col_types = cols(.default = col_character(),
@@ -48,10 +50,8 @@ published_claims <- read_csv(here::here("ground_truth", "published_claims.csv"),
 
 float_coverage <- read_csv(here::here("ground_truth", "float_coverage.csv"),
                            col_types = cols(float = col_character(),
-                                            printed = col_double(),
-                                            covered = col_double(),
-                                            share = col_double(),
-                                            reason = col_character()))
+                                            note = col_character(),
+                                            .default = col_integer()))
 
 # The errata spine, written by errata.qmd. Every statement this report makes about the
 # corrections reads it rather than restating them, so the note and the report cannot diverge.
@@ -293,11 +293,16 @@ It records `r n_claims` values. `r n_archive_verifiable` of them have both a pub
 Most of the published values are inside figures rather than in prose. Figures S1.1, S3.4 and S5.62 print the estimate and standard error beside every point, which makes 218 published numbers that no sentence in the paper states. The 57 study panels of section S4 print another 335. All of them are extracted from the supplementary PDF and checked one by one.
 
 ```{r gt_counts}
+# Grouped by float as printed, with the 57 study panels taken together, by supplementary
+# section for the prose of the supplement, and as "Text" for the prose of the article.
 gt |>
   filter(!is.na(value_paper)) |>
-  mutate(table_figure = if_else(str_starts(table_figure, "fig_S4."),
-                                "figs_S4.5_to_S4.61", table_figure)) |>
-  group_by(Location = table_figure) |>
+  mutate(group = case_when(
+    str_starts(location, "Figures? S4\\.") ~ "Figures S4.5 to S4.61",
+    str_detect(location, "^(Table|Figure|Section) ") ~ location,
+    .default = "Text"
+  )) |>
+  group_by(Location = group) |>
   summarize(
     Checked = n(),
     Match = sum(match_rewrite == 1, na.rm = TRUE),
@@ -315,7 +320,7 @@ gt |>
 ```{r gt_mismatches}
 gt |>
   filter(match_rewrite == 0) |>
-  select(table_figure, claim, value_paper, value_rewrite, defect_locus) |>
+  select(location, claim, value_paper, value_rewrite, defect_locus) |>
   kable(
     booktabs = TRUE,
     digits = 3,
@@ -331,9 +336,9 @@ The `r n_unverifiable` remaining recorded quantities are ones the scripts produc
 
 A further `r sum(!is.na(gt$value_paper) & is.na(gt$match_rewrite))` claims are recorded with a published value and no verdict, because the article states them as approximations. "Two-thirds (37 of 57)" and "over the past four decades" are true at the precision they claim and false at any finer one, so both numbers are recorded and neither is scored.
 
-**Coverage is recorded as a fraction, not as a yes or no.** A float with one row against a hundred published cells satisfies any check that asks only whether the float appears, so the build counts the numbers each published float prints on its face and requires the ground truth to account for all of them. `ground_truth/float_coverage.csv` holds that count float by float. Of the `r nrow(float_coverage)` floats the article and its supplementary front matter list, `r sum(float_coverage$covered > 0)` carry rows here. The `r sum(!is.na(float_coverage$printed))` that print numbers on their faces carry `r format(sum(float_coverage$printed, na.rm = TRUE), big.mark = ",")` published values between them, and the ground truth reaches every one, so each of those floats is covered in full. The build stops if any float falls below that.
+**Coverage is recorded as a fraction, not as a yes or no.** A float with one row against a hundred published cells satisfies any check that asks only whether the float appears, so the build counts the numbers each published float prints on its face and requires the ground truth to account for all of them. `ground_truth/float_coverage.csv` holds that count float by float. Of the `r nrow(float_coverage)` floats the article and its supplementary front matter list, `r sum(float_coverage$covered > 0)` carry rows here. The `r sum(float_coverage$published_numbers > 0 & float_coverage$covered > 0)` that carry rows and print numbers on their faces carry `r format(sum(float_coverage$published_numbers[float_coverage$covered > 0]), big.mark = ",")` published values between them, and the ground truth reaches every one, so each of those floats is covered in full. The build stops if any float falls below that without a stated reason.
 
-The remaining `r sum(float_coverage$covered == 0)` published floats have no row here, and the build stops if a float has neither a row nor a stated reason, since a false reason tells the next reader not to look. Figures 1 and 2 are diagrams of the two gender gradients the theory admits and plot no estimates. Figure 3 summarises the discrimination mechanisms the 51 papers discuss, coded by hand; the deposit carries no mechanism or discipline variable, so nothing in the pipeline can reach it. Figures 4 and 5 print no numbers on their faces, and the estimates and lines they draw are the 298 occupation CATEs and the Table 1 and Table 2 fits, all covered above. Figure S2.2 is a map of country-by-year tiles, and what it asserts is checked through the section S2 sentences that describe it. Figure `r prisma_figure` is a PRISMA flow diagram whose counts come from the screening process and not from any data file in the deposit.
+The remaining `r sum(float_coverage$covered == 0)` published floats have no row here, and the build stops if a float has neither a row nor a stated reason, since a false reason tells the next reader not to look. Figures 1 and 2 are diagrams of the two gender gradients the theory admits and plot no estimates. Figure 3 summarises the discrimination mechanisms the 51 papers discuss, coded by hand, and prints the six category counts beside its bubbles; the deposit carries no mechanism or discipline variable, so nothing in the pipeline can reach it. Figures 4 and 5 print no numbers on their faces, and the estimates and lines they draw are the 298 occupation CATEs and the Table 1 and Table 2 fits, all covered above. Figure S2.2 is a map of country-by-year tiles, and what it asserts is checked through the section S2 sentences that describe it. Figure `r prisma_figure` is a PRISMA flow diagram whose counts come from the screening process and not from any data file in the deposit.
 
 # The extraction and the two instruments
 
@@ -355,7 +360,7 @@ published_claims |>
 
 The float cells are read off the supplementary PDF's own text layer by `ground_truth/extract_published_claims.R`, which is not part of `run_all.R` because this repository does not carry the published PDFs. The prose claims, the two published tables and the front matter are typed from the page. That makes the extraction a second transcription of the same pages the ground truth transcribes, and the build compares the two: all `r sum(!is.na(gt$value_paper) & !is.na(gt$claim_id))` published values they share agree, digit for digit.
 
-**The second instrument.** `maintained/in_text_claims.R` recomputes every claim the extraction says needs a block, from `maintained/output/`, by its own path. It carries the article's own sentence verbatim in a comment above each block and prints one line per claim. It never reads the ground truth. `build_ground_truth.R` runs it, counts what it printed against what the extraction declares, and stops if the two disagree; it then compares the two instruments value by value, and stops if they land on different numbers. The `r sum(str_starts(gt$table_figure, "fig_S4\\.") | gt$table_figure == "table_S2.1")` claims about summarised floats are exempt from that last comparison, because their ground-truth value is a count of agreements with the published page and an instrument that never reads the page cannot recompute one.
+**The second instrument.** `maintained/in_text_claims.R` recomputes every claim the extraction says needs a block, from `maintained/output/`, by its own path. It carries the article's own sentence verbatim in a comment above each block and prints one line per claim. It never reads the ground truth. `build_ground_truth.R` runs it, counts what it printed against what the extraction declares, and stops if the two disagree; it then compares the two instruments value by value, and stops if they land on different numbers. The `r sum(str_starts(gt$location, "Figure S4\\.") | gt$location == "Table S2.1")` claims about summarised floats are exempt from that last comparison, because their ground-truth value is a count of agreements with the published page and an instrument that never reads the page cannot recompute one.
 
 **Three findings came from the extraction and not from the floats.** The abstract's "five continents" against an evidence map drawn as six is the first, and it is now the first entry of the errata. The second is the article's own cross-reference to fig. S6.`r prisma_figure_cited`. The third is a disagreement the article has with itself about a date: the introduction says the earliest study sent its applications in 1986, while the abstract dates the record from 1983 and the deposit's own study table and evidence map both put that study in 1983. Which is right is a fact about the cited 1987 paper rather than about this deposit, so it is not corrected: it is entry 19, a note that quotes the sentence, prints no corrected side, and gives that reason.
 

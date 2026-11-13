@@ -1221,8 +1221,8 @@ if (any(!transcription$numbers_agree | !transcription$strings_agree)) {
 # Gate: every published float is covered, and by how much of what it prints ----
 # The supplement states its own inventory in its front matter, so coverage is checked against
 # that list rather than against whatever the pipeline happens to produce. "At least one row" is
-# not coverage: each float records the fraction of the numbers it prints that the ground truth
-# reaches.
+# not coverage: each float records how many of the numbers it prints the ground truth reaches,
+# and how many of those each pipeline reproduces.
 published_floats <- c("Table 1", "Table 2", "Table S2.1", "Figure 1", "Figure 2", "Figure 3",
                       "Figure 4", "Figure 5", "Figure S1.1", "Figure S2.2", "Figure S3.3",
                       "Figure S3.4", str_glue("Figure S4.{5:61}"), "Figure S5.62", "Figure S6.63")
@@ -1239,76 +1239,143 @@ float_of_row <- function(table_figure) {
 }
 
 # Numbers each float prints on its face, counted from the published page rather than assumed.
-# A figure that prints none still asserts something, and what it asserts is recorded in the
-# reason beside it.
+# Figure 3 prints the six mechanism counts beside its bubbles, and the PRISMA diagram prints
+# the counts the extraction transcribes; neither has a ground truth row, for the reasons in
+# the notes below. A float that prints none prints zero.
+prisma_numbers <- published_claims |>
+  filter(location == "Figure S6.63") |>
+  nrow()
+
 float_printed <- bind_rows(
   tibble(float = c("Table 1", "Table 2"),
          printed = c(3 * nrow(published_table_1) + 2 * n_distinct(published_table_1$model),
                      3 * nrow(published_table_2) + 2 * n_distinct(published_table_2$model))),
   tibble(float = "Table S2.1", printed = 3 * nrow(published_s2_1)),
+  tibble(float = "Figure 3", printed = 6),
   tibble(float = "Figure S1.1", printed = 2 * nrow(published_s1_1)),
   tibble(float = "Figure S3.4", printed = 2 * nrow(published_s3_4)),
   tibble(float = "Figure S5.62", printed = 2 * nrow(published_s5_62)),
   published_panels |>
     transmute(float = str_glue("Figure {figure}"),
               printed = lengths(split_labels(entries)) + lengths(split_labels(compositions)) +
-                lengths(split_labels(sample_sizes)))
+                lengths(split_labels(sample_sizes))),
+  tibble(float = "Figure S6.63", printed = prisma_numbers)
 )
 
-uncovered_reasons <- tribble(
-  ~float, ~reason,
+# Plotted quantities, for a figure, counted where the article fixes their number in print: a
+# forest plot's printed labels, a panel's "estimate (SE)" labels, the six bubbles of Figure 3,
+# and the observation counts of the Table 1 and Table 2 models that Figures 4 and 5 draw. Where
+# the article fixes no such number the count is NA and the note says why. A figure's plotted
+# quantities are reproduced when the rewrite plots as many as the article does.
+figure_4_points <- out("figure_4_cates_gender_gradient.csv") |> filter(layer == "point")
+figure_5_points <- out("figure_5_cates_ethnicity.csv") |> filter(layer == "point")
+
+table_nobs <- function(published, models) {
+  published |>
+    filter(model %in% models) |>
+    distinct(model, nobs) |>
+    pull(nobs) |>
+    as.numeric() |>
+    sum()
+}
+
+float_plotted <- bind_rows(
+  tibble(float = "Figure 3", plotted = 6, plotted_by_rewrite = 0),
+  tibble(float = "Figure 4", plotted = table_nobs(published_table_1, "Model 1"),
+         plotted_by_rewrite = nrow(figure_4_points)),
+  tibble(float = "Figure 5", plotted = table_nobs(published_table_2, c("Model 1", "Model 2")),
+         plotted_by_rewrite = nrow(figure_5_points)),
+  tibble(float = "Figure S1.1", plotted = nrow(published_s1_1),
+         plotted_by_rewrite = nrow(forest_s1_1)),
+  tibble(float = "Figure S3.4", plotted = nrow(published_s3_4),
+         plotted_by_rewrite = nrow(forest_s3_4)),
+  tibble(float = "Figure S5.62", plotted = nrow(published_s5_62),
+         plotted_by_rewrite = nrow(forest_s5_62)),
+  gt |>
+    filter(str_starts(table_figure, "fig_S4\\."), str_ends(claim_id, "_entries")) |>
+    transmute(float = float_of_row(table_figure), plotted = value_paper_number,
+              plotted_by_rewrite = value_rewrite)
+)
+
+float_notes <- tribble(
+  ~float, ~note,
   "Figure 1", "A two-panel diagram of the two gender gradients the theory admits. It plots no estimates and the deposit has no code for it",
   "Figure 2", "The same diagram split by advantaged and disadvantaged group. It plots no estimates and the deposit has no code for it",
-  "Figure 3", "A summary of the discrimination mechanisms the 51 papers discuss, coded by hand. The deposit carries no mechanism or discipline variable, so nothing in the pipeline can reach it",
+  "Figure 3", "A summary of the discrimination mechanisms the 51 papers discuss, coded by hand, printing the six category counts beside its bubbles. The deposit carries no mechanism or discipline variable, so nothing in the pipeline can reach it",
   "Figure 4", "The occupation CATEs against gender composition, with the Table 1 model 1 line. It prints no numbers on its face; its estimates are the 298 CATEs and its line is the Table 1 model 1 row, both covered here",
   "Figure 5", "The same estimates split by majority and minority status, with the Table 2 model 1 and 2 lines. It prints no numbers on its face and both lines are covered here",
-  "Figure S2.2", "An evidence map of country by year tiles. It prints no numbers; what it asserts is which country-year cells are occupied, and the section S2 sentences describing it are covered here",
-  "Figure S3.3", "The survey and field gradients drawn as two fitted lines. It prints no numbers; both fits are recorded here with no published counterpart",
+  "Figure S2.2", "An evidence map of country by year tiles. It prints no numbers and the article does not count its tiles; what it asserts is which country-year cells are occupied, and the section S2 sentences describing it are covered here",
+  "Figure S3.3", "The survey and field gradients drawn as two fitted lines over the CATEs behind them. It prints no numbers and the article does not count its points; both fits are recorded here with no published counterpart",
   "Figure S6.63", "A PRISMA flow diagram of the literature search. Its counts come from the screening process and no data file in the deposit records them"
 )
 
-# A row covers one published number, except where a float is summarised rather than recorded
-# cell by cell: a panel's three rows and the manifest's three column rows each account for a
-# whole column of published labels, and the number they account for is the number the page
-# prints. Counting rows instead would report a 57-label panel as three numbers covered.
-float_coverage <-
-  gt |>
+# What each float's rows reproduce. A row covers one published number, except where a float is
+# summarised rather than recorded cell by cell: a panel's three rows and the manifest's three
+# column rows each account for a whole column of published labels, and both what they cover and
+# what they reproduce are counts. Counting rows instead would report a 57-label panel as three
+# numbers covered. The deposit has no code for table S2.1 and its panel loop draws nothing, so
+# the archive reproduces none of either.
+summarised <- function(table_figure) {
+  str_starts(table_figure, "fig_S4\\.") | table_figure == "table_S2.1"
+}
+
+float_rows <- gt |>
   mutate(
     float = float_of_row(table_figure),
     covers = case_when(
-      str_starts(table_figure, "fig_S4\\.") ~ value_paper_number,
-      table_figure == "table_S2.1" & claim != "Studies listed" ~ value_paper_number,
-      table_figure == "table_S2.1" ~ 0,
+      table_figure == "table_S2.1" & claim == "Studies listed" ~ 0,
+      summarised(table_figure) ~ value_paper_number,
       .default = 1
-    )
+    ),
+    by_rewrite = case_when(
+      table_figure == "table_S2.1" & claim == "Studies listed" ~ 0,
+      summarised(table_figure) ~ value_rewrite,
+      .default = as.numeric(replace_na(match_rewrite, 0) == 1)
+    ),
+    by_archive = if_else(summarised(table_figure), 0, as.numeric(replace_na(match, 0) == 1))
   ) |>
   drop_na(float) |>
-  summarize(covered = sum(covers), .by = float) |>
-  full_join(float_printed, by = "float") |>
-  full_join(tibble(float = published_floats), by = "float") |>
-  left_join(uncovered_reasons, by = "float") |>
-  mutate(covered = replace_na(covered, 0),
-         share = if_else(is.na(printed) | printed == 0, NA_real_, covered / printed))
+  summarize(covered = sum(covers), reproduced_by_rewrite = sum(by_rewrite),
+            reproduced_by_archive = sum(by_archive), .by = float)
 
-# Written out so the report can state the fraction rather than assert that a float has a row.
-# "At least one row" is not coverage: one row against a hundred published cells satisfies every
-# check that asks only whether a float appears, which is the failure this file exists to make
-# visible. Only properties of the published floats and of the ground truth go in it.
+float_coverage <- tibble(float = published_floats) |>
+  full_join(float_rows, by = "float") |>
+  full_join(float_printed, by = "float") |>
+  left_join(float_plotted, by = "float") |>
+  left_join(float_notes, by = "float") |>
+  mutate(
+    is_figure = str_starts(float, "Figure"),
+    published_numbers = replace_na(printed, 0),
+    across(c(covered, reproduced_by_rewrite, reproduced_by_archive), \(x) replace_na(x, 0)),
+    plotted_reproduced = if_else(plotted_by_rewrite == plotted, plotted, 0),
+    plotted = if_else(is_figure & float %in% c("Figure 1", "Figure 2", "Figure S6.63"),
+                      0, plotted),
+    plotted_reproduced = if_else(is_figure & is.na(plotted_reproduced) & plotted %in% 0,
+                                 0, plotted_reproduced),
+    plotted = if_else(is_figure, plotted, NA_real_),
+    plotted_reproduced = if_else(is_figure, plotted_reproduced, NA_real_),
+    across(c(published_numbers, covered, reproduced_by_rewrite, reproduced_by_archive, plotted,
+             plotted_reproduced), as.integer)
+  ) |>
+  arrange(factor(float, levels = published_floats), .locale = "en")
+
+# Written out so the report can state the counts rather than assert that a float has a row.
+# Only properties of the published floats and of the ground truth go in it.
 float_coverage |>
-  select(float, printed, covered, share, reason) |>
-  arrange(factor(float, levels = published_floats), .locale = "en") |>
+  select(float, published_numbers, covered, reproduced_by_rewrite, reproduced_by_archive,
+         plotted, plotted_reproduced, note) |>
   write_csv(here::here("ground_truth", "float_coverage.csv"))
 
 unlisted <- setdiff(float_coverage$float, published_floats)
-uncovered <- float_coverage |> filter(covered == 0, is.na(reason))
-partial <- float_coverage |> filter(!is.na(share), share < 1)
+uncovered <- float_coverage |> filter(covered == 0, is.na(note))
+partial <- float_coverage |> filter(covered < published_numbers, is.na(note))
 
 if (length(unlisted) > 0 || nrow(uncovered) > 0 || nrow(partial) > 0) {
-  print(float_coverage |> filter(covered == 0 | (!is.na(share) & share < 1)), n = 80)
+  print(float_coverage |> filter(covered == 0 | covered < published_numbers), n = 80)
   stop(str_glue(
     "Float coverage gate failed. Floats the supplement does not list: ",
-    "{str_c(unlisted, collapse = ', ')}. Floats with no row and no reason: ",
-    "{str_c(uncovered$float, collapse = ', ')}. Floats covered in part: ",
+    "{str_c(unlisted, collapse = ', ')}. Floats with no row and no note: ",
+    "{str_c(uncovered$float, collapse = ', ')}. Floats covered in part with no note: ",
     "{str_c(partial$float, collapse = ', ')}."
   ))
 }
@@ -1327,8 +1394,9 @@ claims_output <- capture.output(
   source(here::here("maintained", "in_text_claims.R"), local = new.env())
 )
 
+# excheckr closes the run with two "CLAIM SUMMARY:" lines, which carry no claim id.
 printed_claims <- tibble(line = claims_output) |>
-  filter(str_starts(line, "CLAIM ")) |>
+  filter(str_detect(line, "^CLAIM \\S+ = ")) |>
   transmute(claim_id = str_match(line, "^CLAIM ([^ ]+) = ")[, 2],
             value_printed = str_match(line, "^CLAIM [^ ]+ = (.*?) \\|\\| ")[, 2])
 
@@ -1384,13 +1452,19 @@ if (nrow(instrument_disagreements) > 0) {
                 "{nrow(instrument_disagreements)} claims."))
 }
 
-gt <- gt |> select(-value_paper_number, -digits, -mode)
+# A claim compared in "holds" mode is a truth value, and its verdict is carried in holds as well
+# as in match_rewrite, where it has always been, so the columns this file wrote before keep
+# their values.
+gt <- gt |>
+  mutate(holds = if_else(mode == "holds", match_rewrite, NA_real_)) |>
+  select(-value_paper_number, -digits, -mode)
 
 # Errata spine gate ----
 # errata.qmd names, for each published entry, the ground truth rows that entry corrects. An
 # id that no longer exists is a typo or a renamed claim, and a dangling reference in a
 # document whose whole purpose is correcting the record is worse than a build that refuses.
 errata_path <- here::here("errata_entries.csv")
+errata_ids <- character()
 if (file.exists(errata_path)) {
   errata_ids <- read_csv(errata_path, show_col_types = FALSE) |>
     pull(claim_ids) |>
@@ -1406,6 +1480,95 @@ if (file.exists(errata_path)) {
   print(str_glue("Errata spine: {length(unique(errata_ids))} distinct claim ids listed, ",
                  "all present in the ground truth."))
 }
+
+# Location, claim type, and printed precision, carried from the extraction ----
+# A row the extraction names takes the extraction's location, claim type, and digit count. A row
+# it does not name is a quantity the article never states or a float cell, and takes its float's
+# label as printed. Every float row the extraction names has to sit in the same float there.
+printed_location <- function(table_figure) {
+  case_when(
+    str_detect(table_figure, "^table_[12]_model[0-9]$") ~
+      str_replace(table_figure, "^table_([12])_model([0-9])$", "Table \\1, Model \\2"),
+    table_figure == "table_S2.1" ~ "Table S2.1",
+    table_figure == "figs_S4.5_to_S4.61" ~ "Figures S4.5 to S4.61",
+    str_starts(table_figure, "fig_S") ~ str_replace(table_figure, "^fig_S", "Figure S"),
+    table_figure == "text" ~ "Text",
+    str_starts(table_figure, "text_S") ~ str_replace(table_figure, "^text_S", "Section S"),
+    .default = NA_character_
+  )
+}
+
+gt <- gt |>
+  left_join(select(published_claims, claim_id, extracted_location = location, claim_type,
+                   extracted_digits = digits),
+            by = "claim_id") |>
+  mutate(
+    float_label = printed_location(table_figure),
+    location = if_else(is.na(claim_id), float_label, extracted_location),
+    claim_type = if_else(is.na(claim_id), "pipeline", claim_type),
+    page_digits = excheckr::claim_digits(value_paper),
+    digits = if_else(is.na(claim_id), page_digits, as.integer(extracted_digits))
+  )
+
+misplaced <- gt |>
+  filter(!is.na(claim_id), str_detect(table_figure, "^(table|fig)"),
+         location != float_label)
+digit_disagreement <- gt |>
+  filter(!is.na(claim_id), !is.na(value_paper), digits != page_digits)
+
+if (nrow(misplaced) > 0 || nrow(digit_disagreement) > 0) {
+  print(misplaced |> select(claim_id, table_figure, location))
+  print(digit_disagreement |> select(claim_id, value_paper, digits, page_digits))
+  stop("The extraction places a float row in another float, or prints a claim at a precision ",
+       "this file does not.")
+}
+
+stopifnot(!anyNA(gt$location), !anyNA(gt$claim_type))
+
+# Disposition: what became of each defect ----
+# corrected_here is computed from the errata spine and never typed. Every other judgment is one
+# the report already makes, keyed on the claim; a defect nobody has judged stays NA.
+disposition_judgments <- bind_rows(
+  tibble(
+    claim_id = c("results_magnitude_se", "s4_panels_published", "s4_panel_entries_published"),
+    disposition = "documented_only",
+    disposition_reason = "An archive defect the rewrite repairs and the article never shows: the deposit ships the bootstrap at five resamples and a panel loop that draws nothing, both described in the report; the published values are right."
+  ),
+  gt |>
+    filter(defect_locus == "archive",
+           claim_id == "table_s2_1_subjects" | str_ends(claim_id, "_sample_sizes")) |>
+    transmute(
+      claim_id,
+      disposition = "documented_only",
+      disposition_reason = "The deposit carries no subject counts, so these published sample sizes cannot be rebuilt from it. The report describes the gap; the article is not shown to be wrong, so no erratum is issued."
+    )
+)
+
+gt <- gt |>
+  left_join(disposition_judgments, by = "claim_id") |>
+  mutate(
+    disposition = case_when(
+      is.na(defect_locus) ~ NA_character_,
+      claim_id %in% errata_ids ~ "corrected_here",
+      .default = disposition
+    ),
+    disposition_reason = if_else(is.na(disposition) | disposition == "corrected_here",
+                                 NA_character_, disposition_reason)
+  )
+
+undisposed <- gt |> filter(defect_locus == "paper_internal", is.na(disposition))
+if (nrow(undisposed) > 0) {
+  print(undisposed |> select(claim_id, location, claim), n = nrow(undisposed))
+  stop(str_glue("{nrow(undisposed)} paper_internal rows carry no disposition."))
+}
+print(gt |> filter(!is.na(defect_locus)) |> count(defect_locus, disposition))
+
+# The ground truth, in the canonical column order ----
+gt <- gt |>
+  mutate(across(c(match, match_rewrite, holds), as.logical)) |>
+  select(paper_id, claim_id, location, claim_type, claim, value_paper, digits, value_script,
+         match, value_rewrite, match_rewrite, holds, defect_locus, disposition,
+         disposition_reason, notes)
 
 write_csv(gt, here::here("ground_truth", str_glue("{paper_id}_ground_truth.csv")))
 
@@ -1424,6 +1587,6 @@ print(str_glue(
   "{sum(!agreement_counts & !is.na(gt$claim_id) & !is.na(gt$value_rewrite))} compared across ",
   "the two instruments, {nrow(instrument_disagreements)} disagreements."
 ))
-print(gt |> filter(match_rewrite == 0 | match == 0) |>
-        select(table_figure, claim, value_paper, value_rewrite, defect_locus),
+print(gt |> filter(!match_rewrite | !match) |>
+        select(location, claim, value_paper, value_rewrite, defect_locus, disposition),
       n = 100, width = 200)

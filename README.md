@@ -25,7 +25,10 @@
   - [Patterns replaced](#patterns-replaced)
 - [R environment](#r-environment)
 
-**Archived at Zenodo:** [doi:10.5281/zenodo.24168385](https://doi.org/10.5281/zenodo.24168385). This DOI always resolves to the latest release of the maintained version.
+**Archived at Zenodo:**
+[doi:10.5281/zenodo.24168385](https://doi.org/10.5281/zenodo.24168385).
+This DOI always resolves to the latest release of the maintained
+version.
 
 This repository holds the actively maintained replication code for Galos
 and Coppock (2023), together with the reproducibility report that
@@ -363,59 +366,59 @@ one by one.
 
 | Location | Published values checked | Rewrite matches | Rewrite mismatches |
 |:---|---:|---:|---:|
-| figs_S4.5_to_S4.61 | 173 | 151 | 22 |
-| fig_S1.1 | 116 | 115 | 1 |
-| fig_S5.62 | 76 | 76 | 0 |
-| text | 40 | 35 | 2 |
-| fig_S3.4 | 26 | 26 | 0 |
-| table_2_model3 | 14 | 14 | 0 |
-| table_1_model1 | 8 | 8 | 0 |
-| table_1_model2 | 8 | 8 | 0 |
-| table_1_model3 | 8 | 8 | 0 |
-| table_1_model4 | 8 | 8 | 0 |
-| table_1_model5 | 8 | 8 | 0 |
-| table_2_model1 | 8 | 8 | 0 |
-| table_2_model2 | 8 | 7 | 1 |
-| text_S5 | 8 | 8 | 0 |
-| table_S2.1 | 4 | 2 | 2 |
-| text_S1 | 3 | 3 | 0 |
-| text_S2 | 3 | 3 | 0 |
-| text_S4 | 2 | 2 | 0 |
-| text_S3 | 1 | 1 | 0 |
+| Figures S4.5 to S4.61 | 173 | 151 | 22 |
+| Figure S1.1 | 116 | 115 | 1 |
+| Figure S5.62 | 76 | 76 | 0 |
+| Text | 40 | 35 | 2 |
+| Figure S3.4 | 26 | 26 | 0 |
+| Table 2, Model 3 | 14 | 14 | 0 |
+| Section S5 | 8 | 8 | 0 |
+| Table 1, Model 1 | 8 | 8 | 0 |
+| Table 1, Model 2 | 8 | 8 | 0 |
+| Table 1, Model 3 | 8 | 8 | 0 |
+| Table 1, Model 4 | 8 | 8 | 0 |
+| Table 1, Model 5 | 8 | 8 | 0 |
+| Table 2, Model 1 | 8 | 8 | 0 |
+| Table 2, Model 2 | 8 | 7 | 1 |
+| Table S2.1 | 4 | 2 | 2 |
+| Section S1 | 3 | 3 | 0 |
+| Section S2 | 3 | 3 | 0 |
+| Section S4 | 2 | 2 | 0 |
+| Section S3 | 1 | 1 | 0 |
 
 Where the checkable published numbers are, and how the rewrite does
 against them.
 
 | Location | Quantity | Paper | Rewrite | Where the fault lies |
 |:---|:---|:---|---:|:---|
-| text | Continents the experiments were carried out across | 5 | 6.000 | paper_internal |
-| text | Difference in magnitude, 100 vs 0 percent women (pp) | 2.10 | 2.105 | paper_internal |
-| table_2_model2 | Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three) | 0 | 2.000 | paper_internal |
-| table_S2.1 | Subject counts reproduced | 57 | 35.000 | archive |
-| table_S2.1 | Occupation counts reproduced | 57 | 55.000 | paper_internal |
-| fig_S1.1 | ATE: Neumark et al. (9): United States | 2.3 | -12.308 | paper_internal |
-| fig_S4.8 | Occupation sample size labels, Alden et al. (68): Sweden | 2 | 0.000 | archive |
-| fig_S4.11 | Occupation sample size labels, Asali et al. (70): Georgia | 9 | 0.000 | archive |
-| fig_S4.13 | Occupation sample size labels, Baert et al. (71): Belgium | 1 | 0.000 | archive |
-| fig_S4.14 | Occupation sample size labels, Baert et al. (72): Belgium | 1 | 0.000 | archive |
-| fig_S4.17 | Occupation sample size labels, Berson (75): France | 1 | 0.000 | archive |
-| fig_S4.28 | Occupation sample size labels, Carlsson (13): Sweden | 13 | 0.000 | archive |
-| fig_S4.32 | Occupation sample size labels, Dahl and Krog (84): Denmark | 21 | 3.000 | archive |
-| fig_S4.33 | Occupation sample size labels, Edo et al. (85): France | 3 | 0.000 | archive |
-| fig_S4.37 | Occupation sample size labels, Gonzalez et al. (89): Spain | 17 | 0.000 | archive |
-| fig_S4.38 | Occupation sample size labels, Hipp (90): Germany | 1 | 0.000 | archive |
-| fig_S4.42 | Occupation sample size labels, Neumark et al. (9): United States | 1 | 0.000 | archive |
-| fig_S4.43 | Occupation sample size labels, Nunley et al. (93): United States | 6 | 0.000 | archive |
-| fig_S4.44 | Occupation sample size labels, Oreopoulos (94): Canada | 21 | 1.000 | archive |
-| fig_S4.46 | Occupation sample size labels, Pedulla (96): United States, field experiment | 4 | 0.000 | archive |
-| fig_S4.47 | Occupation sample size labels, Petit (97): France | 1 | 0.000 | archive |
-| fig_S4.50 | Occupation sample size labels, Riach and Rich (8): Australia | 7 | 0.000 | archive |
-| fig_S4.51 | Occupation sample size labels, Riach and Rich (100): England | 4 | 0.000 | archive |
-| fig_S4.52 | Occupation sample size labels, Rivera and Tilcsik (101): United States, field experiment | 1 | 0.000 | archive |
-| fig_S4.53 | Occupation sample size labels, Rooth (102): Sweden | 7 | 0.000 | archive |
-| fig_S4.54 | Occupation sample size labels, Ruffle and Shtudiner (103): Israel | 10 | 1.000 | archive |
-| fig_S4.60 | Occupation sample size labels, Zhou et al. (108): China | 4 | 0.000 | archive |
-| fig_S4.61 | Occupation sample size labels, Capéau et al. (82): Belgium | 1 | 0.000 | archive |
+| Abstract | Continents the experiments were carried out across | 5 | 6.000 | paper_internal |
+| Results, p. 6 | Difference in magnitude, 100 vs 0 percent women (pp) | 2.10 | 2.105 | paper_internal |
+| Table 2, Model 2 | Intercept significance stars (0 = none, 1 = one, 2 = two, 3 = three) | 0 | 2.000 | paper_internal |
+| Table S2.1 | Subject counts reproduced | 57 | 35.000 | archive |
+| Table S2.1 | Occupation counts reproduced | 57 | 55.000 | paper_internal |
+| Figure S1.1 | ATE: Neumark et al. (9): United States | 2.3 | -12.308 | paper_internal |
+| Figure S4.8 | Occupation sample size labels, Alden et al. (68): Sweden | 2 | 0.000 | archive |
+| Figure S4.11 | Occupation sample size labels, Asali et al. (70): Georgia | 9 | 0.000 | archive |
+| Figure S4.13 | Occupation sample size labels, Baert et al. (71): Belgium | 1 | 0.000 | archive |
+| Figure S4.14 | Occupation sample size labels, Baert et al. (72): Belgium | 1 | 0.000 | archive |
+| Figure S4.17 | Occupation sample size labels, Berson (75): France | 1 | 0.000 | archive |
+| Figure S4.28 | Occupation sample size labels, Carlsson (13): Sweden | 13 | 0.000 | archive |
+| Figure S4.32 | Occupation sample size labels, Dahl and Krog (84): Denmark | 21 | 3.000 | archive |
+| Figure S4.33 | Occupation sample size labels, Edo et al. (85): France | 3 | 0.000 | archive |
+| Figure S4.37 | Occupation sample size labels, Gonzalez et al. (89): Spain | 17 | 0.000 | archive |
+| Figure S4.38 | Occupation sample size labels, Hipp (90): Germany | 1 | 0.000 | archive |
+| Figure S4.42 | Occupation sample size labels, Neumark et al. (9): United States | 1 | 0.000 | archive |
+| Figure S4.43 | Occupation sample size labels, Nunley et al. (93): United States | 6 | 0.000 | archive |
+| Figure S4.44 | Occupation sample size labels, Oreopoulos (94): Canada | 21 | 1.000 | archive |
+| Figure S4.46 | Occupation sample size labels, Pedulla (96): United States, field experiment | 4 | 0.000 | archive |
+| Figure S4.47 | Occupation sample size labels, Petit (97): France | 1 | 0.000 | archive |
+| Figure S4.50 | Occupation sample size labels, Riach and Rich (8): Australia | 7 | 0.000 | archive |
+| Figure S4.51 | Occupation sample size labels, Riach and Rich (100): England | 4 | 0.000 | archive |
+| Figure S4.52 | Occupation sample size labels, Rivera and Tilcsik (101): United States, field experiment | 1 | 0.000 | archive |
+| Figure S4.53 | Occupation sample size labels, Rooth (102): Sweden | 7 | 0.000 | archive |
+| Figure S4.54 | Occupation sample size labels, Ruffle and Shtudiner (103): Israel | 10 | 1.000 | archive |
+| Figure S4.60 | Occupation sample size labels, Zhou et al. (108): China | 4 | 0.000 | archive |
+| Figure S4.61 | Occupation sample size labels, Capéau et al. (82): Belgium | 1 | 0.000 | archive |
 
 Every published value the rewrite does not match, and where the fault
 lies.
@@ -440,24 +443,26 @@ only whether the float appears, so the build counts the numbers each
 published float prints on its face and requires the ground truth to
 account for all of them. `ground_truth/float_coverage.csv` holds that
 count float by float. Of the 71 floats the article and its supplementary
-front matter list, 64 carry rows here. The 63 that print numbers on
-their faces carry 1,389 published values between them, and the ground
-truth reaches every one, so each of those floats is covered in full. The
-build stops if any float falls below that.
+front matter list, 64 carry rows here. The 63 that carry rows and print
+numbers on their faces carry 1,389 published values between them, and
+the ground truth reaches every one, so each of those floats is covered
+in full. The build stops if any float falls below that without a stated
+reason.
 
 The remaining 7 published floats have no row here, and the build stops
 if a float has neither a row nor a stated reason, since a false reason
 tells the next reader not to look. Figures 1 and 2 are diagrams of the
 two gender gradients the theory admits and plot no estimates. Figure 3
 summarises the discrimination mechanisms the 51 papers discuss, coded by
-hand; the deposit carries no mechanism or discipline variable, so
-nothing in the pipeline can reach it. Figures 4 and 5 print no numbers
-on their faces, and the estimates and lines they draw are the 298
-occupation CATEs and the Table 1 and Table 2 fits, all covered above.
-Figure S2.2 is a map of country-by-year tiles, and what it asserts is
-checked through the section S2 sentences that describe it. Figure S6.63
-is a PRISMA flow diagram whose counts come from the screening process
-and not from any data file in the deposit.
+hand, and prints the six category counts beside its bubbles; the deposit
+carries no mechanism or discipline variable, so nothing in the pipeline
+can reach it. Figures 4 and 5 print no numbers on their faces, and the
+estimates and lines they draw are the 298 occupation CATEs and the Table
+1 and Table 2 fits, all covered above. Figure S2.2 is a map of
+country-by-year tiles, and what it asserts is checked through the
+section S2 sentences that describe it. Figure S6.63 is a PRISMA flow
+diagram whose counts come from the screening process and not from any
+data file in the deposit.
 
 # The extraction and the two instruments
 
@@ -697,19 +702,19 @@ nowhere as files and cannot be diffed between runs.
 
 | Item      | Value                  |
 |:----------|:-----------------------|
-| R version | 4.6.1                  |
+| R version | 4.6.2                  |
 | Platform  | aarch64-apple-darwin23 |
 
 | Package      | Version |
 |:-------------|:--------|
 | tidyverse    | 2.0.0   |
-| metafor      | 5.0.1   |
+| metafor      | 5.2.1   |
 | broom        | 1.0.13  |
 | scales       | 1.4.0   |
 | rsample      | 1.3.2   |
 | modelsummary | 2.6.0   |
-| knitr        | 1.51    |
-| kableExtra   | 1.4.0   |
+| knitr        | 1.52    |
+| kableExtra   | 1.4.1   |
 | here         | 1.0.2   |
 
 Package versions used for the run behind this report.
